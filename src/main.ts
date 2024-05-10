@@ -9,13 +9,13 @@ const appElement = document.querySelector("#app");
 if (appElement) {
   appElement.innerHTML = `
     <div>
-      <h1>Initiative Tracker</h1>
-      <ul id="initiative-list"></ul>
+      <h1>Location Keys</h1>
+      <ul id="location-keys"></ul>
     </div>
   `;
 }
 
 OBR.onReady(() => {
   setupContextMenu();
-  setupInitiativeList(document.querySelector("#initiative-list"));
+  setupInitiativeList(document.querySelector("#location-keys"));
 });

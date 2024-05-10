@@ -1,0 +1,12 @@
+{
+  "name": "Map Location Keys",
+  "version": "1.0.0",
+  "manifest_version": 1,
+  "action": {
+    "title": "Map Location Keys",
+    "icon": "/icon.svg",
+    "popover": "/",
+    "height": 600,
+    "width": 400
+  }
+}

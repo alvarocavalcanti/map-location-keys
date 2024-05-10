@@ -1,24 +1,21 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { setupContextMenu } from "./contextMenu";
+import { setupInitiativeList } from "./initiativeList";
+import "./style.css";
+import OBR from "@owlbear-rodeo/sdk";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
+export const ID = "es.memorablenaton.map-location-keys";
+
+const appElement = document.querySelector("#app");
+if (appElement) {
+  appElement.innerHTML = `
+    <div>
+      <h1>Initiative Tracker</h1>
+      <ul id="initiative-list"></ul>
     </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+  `;
+}
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+OBR.onReady(() => {
+  setupContextMenu();
+  setupInitiativeList(document.querySelector("#initiative-list"));
+});

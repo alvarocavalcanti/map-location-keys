@@ -1,6 +1,7 @@
 import OBR, { Item, Metadata } from '@owlbear-rodeo/sdk';
 import React, { useState } from 'react';
 
+import Accordion from 'react-bootstrap/Accordion';
 import Container from 'react-bootstrap/Container';
 import { setupContextMenu } from './contextMenu';
 import { ID } from './main';
@@ -56,19 +57,22 @@ const App: React.FC = () => {
           Map Location Keys
         </h1>
       </Container>
-      <ul id='location-keys'>
-        {locationKeys.length > 0 ? locationKeys.map((locationKey, index) => (
-          <li key={index}>
-            {locationKey.name}
-            <br />
-            {locationKey.description}
-          </li>
-        )) : (
-          <li>
-            No location keys found
-          </li>
-        ) }
-      </ul>
+      {locationKeys.length > 0 ? locationKeys.map((locationKey, index) => (
+        <Accordion key={index}>
+          <Accordion.Item eventKey={locationKey.name}>
+            <Accordion.Header>
+              {locationKey.name}
+            </Accordion.Header>
+            <Accordion.Body>
+              {locationKey.description}
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      )) : (
+        <>
+          No location keys found
+        </>
+      ) }
     </Container>
   );
 };

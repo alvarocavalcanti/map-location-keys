@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import Accordion from 'react-bootstrap/Accordion';
 import Container from 'react-bootstrap/Container';
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { setupContextMenu } from './contextMenu';
 import { ID } from './main';
 
@@ -64,7 +66,9 @@ const App: React.FC = () => {
               {locationKey.name}
             </Accordion.Header>
             <Accordion.Body>
-              {locationKey.description}
+              <Markdown remarkPlugins={[remarkGfm]}>
+                {locationKey.description}
+              </Markdown>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

@@ -28,22 +28,15 @@ export function setupContextMenu() {
         (item) => item.metadata[`${ID}/metadata`] === undefined
       );
       if (addToLocationKeys) {
-        const locationKey = `
-          # This is a location key\n
-          \n
-          **Location Key:**\n
-          \n
-          **Description:**\n
-          \n
-          **Features:**\n
-          \n
-          **Creatures:**\n
-          \n
-          **Notes:**\n
-          \n
-          ---\n
-          \n
-        `;
+        const locationKey = `# Evocative Name
+
+**Description:**
+
+**Features:**
+
+**Creatures:**
+
+**Notes:**`;
         OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items) {
             item.metadata[`${ID}/metadata`] = {

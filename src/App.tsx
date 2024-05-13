@@ -7,6 +7,26 @@ import { ID } from './main';
 
 interface LocationKey { description: string; name: string; }
 
+function loadExistingLocationKeys(items: Item[], newLocationKeys: LocationKey[], getItemText: (item: any) => any) {
+  for (const item of items) {
+    if (item.metadata[`${ID}/metadata`]) {
+      const metadata = item.metadata[`${ID}/metadata`] as Metadata;
+      newLocationKeys.push({
+        description: metadata.locationKey as string,
+        name: getItemText(item),
+      });
+    }
+  }
+}
+
+function sortLocationKeys(newLocationKeys: LocationKey[]) {
+  newLocationKeys.sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+    return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+  });
+}
+
 const App: React.FC = () => {
   const [locationKeys, setLocationKeys] = useState<LocationKey[]>([]);
 
@@ -17,23 +37,9 @@ const App: React.FC = () => {
   const handleOnChange = (items: Item[]): void => {
     const newLocationKeys: LocationKey[] = [];
     
-    // Loads the existing location keys
-    for (const item of items) {
-      if (item.metadata[`${ID}/metadata`]) {
-        const metadata = item.metadata[`${ID}/metadata`] as Metadata;
-        newLocationKeys.push({
-          description: metadata.locationKey as string,
-          name: getItemText(item),
-        });
-      }
-    }
+    loadExistingLocationKeys(items, newLocationKeys, getItemText);
 
-    // Sorts the location keys by name
-    newLocationKeys.sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-      return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-    });
+    sortLocationKeys(newLocationKeys);
 
     setLocationKeys(newLocationKeys);
   }
@@ -45,19 +51,23 @@ const App: React.FC = () => {
   
   return (
     <Container className="p-3">
-      <Container className="p-5 mb-4 bg-light rounded-3">
+      <Container className="mb-4 bg-light rounded-3">
         <h1 className="header">
           Map Location Keys
         </h1>
       </Container>
       <ul id='location-keys'>
-        {locationKeys.map((locationKey, index) => (
+        {locationKeys.length > 0 ? locationKeys.map((locationKey, index) => (
           <li key={index}>
             {locationKey.name}
             <br />
             {locationKey.description}
           </li>
-        ))}
+        )) : (
+          <li>
+            No location keys found
+          </li>
+        ) }
       </ul>
     </Container>
   );

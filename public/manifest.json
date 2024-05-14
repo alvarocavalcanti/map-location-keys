@@ -4,7 +4,7 @@
   "manifest_version": 1,
   "action": {
     "title": "Map Location Keys",
-    "icon": "/icon.svg",
+    "icon": "/map-location-keys.svg",
     "popover": "/",
     "height": 600,
     "width": 400

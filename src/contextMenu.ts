@@ -1,5 +1,16 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "./main";
+import { getItemText } from "./App";
+
+const locationKeyTemplate = `# Evocative Name
+
+**Description:**
+
+**Features:**
+
+**Creatures:**
+
+**Notes:**`;
 
 export function setupContextMenu() {
   OBR.contextMenu.create({
@@ -24,23 +35,16 @@ export function setupContextMenu() {
       },
     ],
     onClick(context) {
+      console.log(context);
       const addToLocationKeys = context.items.every(
         (item) => item.metadata[`${ID}/metadata`] === undefined
       );
+
       if (addToLocationKeys) {
-        const locationKey = `# Evocative Name
-
-**Description:**
-
-**Features:**
-
-**Creatures:**
-
-**Notes:**`;
         OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items) {
             item.metadata[`${ID}/metadata`] = {
-              locationKey: locationKey,
+              locationKey: locationKeyTemplate,
             };
           }
         });

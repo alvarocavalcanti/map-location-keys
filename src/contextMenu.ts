@@ -1,6 +1,6 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "./main";
-import { getItemText } from "./App";
+import { getItemText } from "./LocationKeys";
 
 const locationKeyTemplate = `# Evocative Name
 
@@ -51,7 +51,7 @@ export function setupContextMenu() {
       } else {
         OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items) {
-            delete item.metadata[`${ID}/metadata`]
+            delete item.metadata[`${ID}/metadata`];
           }
         });
       }

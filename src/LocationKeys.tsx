@@ -1,5 +1,5 @@
-import OBR, { Item, Metadata } from "@owlbear-rodeo/sdk";
-import React, { useState } from "react";
+import OBR, { Item, Metadata, Player } from "@owlbear-rodeo/sdk";
+import React, { useEffect, useState } from "react";
 import { Accordion, Button, ButtonGroup, Container } from "react-bootstrap";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -61,10 +61,24 @@ const App: React.FC = () => {
     OBR.scene.items.onChange(handleOnChange);
   });
 
+  const [role, setRole] = useState<"GM" | "PLAYER">("PLAYER");
+
+  useEffect(() => {
+    const handlePlayerChange = (player: Player) => {
+      setRole(player.role);
+    };
+    OBR.player.getRole().then(setRole);
+    return OBR.player.onChange(handlePlayerChange);
+  }, []);
+
   const queryParams = new URLSearchParams(window.location.search);
   const showLocationKey = queryParams.has("location-key");
   const locationName = queryParams.get("location-key");
   const locationItemId = queryParams.get("item-id");
+
+  if (role === "PLAYER") {
+    return <>Only the GM can view location keys.</>;
+  }
 
   return showLocationKey ? (
     <LocationKey

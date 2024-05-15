@@ -5,14 +5,10 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { setupContextMenu } from "./contextMenu";
-import LocationKey from "./LocationKey";
 import { ID } from "./main";
-
-interface LocationKey {
-  description: string;
-  name: string;
-  id: string;
-}
+import { Link } from "react-router-dom";
+import { useLocationKeysContext } from "./LocationKeysContext";
+import { LocationKey } from "./types";
 
 function loadExistingLocationKeys(
   items: Item[],
@@ -43,7 +39,8 @@ export const getItemText = (item: any) => {
   return item.text.richText[0].children[0].text;
 };
 
-const App: React.FC = () => {
+const LocationKeys: React.FC = () => {
+  const { setSelectedLocationKey } = useLocationKeysContext();
   const [locationKeys, setLocationKeys] = useState<LocationKey[]>([]);
 
   const handleOnChange = (items: Item[]): void => {
@@ -71,21 +68,15 @@ const App: React.FC = () => {
     return OBR.player.onChange(handlePlayerChange);
   }, []);
 
-  const queryParams = new URLSearchParams(window.location.search);
-  const showLocationKey = queryParams.has("location-key");
-  const locationName = queryParams.get("location-key");
-  const locationItemId = queryParams.get("item-id");
-
   if (role === "PLAYER") {
     return <>Only the GM can view location keys.</>;
   }
 
-  return showLocationKey ? (
-    <LocationKey
-      locationName={locationName as string}
-      locationItemID={locationItemId as string}
-    />
-  ) : (
+  function handleOnEdit(id: string, name: string, description: string): void {
+    setSelectedLocationKey({ id, name, description });
+  }
+
+  return (
     <Container className="p-3">
       <Container className="mb-4 bg-light rounded-3">
         <h1 className="header">Map Location Keys</h1>
@@ -100,12 +91,22 @@ const App: React.FC = () => {
                   {locationKey.description}
                 </Markdown>
                 <ButtonGroup>
-                  <Button
-                    variant="primary"
-                    href={`?location-key=${locationKey.name}&item-id=${locationKey.id}`}
+                  <Link
+                    to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}
                   >
-                    Edit
-                  </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() =>
+                        handleOnEdit(
+                          locationKey.id,
+                          locationKey.name,
+                          locationKey.description
+                        )
+                      }
+                    >
+                      Edit
+                    </Button>
+                  </Link>
                 </ButtonGroup>
               </Accordion.Body>
             </Accordion.Item>
@@ -118,4 +119,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default LocationKeys;

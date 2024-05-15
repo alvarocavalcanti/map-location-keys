@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 
-import App from "./LocationKeys";
+import App from "./App";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import PluginGate from "./PluginGate";

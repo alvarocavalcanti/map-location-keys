@@ -1,14 +1,13 @@
+import { LocationKey } from "./types";
 import OBR, { Item, Metadata, Player } from "@owlbear-rodeo/sdk";
 import React, { useEffect, useState } from "react";
 import { Accordion, Button, ButtonGroup, Container } from "react-bootstrap";
 import Markdown from "react-markdown";
+import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 import { setupContextMenu } from "./contextMenu";
 import { ID } from "./main";
-import { Link } from "react-router-dom";
-import { useLocationKeysContext } from "./LocationKeysContext";
-import { LocationKey } from "./types";
 
 function loadExistingLocationKeys(
   items: Item[],
@@ -39,8 +38,9 @@ export const getItemText = (item: any) => {
   return item.text.richText[0].children[0].text;
 };
 
-const LocationKeys: React.FC = () => {
-  const { setSelectedLocationKey } = useLocationKeysContext();
+const LocationKeys: React.FC<{
+  setSelectedLocationKey: (locationKey: LocationKey) => void;
+}> = ({ setSelectedLocationKey }) => {
   const [locationKeys, setLocationKeys] = useState<LocationKey[]>([]);
 
   const handleOnChange = (items: Item[]): void => {
@@ -72,10 +72,6 @@ const LocationKeys: React.FC = () => {
     return <>Only the GM can view location keys.</>;
   }
 
-  function handleOnEdit(id: string, name: string, description: string): void {
-    setSelectedLocationKey({ id, name, description });
-  }
-
   return (
     <Container className="p-3">
       <Container className="mb-4 bg-light rounded-3">
@@ -97,11 +93,11 @@ const LocationKeys: React.FC = () => {
                     <Button
                       variant="primary"
                       onClick={() =>
-                        handleOnEdit(
-                          locationKey.id,
-                          locationKey.name,
-                          locationKey.description
-                        )
+                        setSelectedLocationKey({
+                          id: locationKey.id,
+                          name: locationKey.name,
+                          description: locationKey.description,
+                        })
                       }
                     >
                       Edit

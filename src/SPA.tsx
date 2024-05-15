@@ -1,21 +1,36 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import LocationKeys from "./LocationKeys";
-import LocationKey from "./LocationKey";
 import React from "react";
+import { Link, Outlet, Route, Routes } from "react-router-dom";
 
-export const MyContext = React.createContext({});
+import LocationKey from "./LocationKey";
+import LocationKeys from "./LocationKeys";
+
+import type { LocationKey as LocationKeyType } from "./types";
 
 export default function App() {
+  const [selectedLocationKey, setSelectedLocationKey] = React.useState(
+    {} as LocationKeyType
+  );
 
   return (
-    <MyContext.Provider value={{}}>
-      <Routes>
-        <Route path="/" element={<Layout />} />
-        <Route index element={<LocationKeys />} />
-        <Route path="location-key/:id" element={<LocationKey />} />
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
-    </MyContext.Provider>
+    <Routes>
+      <Route path="/" element={<Layout />} />
+      <Route
+        index
+        element={
+          <LocationKeys setSelectedLocationKey={setSelectedLocationKey} />
+        }
+      />
+      <Route
+        path="location-key/:id"
+        element={
+          <LocationKey
+            locationKey={selectedLocationKey}
+            setSelectedLocationKey={setSelectedLocationKey}
+          />
+        }
+      />
+      <Route path="*" element={<NoMatch />} />
+    </Routes>
   );
 }
 

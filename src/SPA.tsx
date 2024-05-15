@@ -5,11 +5,34 @@ import LocationKey from "./LocationKey";
 import LocationKeys from "./LocationKeys";
 
 import type { LocationKey as LocationKeyType } from "./types";
+import {
+  getItemText,
+  loadExistingLocationKeys,
+  sortLocationKeys,
+} from "./utils";
+import OBR, { Item } from "@owlbear-rodeo/sdk";
+import { setupContextMenu } from "./contextMenu";
 
-export default function App() {
+export default function SPA() {
   const [selectedLocationKey, setSelectedLocationKey] = React.useState(
     {} as LocationKeyType
   );
+  const [locationKeys, setLocationKeys] = React.useState<LocationKey[]>([]);
+
+  const handleOnChange = (items: Item[]): void => {
+    const newLocationKeys: LocationKey[] = [];
+
+    loadExistingLocationKeys(items, newLocationKeys, getItemText);
+
+    sortLocationKeys(newLocationKeys);
+
+    setLocationKeys(newLocationKeys);
+  };
+
+  OBR.onReady(() => {
+    setupContextMenu();
+    OBR.scene.items.getItems().then((items) => handleOnChange(items));
+  });
 
   return (
     <Routes>
@@ -17,7 +40,10 @@ export default function App() {
       <Route
         index
         element={
-          <LocationKeys setSelectedLocationKey={setSelectedLocationKey} />
+          <LocationKeys
+            setSelectedLocationKey={setSelectedLocationKey}
+            locationKeys={locationKeys}
+          />
         }
       />
       <Route

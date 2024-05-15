@@ -1,63 +1,15 @@
 import { LocationKey } from "./types";
-import OBR, { Item, Metadata, Player } from "@owlbear-rodeo/sdk";
+import OBR, { Player } from "@owlbear-rodeo/sdk";
 import React, { useEffect, useState } from "react";
 import { Accordion, Button, ButtonGroup, Container } from "react-bootstrap";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
-import { setupContextMenu } from "./contextMenu";
-import { ID } from "./main";
-
-function loadExistingLocationKeys(
-  items: Item[],
-  newLocationKeys: LocationKey[],
-  getItemText: (item: any) => any
-) {
-  for (const item of items) {
-    if (item.metadata[`${ID}/metadata`]) {
-      const metadata = item.metadata[`${ID}/metadata`] as Metadata;
-      newLocationKeys.push({
-        description: metadata.locationKey as string,
-        name: getItemText(item),
-        id: item.id,
-      });
-    }
-  }
-}
-
-function sortLocationKeys(newLocationKeys: LocationKey[]) {
-  newLocationKeys.sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-    return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-  });
-}
-
-export const getItemText = (item: any) => {
-  return item.text.richText[0].children[0].text;
-};
-
 const LocationKeys: React.FC<{
   setSelectedLocationKey: (locationKey: LocationKey) => void;
-}> = ({ setSelectedLocationKey }) => {
-  const [locationKeys, setLocationKeys] = useState<LocationKey[]>([]);
-
-  const handleOnChange = (items: Item[]): void => {
-    const newLocationKeys: LocationKey[] = [];
-
-    loadExistingLocationKeys(items, newLocationKeys, getItemText);
-
-    sortLocationKeys(newLocationKeys);
-
-    setLocationKeys(newLocationKeys);
-  };
-
-  OBR.onReady(() => {
-    setupContextMenu();
-    OBR.scene.items.getItems().then((items) => handleOnChange(items));
-  });
-
+  locationKeys: LocationKey[];
+}> = ({ setSelectedLocationKey, locationKeys }) => {
   const [role, setRole] = useState<"GM" | "PLAYER">("PLAYER");
 
   useEffect(() => {

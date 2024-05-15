@@ -4,14 +4,14 @@ import { Link, Outlet, Route, Routes } from "react-router-dom";
 import LocationKey from "./LocationKey";
 import LocationKeys from "./LocationKeys";
 
-import type { LocationKey as LocationKeyType } from "./types";
+import type { LocationKey as LocationKeyType } from "../@types/types";
 import {
   getItemText,
   loadExistingLocationKeys,
   sortLocationKeys,
-} from "./utils";
+} from "../utils";
 import OBR, { Item } from "@owlbear-rodeo/sdk";
-import { setupContextMenu } from "./contextMenu";
+import { setupContextMenu } from "../contextMenu";
 
 export default function SPA() {
   const [selectedLocationKey, setSelectedLocationKey] = React.useState(

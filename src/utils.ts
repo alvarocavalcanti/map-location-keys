@@ -1,5 +1,5 @@
 import { Item, Metadata } from "@owlbear-rodeo/sdk";
-import { LocationKey } from "./types";
+import { LocationKey } from "./@types/types";
 import { ID } from "./main";
 
 export function loadExistingLocationKeys(

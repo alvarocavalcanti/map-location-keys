@@ -2,14 +2,12 @@ import React from "react";
 import { Button, ButtonGroup, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import type { LocationKey } from "./types";
+import type { LocationKey } from "../@types/types";
 
-const LocationKey: React.FC<{ locationKey: LocationKey,
+const LocationKey: React.FC<{
+  locationKey: LocationKey;
   setSelectedLocationKey: (locationKey: LocationKey) => void;
- }> = ({
-  locationKey,
-  setSelectedLocationKey,
-}) => {
+}> = ({ locationKey, setSelectedLocationKey }) => {
   return (
     <Container className="p-3">
       <Container className="mb-4 bg-light rounded-3">
@@ -28,9 +26,14 @@ const LocationKey: React.FC<{ locationKey: LocationKey,
             />
             <ButtonGroup>
               <Button variant="primary">Save</Button>
-              {''}
+              {""}
               <Link to="/">
-                <Button variant="danger" onClick={() => setSelectedLocationKey({} as LocationKey)}>Cancel</Button>
+                <Button
+                  variant="danger"
+                  onClick={() => setSelectedLocationKey({} as LocationKey)}
+                >
+                  Cancel
+                </Button>
               </Link>
             </ButtonGroup>
           </Form.Group>

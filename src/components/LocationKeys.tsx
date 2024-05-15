@@ -1,4 +1,4 @@
-import { LocationKey } from "./types";
+import { LocationKey } from "../@types/types";
 import OBR, { Player } from "@owlbear-rodeo/sdk";
 import React, { useEffect, useState } from "react";
 import { Accordion, Button, ButtonGroup, Container } from "react-bootstrap";

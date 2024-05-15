@@ -55,7 +55,7 @@ const LocationKeys: React.FC<{
 
   OBR.onReady(() => {
     setupContextMenu();
-    OBR.scene.items.onChange(handleOnChange);
+    OBR.scene.items.getItems().then((items) => handleOnChange(items));
   });
 
   const [role, setRole] = useState<"GM" | "PLAYER">("PLAYER");

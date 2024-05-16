@@ -34,7 +34,6 @@ export function setupContextMenu() {
       },
     ],
     onClick(context) {
-      console.log(context);
       const addToLocationKeys = context.items.every(
         (item) => item.metadata[`${ID}/metadata`] === undefined
       );

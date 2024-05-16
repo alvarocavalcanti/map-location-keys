@@ -1,13 +1,34 @@
 import React from "react";
 import { Button, ButtonGroup, Container, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import type { LocationKey } from "../@types/types";
+import OBR from "@owlbear-rodeo/sdk";
+import { ID } from "../main";
 
 const LocationKey: React.FC<{
   locationKey: LocationKey;
   setSelectedLocationKey: (locationKey: LocationKey) => void;
-}> = ({ locationKey, setSelectedLocationKey }) => {
+}> = ({ locationKey }) => {
+  const [description, setDescription] = React.useState(
+    locationKey.description || ""
+  );
+  const navigate = useNavigate();
+
+  const handleSave = () => {
+    OBR.scene.items
+      .updateItems(
+        (item) => item.id === locationKey.id,
+        (items) => {
+          for (let item of items) {
+            item.metadata[`${ID}/metadata`] = { locationKey: description };
+          }
+        }
+      )
+      .then(() => {
+        navigate("/");
+      });
+  };
   return (
     <Container className="p-3">
       <Container className="mb-4 bg-light rounded-3">
@@ -21,19 +42,22 @@ const LocationKey: React.FC<{
             <Form.Control
               as="textarea"
               rows={25}
-              value={locationKey.description || ""}
-              onChange={() => {}}
+              defaultValue={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
-            <ButtonGroup>
-              <Button variant="primary">Save</Button>
-              {""}
+            <ButtonGroup className="mb-2">
+              <Button
+                variant="primary"
+                onClick={() => {
+                  handleSave();
+                }}
+              >
+                Save
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup className="mb-2">
               <Link to="/">
-                <Button
-                  variant="danger"
-                  onClick={() => setSelectedLocationKey({} as LocationKey)}
-                >
-                  Cancel
-                </Button>
+                <Button variant="danger">Cancel</Button>
               </Link>
             </ButtonGroup>
           </Form.Group>

@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 const LocationKeys: React.FC<{
-  setSelectedLocationKey: (locationKey: LocationKey) => void;
+  setLocationKeyToEdit: (locationKey: LocationKey) => void;
   locationKeys: LocationKey[];
-}> = ({ setSelectedLocationKey, locationKeys }) => {
+}> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys }) => {
   const [role, setRole] = useState<"GM" | "PLAYER">("PLAYER");
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const LocationKeys: React.FC<{
       {locationKeys.length > 0 ? (
         locationKeys.map((locationKey, index) => (
           <Accordion key={index}>
-            <Accordion.Item eventKey={locationKey.name}>
+            <Accordion.Item eventKey={locationKey.id} >
               <Accordion.Header>{locationKey.name}</Accordion.Header>
               <Accordion.Body>
                 <Markdown remarkPlugins={[remarkGfm]}>
@@ -45,7 +45,7 @@ const LocationKeys: React.FC<{
                     <Button
                       variant="primary"
                       onClick={() =>
-                        setSelectedLocationKey({
+                        setLocationKeyToEdit({
                           id: locationKey.id,
                           name: locationKey.name,
                           description: locationKey.description,

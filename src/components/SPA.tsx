@@ -14,12 +14,12 @@ import OBR, { Item } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
 
 export default function SPA() {
-  const [selectedLocationKey, setSelectedLocationKey] = React.useState(
+  const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
     {} as LocationKeyType
   );
   const [locationKeys, setLocationKeys] = React.useState<LocationKey[]>([]);
 
-  const handleOnChange = (items: Item[]): void => {
+  const loadLocationKeys = (items: Item[]): void => {
     const newLocationKeys: LocationKey[] = [];
 
     loadExistingLocationKeys(items, newLocationKeys, getItemText);
@@ -31,7 +31,7 @@ export default function SPA() {
 
   OBR.onReady(() => {
     setupContextMenu();
-    OBR.scene.items.getItems().then((items) => handleOnChange(items));
+    OBR.scene.items.getItems().then((items) => loadLocationKeys(items));
   });
 
   return (
@@ -41,7 +41,7 @@ export default function SPA() {
         index
         element={
           <LocationKeys
-            setSelectedLocationKey={setSelectedLocationKey}
+            setLocationKeyToEdit={setLocationKeyToEdit}
             locationKeys={locationKeys}
           />
         }
@@ -50,8 +50,8 @@ export default function SPA() {
         path="location-key/:id"
         element={
           <LocationKey
-            locationKey={selectedLocationKey}
-            setSelectedLocationKey={setSelectedLocationKey}
+            locationKey={locationKeyToEdit}
+            setSelectedLocationKey={setLocationKeyToEdit}
           />
         }
       />

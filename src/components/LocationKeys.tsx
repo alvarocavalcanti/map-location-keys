@@ -1,7 +1,14 @@
 import { LocationKey } from "../@types/types";
 import OBR, { Player } from "@owlbear-rodeo/sdk";
 import React, { useEffect, useState } from "react";
-import { Accordion, Button, ButtonGroup, Container } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  Container,
+} from "react-bootstrap";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
@@ -26,13 +33,19 @@ const LocationKeys: React.FC<{
 
   return (
     <Container className="p-3">
-      <Container className="mb-4 bg-light rounded-3">
-        <h1 className="header">Map Location Keys</h1>
-      </Container>
+      <Card className="mb-4">
+        <CardBody>
+          <Card.Title className="header">Location Keys</Card.Title>
+          <Card.Text>
+            Location keys are used to provide additional information about
+            locations on the map.
+          </Card.Text>
+        </CardBody>
+      </Card>
       {locationKeys.length > 0 ? (
         locationKeys.map((locationKey, index) => (
           <Accordion key={index}>
-            <Accordion.Item eventKey={locationKey.id} >
+            <Accordion.Item eventKey={locationKey.id}>
               <Accordion.Header>{locationKey.name}</Accordion.Header>
               <Accordion.Body>
                 <Markdown remarkPlugins={[remarkGfm]}>
@@ -61,7 +74,15 @@ const LocationKeys: React.FC<{
           </Accordion>
         ))
       ) : (
-        <>No location keys have been added.</>
+        <Card>
+          <CardBody>
+            {/* <Card.Title>No Location Keys</Card.Title> */}
+            <Card.Text>
+              Select a TEXT item in the map and then add it to the location
+              keys.
+            </Card.Text>
+          </CardBody>
+        </Card>
       )}
     </Container>
   );

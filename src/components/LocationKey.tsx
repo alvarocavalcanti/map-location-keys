@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, ButtonGroup, Container, Form } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  Container,
+  Form,
+} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 import type { LocationKey } from "../@types/types";
@@ -31,38 +38,44 @@ const LocationKey: React.FC<{
   };
   return (
     <Container className="p-3">
-      <Container className="mb-4 bg-light rounded-3">
-        <h1 className="header">Add Location Key for: {locationKey.name}</h1>
-        <h5>Item ID: {locationKey.id}</h5>
-      </Container>
-      <Container className="mb-4">
+      <Card className="mb-4">
+        <CardBody>
+          <Card.Title className="header">Edit Location Key</Card.Title>
+          <Card.Text>Name: {locationKey.name}</Card.Text>
+        </CardBody>
+      </Card>
+      <Card className="mb-4">
         <Form>
-          <Form.Group className="mb-3" controlId="form.LocationKeyDetails">
-            <Form.Label>Details</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={25}
-              defaultValue={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <ButtonGroup className="mb-2">
-              <Button
-                variant="primary"
-                onClick={() => {
-                  handleSave();
-                }}
-              >
-                Save
-              </Button>
-            </ButtonGroup>
-            <ButtonGroup className="mb-2">
-              <Link to="/">
-                <Button variant="danger">Cancel</Button>
-              </Link>
-            </ButtonGroup>
+          <Form.Group controlId="form.LocationKeyDetails">
+            <CardBody>
+              <Card.Title className="header">Details</Card.Title>
+              <Form.Control
+                as="textarea"
+                rows={13}
+                defaultValue={description}
+                onChange={(e) => setDescription(e.target.value)}
+                data-bs-theme="light"
+              />
+              <ButtonGroup className="mt-3">
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    handleSave();
+                  }}
+                  className="me-2"
+                >
+                  Save
+                </Button>
+                <Link to="/">
+                  <Button variant="danger" className="me-2">
+                    Cancel
+                  </Button>
+                </Link>
+              </ButtonGroup>
+            </CardBody>
           </Form.Group>
         </Form>
-      </Container>
+      </Card>
     </Container>
   );
 };

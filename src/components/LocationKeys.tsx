@@ -74,7 +74,6 @@ const LocationKeys: React.FC<{
       ) : (
         <Card>
           <CardBody>
-            {/* <Card.Title>No Location Keys</Card.Title> */}
             <Card.Text>
               Select a TEXT item in the map and then add it to the location
               keys.

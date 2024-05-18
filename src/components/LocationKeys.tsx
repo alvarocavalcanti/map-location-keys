@@ -13,11 +13,13 @@ import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
+import PlayerView from "./PlayerView";
+
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
   locationKeys: LocationKey[];
 }> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys }) => {
-  const [role, setRole] = useState<"GM" | "PLAYER">("PLAYER");
+  const [role, setRole] = useState<"GM" | "PLAYER">("GM");
 
   useEffect(() => {
     const handlePlayerChange = (player: Player) => {
@@ -27,11 +29,7 @@ const LocationKeys: React.FC<{
     return OBR.player.onChange(handlePlayerChange);
   }, []);
 
-  if (role === "PLAYER") {
-    return <>Only the GM can view location keys.</>;
-  }
-
-  return (
+  return role === "GM" ? (
     <Container className="p-3">
       <Card className="mb-4">
         <CardBody>
@@ -85,6 +83,8 @@ const LocationKeys: React.FC<{
         </Card>
       )}
     </Container>
+  ) : (
+    <PlayerView />
   );
 };
 

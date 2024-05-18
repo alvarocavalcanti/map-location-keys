@@ -1,9 +1,9 @@
 import OBR from "@owlbear-rodeo/sdk";
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Container } from "react-bootstrap";
-
-import SPA from "./SPA";
 import { BrowserRouter } from "react-router-dom";
+
+import SceneNotReady from "./SceneNotReady";
+import SPA from "./SPA";
 
 const App: React.FC = () => {
   const [sceneReady, setSceneReady] = useState(false);
@@ -12,26 +12,13 @@ const App: React.FC = () => {
     return OBR.scene.onReadyChange(setSceneReady);
   }, []);
 
-  if (sceneReady) {
-    return (
-      <BrowserRouter>
-        <SPA />
-      </BrowserRouter>
-    );
-  } else {
-    return (
-      <Container className="p-3">
-        <Card className="mb-4">
-          <CardBody>
-            <Card.Title className="header">Map Location Keys</Card.Title>
-            <Card.Text>
-              Open a scene in order to use the Map Location Keys tool.
-            </Card.Text>
-          </CardBody>
-        </Card>
-      </Container>
-    );
-  }
+  return sceneReady ? (
+    <BrowserRouter>
+      <SPA />
+    </BrowserRouter>
+  ) : (
+    <SceneNotReady />
+  );
 };
 
 export default App;

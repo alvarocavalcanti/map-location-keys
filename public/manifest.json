@@ -2,9 +2,13 @@
   "name": "Map Location Keys",
   "version": "1.0.0",
   "manifest_version": 1,
+  "icon": "/logo.png",
+  "author": "Alvaro Cavalcanti",
+  "homepage_url": "https://github.com/alvarocavalcanti/map-location-keys",
+  "description": "Add location keys to your map by attaching them text items.",
   "action": {
     "title": "Map Location Keys",
-    "icon": "/map-location-keys.svg",
+    "icon": "/icon.svg",
     "popover": "/",
     "height": 600,
     "width": 400

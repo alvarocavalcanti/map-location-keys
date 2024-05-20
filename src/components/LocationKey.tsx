@@ -66,11 +66,14 @@ const LocationKey: React.FC<{
                 >
                   Save
                 </Button>
-                <Link to="/">
-                  <Button variant="danger" className="me-2">
-                    Cancel
-                  </Button>
-                </Link>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  Cancel
+                </Button>
               </ButtonGroup>
             </CardBody>
           </Form.Group>

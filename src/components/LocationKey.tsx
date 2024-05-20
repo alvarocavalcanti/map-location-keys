@@ -7,7 +7,7 @@ import {
   Container,
   Form,
 } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import type { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";

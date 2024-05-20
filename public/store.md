@@ -1,9 +1,9 @@
 ---
 title: Map Location Key
-description: Add location keys to your map by attaching them to any text item.
+description: Add location keys to your map by attaching them to text items.
 author: Alvaro Cavalcanti
-image: <your extension's hero image>
-icon: https://map-location-keys.vercel.app/map_location_keys_logo.png
+image: https://map-location-keys.vercel.app/hero.png
+icon: https://map-location-keys.vercel.app/logo.png
 tags:
   - map
   - location

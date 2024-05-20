@@ -5,7 +5,7 @@
   "icon": "/logo.png",
   "author": "Alvaro Cavalcanti",
   "homepage_url": "https://github.com/alvarocavalcanti/map-location-keys",
-  "description": "Add location keys to your map by attaching them text items.",
+  "description": "Add location keys to your map by attaching them to text items.",
   "action": {
     "title": "Map Location Keys",
     "icon": "/icon.svg",

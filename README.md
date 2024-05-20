@@ -1,16 +1,24 @@
-# Roadmap
 
-## V 1.0.0
+# Map Location Keys
 
-- [x] Display item text and initial content
-- [x] Use ReactJS
-- [x] Fix bug: need to move location keys to load
-- [x] Use Markdown to display description
-- [x] Edit and save description
-- [x] Player-view mode
-- [x] Use a theme more aligned with OBR
-- [x] Improve Player View
-- [ ] Improve edit screen layout
-- [ ] Add documentation
-- [ ] Create help page and add navbar
-- [ ] Empty state points to help page
+![Map Location Keys](public/img/hero.png)
+
+TBD
+
+## Add a Location Key
+
+![Add location key](public/img/add-location-key.png)
+
+Select a TEXT item and choose "Add Location Key" from the context menu.
+
+## Remove a Location Key
+
+![Remove location key](public/img/remove-location-key.png)
+
+Select a TEXT item and choose "Remove Location Key" from the context menu.
+
+## Edit a Location Key
+
+![Edit a location key](public/img/edit.png)
+
+You can edit location keys using Markdown.

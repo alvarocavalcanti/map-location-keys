@@ -16,7 +16,7 @@ export function setupContextMenu() {
     id: `${ID}/context-menu`,
     icons: [
       {
-        icon: "/add.svg",
+        icon: "/img/add.svg",
         label: "Add Location Key",
         filter: {
           every: [
@@ -26,7 +26,7 @@ export function setupContextMenu() {
         },
       },
       {
-        icon: "/remove.svg",
+        icon: "/img/remove.svg",
         label: "Remove Location Key",
         filter: {
           every: [{ key: "layer", value: "TEXT" }],

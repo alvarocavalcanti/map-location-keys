@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Outlet, Route, Routes } from "react-router-dom";
 
 import LocationKey from "./LocationKey";
@@ -29,10 +29,19 @@ export default function SPA() {
     setLocationKeys(newLocationKeys);
   };
 
-  OBR.onReady(() => {
-    setupContextMenu();
-    OBR.scene.items.getItems().then((items) => loadLocationKeys(items));
-  });
+  useEffect(() => {
+    OBR.onReady(() => {
+      setupContextMenu();
+      OBR.scene.items
+        .getItems((item) => {
+          return item.layer === "TEXT";
+        })
+        .then((items) => loadLocationKeys(items));
+      OBR.scene.items.onChange((items) => {
+        loadLocationKeys(items.filter((item) => item.layer === "TEXT"))
+      });
+    });
+  }, []);
 
   return (
     <Routes>

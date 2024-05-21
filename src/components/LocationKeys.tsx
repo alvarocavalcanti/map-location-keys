@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 import PlayerView from "./PlayerView";
+import Help from "./Help";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
@@ -72,14 +73,7 @@ const LocationKeys: React.FC<{
           </Accordion>
         ))
       ) : (
-        <Card>
-          <CardBody>
-            <Card.Text>
-              Select a TEXT item in the map and then add it to the location
-              keys.
-            </Card.Text>
-          </CardBody>
-        </Card>
+        <Help state="EMPTY" />
       )}
     </Container>
   ) : (

@@ -49,6 +49,8 @@ const LocationKey: React.FC<{
           <Form.Group controlId="form.LocationKeyDetails">
             <CardBody>
               <Card.Title className="header">Details</Card.Title>
+              <Card.Text><em>Markdown supported.</em></Card.Text>
+              {/* #TODO: Use https://uiwjs.github.io/react-markdown-editor/ to add markdown support */}
               <Form.Control
                 as="textarea"
                 rows={13}

@@ -12,6 +12,8 @@ import {
 } from "../utils";
 import OBR, { Item } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
+import { Container } from "react-bootstrap";
+import Help from "./Help";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
@@ -38,39 +40,53 @@ export default function SPA() {
         })
         .then((items) => loadLocationKeys(items));
       OBR.scene.items.onChange((items) => {
-        loadLocationKeys(items.filter((item) => item.layer === "TEXT"))
+        loadLocationKeys(items.filter((item) => item.layer === "TEXT"));
       });
     });
   }, []);
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />} />
-      <Route
-        index
-        element={
-          <LocationKeys
-            setLocationKeyToEdit={setLocationKeyToEdit}
-            locationKeys={locationKeys}
-          />
-        }
-      />
-      <Route
-        path="location-key/:id"
-        element={
-          <LocationKey
-            locationKey={locationKeyToEdit}
-            setSelectedLocationKey={setLocationKeyToEdit}
-          />
-        }
-      />
-      <Route path="*" element={<NoMatch />} />
+      <Route path="/" element={<Layout />}>
+        <Route
+          index
+          element={
+            <LocationKeys
+              setLocationKeyToEdit={setLocationKeyToEdit}
+              locationKeys={locationKeys}
+            />
+          }
+        />
+        <Route
+          path="location-key/:id"
+          element={
+            <LocationKey
+              locationKey={locationKeyToEdit}
+              setSelectedLocationKey={setLocationKeyToEdit}
+            />
+          }
+        />
+        <Route path="help" element={<Help state="HELP" />} />
+        <Route path="*" element={<NoMatch />} />
+      </Route>
     </Routes>
   );
 }
 
 function Layout() {
-  return <Outlet />;
+  return (
+    <Container className="mb-4">
+      <nav className="navbar navbar-dark bg-dark">
+        <Link className="nav-item nav-link" to="/">
+          Location Keys
+        </Link>
+        <Link className="nav-item nav-link" to="/help">
+          Help
+        </Link>
+      </nav>
+      <Outlet />
+    </Container>
+  );
 }
 
 function NoMatch() {

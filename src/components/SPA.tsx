@@ -76,7 +76,7 @@ export default function SPA() {
             />
           }
         />
-        <Route path="help" element={<Help state="HELP" />} />
+        <Route path="help" element={<Help />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>

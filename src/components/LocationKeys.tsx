@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 import PlayerView from "./PlayerView";
-import Help from "./Help";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
@@ -73,7 +72,15 @@ const LocationKeys: React.FC<{
           </Accordion>
         ))
       ) : (
-        <Help state="EMPTY" />
+        <Card className="mb-4">
+          <CardBody>
+            <Card.Title className="header">No Location Keys</Card.Title>
+            <Card.Text>
+              The location keys will show up here once you add them. Click{" "}
+              <Link to="/help">here</Link> to learn how to do so.
+            </Card.Text>
+          </CardBody>
+        </Card>
       )}
     </Container>
   ) : (

@@ -1,40 +1,32 @@
 import React from "react";
-import { Card, CardBody, Container } from "react-bootstrap";
+import { Accordion, Card, CardBody, Container } from "react-bootstrap";
 
-interface HelpProps {
-  state: "HELP" | "EMPTY";
-}
-
-const Help: React.FC<HelpProps> = ({ state }) => {
+const Help: React.FC = () => {
+  const items: { header: string; image: string }[] = [
+    { header: "1. Add or select an existing TEXT item", image: "img/help01.png" },
+    { header: "2. Click the \"Add Location Key\" button", image: "img/help02.png" },
+    { header: "3. Edit Location Key's description", image: "img/help03.png" },
+    { header: "4. Save your changes", image: "img/help04.png" }
+  ];
   return (
     <Container className="p-3">
-      <Card>
+      <Card className="mb-4">
         <CardBody>
           <Card.Title>
-            {state === "HELP" ? "How to Add Location Keys" : "No Location Keys"}
+            How to Add Location Keys
           </Card.Title>
         </CardBody>
       </Card>
-      <ol className="list-group mt-4">
-        <li className="list-group-item">
-          <span className="badge badge-primary badge-pill">1</span>
-          Add or select an existing TEXT item
-        </li>
-        <li className="list-group-item">
-          <span className="badge badge-primary badge-pill">2</span>
-          Click the "Add Location Key" button. The location will show up on
-          the list with placeholder content
-        </li>
-        <li className="list-group-item">
-          <span className="badge badge-primary badge-pill">3</span>
-          In the location keys list, expand the location key and click
-          "Edit"
-        </li>
-        <li className="list-group-item">
-          <span className="badge badge-primary badge-pill">4</span>
-          Update the content and then click "Save"
-        </li>
-      </ol>
+      <Accordion key="1">
+        {items.map((item, index) => (
+          <Accordion.Item eventKey={String(index)} key={index}>
+            <Accordion.Header>{item.header}</Accordion.Header>
+            <Accordion.Body>
+              <img src={item.image} alt={item.header} className="img-fluid" />
+            </Accordion.Body>
+          </Accordion.Item>
+        ))}
+      </Accordion>
     </Container>
   );
 };

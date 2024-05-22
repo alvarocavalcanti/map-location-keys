@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, Outlet, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 
 import LocationKey from "./LocationKey";
 import LocationKeys from "./LocationKeys";
@@ -12,7 +12,6 @@ import {
 } from "../utils";
 import OBR, { Item } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
-import { Container } from "react-bootstrap";
 import Help from "./Help";
 import Navbar from "./Navbar";
 

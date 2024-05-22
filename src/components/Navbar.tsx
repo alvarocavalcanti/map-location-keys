@@ -9,6 +9,9 @@ const Navbar: React.FC = () => {
         <Link className="nav-item nav-link" to="/">
           Location Keys
         </Link>
+        <Link className="nav-item nav-link visually-hidden" to="/import-export">
+          Import/Export
+        </Link>
         <Link className="nav-item nav-link" to="/help">
           Help
         </Link>

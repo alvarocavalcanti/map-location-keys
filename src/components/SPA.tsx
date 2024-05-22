@@ -14,6 +14,7 @@ import OBR, { Item } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
 import Help from "./Help";
 import Navbar from "./Navbar";
+import ImportExport from "./ImportExport";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
@@ -76,6 +77,12 @@ export default function SPA() {
             />
           }
         />
+        <Route
+          path="import-export"
+          element={
+            <ImportExport />
+          }
+        />
         <Route path="help" element={<Help />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
@@ -89,7 +96,7 @@ function Layout() {
 
 function NoMatch() {
   return (
-    <div>
+    <div className="p-3">
       <h2>Nothing to see here!</h2>
       <p>
         <Link to="/">Go to the home page</Link>

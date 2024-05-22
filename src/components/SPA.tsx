@@ -80,7 +80,7 @@ export default function SPA() {
         <Route
           path="import-export"
           element={
-            <ImportExport />
+            <ImportExport locationKeys={ locationKeys }/>
           }
         />
         <Route path="help" element={<Help />} />

@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.7",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.12.12",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.4.5",
@@ -18,6 +20,8 @@
     "@owlbear-rodeo/sdk": "^2.4.0",
     "@vitejs/plugin-react": "^4.2.1",
     "bootstrap": "^5.3.3",
+    "file-saver": "^2.0.5",
+    "js-yaml": "^4.1.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",

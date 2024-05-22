@@ -31,6 +31,10 @@ export default function SPA() {
     setLocationKeys(newLocationKeys);
   };
 
+  const setTheme = (theme: string): void => {
+    document.getElementById("html_root")?.setAttribute("data-bs-theme", theme);
+  };
+
   useEffect(() => {
     OBR.onReady(() => {
       setupContextMenu();
@@ -41,6 +45,12 @@ export default function SPA() {
         .then((items) => loadLocationKeys(items));
       OBR.scene.items.onChange((items) => {
         loadLocationKeys(items.filter((item) => item.layer === "TEXT"));
+      });
+      OBR.theme.getTheme().then((theme) => {
+        setTheme(theme.mode.toLowerCase());
+      });
+      OBR.theme.onChange((theme) => {
+        setTheme(theme.mode.toLowerCase());
       });
     });
   }, []);
@@ -76,7 +86,7 @@ export default function SPA() {
 function Layout() {
   return (
     <Container className="mb-4">
-      <nav className="navbar navbar-dark bg-dark">
+      <nav className="navbar">
         <Link className="nav-item nav-link" to="/">
           Location Keys
         </Link>

@@ -14,6 +14,7 @@ import OBR, { Item } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
 import { Container } from "react-bootstrap";
 import Help from "./Help";
+import Navbar from "./Navbar";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
@@ -84,19 +85,7 @@ export default function SPA() {
 }
 
 function Layout() {
-  return (
-    <Container className="mb-4">
-      <nav className="navbar">
-        <Link className="nav-item nav-link" to="/">
-          Location Keys
-        </Link>
-        <Link className="nav-item nav-link" to="/help">
-          Help
-        </Link>
-      </nav>
-      <Outlet />
-    </Container>
-  );
+  return <Navbar />;
 }
 
 function NoMatch() {

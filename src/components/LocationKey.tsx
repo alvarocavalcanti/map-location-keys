@@ -1,11 +1,12 @@
 import React from "react";
 import {
   Button,
-  ButtonGroup,
   Card,
   CardBody,
+  Col,
   Container,
   Form,
+  Row,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +50,9 @@ const LocationKey: React.FC<{
           <Form.Group controlId="form.LocationKeyDetails">
             <CardBody>
               <Card.Title className="header">Details</Card.Title>
-              <Card.Text><em>Markdown supported.</em></Card.Text>
+              <Card.Text>
+                <em>Markdown supported.</em>
+              </Card.Text>
               {/* #TODO: Use https://uiwjs.github.io/react-markdown-editor/ to add markdown support */}
               <Form.Control
                 as="textarea"
@@ -57,26 +60,33 @@ const LocationKey: React.FC<{
                 defaultValue={description}
                 onChange={(e) => setDescription(e.target.value)}
                 data-bs-theme="light"
+                className="mb-4"
               />
-              <ButtonGroup className="mt-3">
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    handleSave();
-                  }}
-                  className="me-2"
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    navigate("/");
-                  }}
-                >
-                  Cancel
-                </Button>
-              </ButtonGroup>
+              <Row className="text-center">
+                <Col>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      handleSave();
+                    }}
+                    className="me-2"
+                  >
+                    Save
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Col>
+                <Col>{""}</Col>
+                <Col>{""}</Col>
+              </Row>
             </CardBody>
           </Form.Group>
         </Form>

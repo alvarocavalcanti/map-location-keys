@@ -2,10 +2,11 @@ import React from "react";
 import { Accordion, Card, CardBody, Container } from "react-bootstrap";
 
 const Help: React.FC = () => {
-  const itemsAdd: { header: string; image: string }[] = [
+  const itemsAdd: { header: string; image: string, description?: string }[] = [
     {
       header: "1. Add or select an existing TEXT item",
       image: "img/help01.png",
+      description: "Use one or two characters for optimal display, e.g. 'A1', 'B2', '7', '8a'.",
     },
     {
       header: '2. Click the "Add Location Key" button',
@@ -33,6 +34,7 @@ const Help: React.FC = () => {
             <Accordion.Item eventKey={String(index)} key={index}>
               <Accordion.Header>{item.header}</Accordion.Header>
               <Accordion.Body>
+                {item.description && <p>{item.description}</p>}
                 <img src={item.image} alt={item.header} className="img-fluid" />
               </Accordion.Body>
             </Accordion.Item>

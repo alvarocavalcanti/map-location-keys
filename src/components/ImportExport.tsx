@@ -7,7 +7,6 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { ID } from "../main";
-import { isDevMode } from "../utils";
 
 const ImportExport: React.FC<{
   locationKeys: LocationKey[];

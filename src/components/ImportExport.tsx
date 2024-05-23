@@ -1,9 +1,10 @@
-import OBR, { Item, buildText } from "@owlbear-rodeo/sdk";
 import { LocationKey } from "../@types/types";
+import OBR, { buildText, Item } from "@owlbear-rodeo/sdk";
 import { saveAs } from "file-saver";
 import yaml from "js-yaml";
 import React from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
+
 import { ID } from "../main";
 import { isDevMode } from "../utils";
 
@@ -11,8 +12,10 @@ const ImportExport: React.FC<{
   locationKeys: LocationKey[];
 }> = ({ locationKeys }) => {
   const [importYAML, setImportYAML] = React.useState("");
+  const [importSuccess, setImportSuccess] = React.useState(false);
 
   const handleOnChange = (target: HTMLTextAreaElement) => {
+    setImportSuccess(false);
     try {
       yaml.load(target.value);
       setImportYAML(target.value);
@@ -81,6 +84,7 @@ const ImportExport: React.FC<{
             .catch((e) => {
               console.error(e);
             });
+          setImportSuccess(true);
         });
     }
   };
@@ -91,7 +95,8 @@ const ImportExport: React.FC<{
         <Card.Body>
           <Card.Title>Export</Card.Title>
           <Card.Text>
-            Click the button below to export your location keys as a YAML file.<br className="mb-4"/>
+            Click the button below to export your location keys as a YAML file.
+            <br className="mb-4" />
             <Button className="primary" onClick={handleExport}>
               Export
             </Button>
@@ -102,29 +107,33 @@ const ImportExport: React.FC<{
         <Card className="mb-4">
           <Card.Body>
             <Card.Title>Import</Card.Title>
-            <Card.Text>
-              <div className="mb-2">
-                Paste the contents of a YAML file below and click the button to
-                import location keys.
-              </div>
-              <div className="mb-4 alert alert-warning" role="alert">
-                Importing will overwrite any existing location keys.
-              </div>
-              <Form.Control
-                as="textarea"
-                rows={13}
-                defaultValue={importYAML}
-                onChange={(e) =>
-                  handleOnChange(e.target as HTMLTextAreaElement)
-                }
-                data-bs-theme="light"
-                className="mb-4"
-                id="yamlInput"
-              />
-              <Button className="primary" onClick={handleImport}>
-                Import
-              </Button>
+            <Card.Text className="mb-2">
+              Paste the contents of a YAML file below and click the button to
+              import location keys.
             </Card.Text>
+            <Container className="mb-4 alert alert-warning" role="alert">
+              Importing will overwrite any existing location keys.
+            </Container>
+            <Form.Control
+              as="textarea"
+              rows={13}
+              defaultValue={importYAML}
+              onChange={(e) => handleOnChange(e.target as HTMLTextAreaElement)}
+              data-bs-theme="light"
+              className="mb-4"
+              id="yamlInput"
+            />
+            <Button className="primary" onClick={handleImport}>
+              Import
+            </Button>
+            {importSuccess ? (
+              <Container className="alert alert-info p-3 mt-4">
+                Location keys successfully imported.
+                <br />
+                The text items have been added to the map at the top left
+                corner. You can move them around as needed.
+              </Container>
+            ) : null}
           </Card.Body>
         </Card>
       ) : null}

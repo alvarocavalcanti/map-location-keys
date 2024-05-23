@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import {
   Accordion,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
+  Col,
   Container,
+  Row,
 } from "react-bootstrap";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
@@ -20,6 +21,16 @@ const LocationKeys: React.FC<{
   locationKeys: LocationKey[];
 }> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys }) => {
   const [role, setRole] = useState<"GM" | "PLAYER">("GM");
+
+  const showOnMap = (id: string) => {
+    OBR.scene.items.getItemBounds([id]).then((bounds) => {
+      OBR.viewport.animateToBounds({
+        ...bounds,
+        min: { x: bounds.min.x - 1000, y: bounds.min.y - 1000 },
+        max: { x: bounds.max.x + 1000, y: bounds.max.y + 1000 },
+      });
+    });
+  };
 
   useEffect(() => {
     const handlePlayerChange = (player: Player) => {
@@ -49,24 +60,37 @@ const LocationKeys: React.FC<{
                 <Markdown remarkPlugins={[remarkGfm]}>
                   {locationKey.description}
                 </Markdown>
-                <ButtonGroup>
-                  <Link
-                    to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}
-                  >
-                    <Button
-                      variant="primary"
-                      onClick={() =>
-                        setLocationKeyToEdit({
-                          id: locationKey.id,
-                          name: locationKey.name,
-                          description: locationKey.description,
-                        })
-                      }
+                <Row className="text-center">
+                  <Col>
+                    <Link
+                      to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}
+                      className="gx-2"
                     >
-                      Edit
+                      <Button
+                        variant="primary"
+                        onClick={() =>
+                          setLocationKeyToEdit({
+                            id: locationKey.id,
+                            name: locationKey.name,
+                            description: locationKey.description,
+                          })
+                        }
+                      >
+                        Edit
+                      </Button>
+                    </Link>
+                  </Col>
+                  <Col>
+                    <Button
+                      variant="secondary"
+                      onClick={() => showOnMap(locationKey.id)}
+                    >
+                      Show
                     </Button>
-                  </Link>
-                </ButtonGroup>
+                  </Col>
+                  <Col>{""}</Col>
+                  <Col>{""}</Col>
+                </Row>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

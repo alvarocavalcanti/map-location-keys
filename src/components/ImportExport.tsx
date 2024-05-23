@@ -14,6 +14,7 @@ const ImportExport: React.FC<{
   const [importYAML, setImportYAML] = React.useState("");
   const [importSuccess, setImportSuccess] = React.useState(false);
   const [inputValid, setInputValid] = React.useState(false);
+  const [importError, setImportError] = React.useState("");
 
   const handleOnChange = (target: HTMLTextAreaElement) => {
     setImportSuccess(false);
@@ -88,11 +89,14 @@ const ImportExport: React.FC<{
 
           OBR.scene.items
             .addItems(newItems)
-            .then(() => {})
+            .then(() => {
+              setImportSuccess(true);
+            })
             .catch((e) => {
+              setImportSuccess(false);
+              setImportError("Error importing location keys. Make sure they are valid.");
               console.error(e);
             });
-          setImportSuccess(true);
         });
     }
   };
@@ -139,12 +143,16 @@ const ImportExport: React.FC<{
             </Button>
             {importSuccess ? (
               <Container className="alert alert-info p-3 mt-4">
-                Location keys successfully imported.
+                Location keys successfully imported.<br />
                 <br />
-                The text items have been added to the map at the top left
+                The text items were added to the map at the top left
                 corner. You can move them around as needed.
               </Container>
-            ) : null}
+            ) : importError.length > 0 && (
+              <Container className="alert alert-danger p-3 mt-4">
+                {importError}
+              </Container>
+            )}
           </Card.Body>
         </Card>
       ) : null}

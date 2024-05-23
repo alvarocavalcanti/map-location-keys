@@ -30,3 +30,7 @@ export function sortLocationKeys(newLocationKeys: LocationKey[]) {
 export const getItemText = (item: any) => {
   return item.text.richText[0].children[0].text;
 };
+
+export const isDevMode = (): boolean => {
+  return localStorage.getItem("dev-mode") === "true";
+};

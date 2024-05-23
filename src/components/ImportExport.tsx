@@ -5,11 +5,22 @@ import yaml from "js-yaml";
 import React from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { ID } from "../main";
+import { isDevMode } from "../utils";
 
 const ImportExport: React.FC<{
   locationKeys: LocationKey[];
 }> = ({ locationKeys }) => {
   const [importYAML, setImportYAML] = React.useState("");
+
+  const handleOnChange = (target: HTMLTextAreaElement) => {
+    try {
+      yaml.load(target.value);
+      setImportYAML(target.value);
+    } catch (e) {
+      console.error("Invalid YAML:", e);
+      target.classList.add("is-invalid");
+    }
+  };
 
   const handleExport = () => {
     const yamlText = yaml.dump(locationKeys);
@@ -19,7 +30,13 @@ const ImportExport: React.FC<{
 
   const handleImport = () => {
     if (importYAML.length > 0) {
-      const newLocationKeys = yaml.load(importYAML) as LocationKey[];
+      let newLocationKeys: LocationKey[];
+      try {
+        newLocationKeys = yaml.load(importYAML) as LocationKey[];
+      } catch (e) {
+        console.error("Invalid YAML:", e);
+        return;
+      }
 
       OBR.scene.items
         .getItems((item) => {
@@ -74,41 +91,43 @@ const ImportExport: React.FC<{
         <Card.Body>
           <Card.Title>Export</Card.Title>
           <Card.Text>
-            <div className="mb-4">
-              Click the button below to export your location keys as a YAML
-              file.
-            </div>
+            Click the button below to export your location keys as a YAML file.<br className="mb-4"/>
             <Button className="primary" onClick={handleExport}>
               Export
             </Button>
           </Card.Text>
         </Card.Body>
       </Card>
-      <Card className="mb-4">
-        <Card.Body>
-          <Card.Title>Import</Card.Title>
-          <Card.Text>
-            <div className="mb-2">
-              Paste the contents of a YAML file below and click the button to
-              import location keys.
-            </div>
-            <div className="mb-4 alert alert-warning" role="alert">
-              Importing will overwrite any existing location keys.
-            </div>
-            <Form.Control
-              as="textarea"
-              rows={13}
-              defaultValue={importYAML}
-              onChange={(e) => setImportYAML(e.target.value)}
-              data-bs-theme="light"
-              className="mb-4"
-            />
-            <Button className="primary" onClick={handleImport}>
-              Import
-            </Button>
-          </Card.Text>
-        </Card.Body>
-      </Card>
+      {isDevMode() ? (
+        <Card className="mb-4">
+          <Card.Body>
+            <Card.Title>Import</Card.Title>
+            <Card.Text>
+              <div className="mb-2">
+                Paste the contents of a YAML file below and click the button to
+                import location keys.
+              </div>
+              <div className="mb-4 alert alert-warning" role="alert">
+                Importing will overwrite any existing location keys.
+              </div>
+              <Form.Control
+                as="textarea"
+                rows={13}
+                defaultValue={importYAML}
+                onChange={(e) =>
+                  handleOnChange(e.target as HTMLTextAreaElement)
+                }
+                data-bs-theme="light"
+                className="mb-4"
+                id="yamlInput"
+              />
+              <Button className="primary" onClick={handleImport}>
+                Import
+              </Button>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      ) : null}
     </Container>
   );
 };

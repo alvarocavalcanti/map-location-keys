@@ -15,6 +15,14 @@ Use the following URL to add this extension to [Owlbear Rodeo](https://owlbear.r
 https://map-location-keys.vercel.app/manifest.json
 ```
 
+## Features Roadmap
+
+- [x] Add location keys to `TEXT` items
+- [x] Markdown support
+- [x] Export location keys to a `YAML` file
+- [ ] Import location keys from a `YAML` file
+- [ ] Re-center the scene on an item from its Location Key
+
 ## Usage
 
 ### Add a Location Key

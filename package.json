@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@owlbear-rodeo/sdk": "^2.4.0",
+    "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
     "@vitejs/plugin-react": "^4.2.1",
     "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",

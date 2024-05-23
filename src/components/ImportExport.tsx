@@ -118,56 +118,54 @@ const ImportExport: React.FC<{
           </Card.Text>
         </Card.Body>
       </Card>
-      {isDevMode() ? (
-        <Card className="mb-4">
-          <Card.Body>
-            <Card.Title>Import</Card.Title>
-            <Card.Text className="mb-2">
-              Paste the contents of a YAML file below and click the button to
-              import location keys.
-            </Card.Text>
-            <Container className="mb-4 alert alert-warning" role="alert">
-              Importing will overwrite any existing location keys.
+      <Card className="mb-4">
+        <Card.Body>
+          <Card.Title>Import</Card.Title>
+          <Card.Text className="mb-2">
+            Paste the contents of a YAML file below and click the button to
+            import location keys.
+          </Card.Text>
+          <Container className="mb-4 alert alert-warning" role="alert">
+            Importing will overwrite any existing location keys.
+          </Container>
+          <Form.Control
+            as="textarea"
+            rows={13}
+            defaultValue={importYAML}
+            onChange={(e) => handleOnChange(e.target as HTMLTextAreaElement)}
+            data-bs-theme="light"
+            className={`mb-4 ${inputValid ? "is-valid" : "is-invalid"}`}
+            id="yamlInput"
+          />
+          <Button
+            className={`primary ${inputValid ? "enabled" : "disabled"}`}
+            onClick={handleImport}
+          >
+            Import
+          </Button>
+          {importSuccess ? (
+            <Container className="alert alert-info p-3 mt-4">
+              Location keys successfully imported.
+              <br />
+              <br />
+              The text items were added to the map at the top left corner. You
+              can move them around as needed.
             </Container>
-            <Form.Control
-              as="textarea"
-              rows={13}
-              defaultValue={importYAML}
-              onChange={(e) => handleOnChange(e.target as HTMLTextAreaElement)}
-              data-bs-theme="light"
-              className={`mb-4 ${inputValid ? "is-valid" : "is-invalid"}`}
-              id="yamlInput"
-            />
-            <Button
-              className={`primary ${inputValid ? "enabled" : "disabled"}`}
-              onClick={handleImport}
-            >
-              Import
-            </Button>
-            {importSuccess ? (
-              <Container className="alert alert-info p-3 mt-4">
-                Location keys successfully imported.
+          ) : (
+            importError.length > 0 && (
+              <Container className="alert alert-danger p-3 mt-4">
+                {importError}
                 <br />
-                <br />
-                The text items were added to the map at the top left corner. You
-                can move them around as needed.
+                See the{" "}
+                <Link to="/help" className="alert-link">
+                  Help
+                </Link>{" "}
+                page for more information.
               </Container>
-            ) : (
-              importError.length > 0 && (
-                <Container className="alert alert-danger p-3 mt-4">
-                  {importError}
-                  <br />
-                  See the{" "}
-                  <Link to="/help" className="alert-link">
-                    Help
-                  </Link>{" "}
-                  page for more information.
-                </Container>
-              )
-            )}
-          </Card.Body>
-        </Card>
-      ) : null}
+            )
+          )}
+        </Card.Body>
+      </Card>
     </Container>
   );
 };

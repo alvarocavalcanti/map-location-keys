@@ -1,7 +1,7 @@
 import { LocationKey } from "../@types/types";
 import OBR, { buildText, Item } from "@owlbear-rodeo/sdk";
 import { saveAs } from "file-saver";
-import yaml from "js-yaml";
+import yaml, { JSON_SCHEMA } from "js-yaml";
 import React from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 
@@ -13,20 +13,28 @@ const ImportExport: React.FC<{
 }> = ({ locationKeys }) => {
   const [importYAML, setImportYAML] = React.useState("");
   const [importSuccess, setImportSuccess] = React.useState(false);
+  const [inputValid, setInputValid] = React.useState(false);
 
   const handleOnChange = (target: HTMLTextAreaElement) => {
     setImportSuccess(false);
-    try {
-      yaml.load(target.value);
-      setImportYAML(target.value);
-    } catch (e) {
-      console.error("Invalid YAML:", e);
-      target.classList.add("is-invalid");
+    if (target.value.length === 0) {
+      setInputValid(false);
+      return;
     }
+    yaml.load(target.value, {
+      schema: JSON_SCHEMA,
+      onWarning(e) {
+        console.error("Invalid YAML:", e);
+        setInputValid(false);
+      },
+    });
+    console.log("Valid YAML");
+    setImportYAML(target.value);
+    setInputValid(true);
   };
 
   const handleExport = () => {
-    const yamlText = yaml.dump(locationKeys);
+    const yamlText = yaml.dump(locationKeys, { schema: JSON_SCHEMA });
     const blob = new Blob([yamlText], { type: "text/yaml;charset=utf-8" });
     saveAs(blob, "locationKeys.yaml");
   };
@@ -120,10 +128,13 @@ const ImportExport: React.FC<{
               defaultValue={importYAML}
               onChange={(e) => handleOnChange(e.target as HTMLTextAreaElement)}
               data-bs-theme="light"
-              className="mb-4"
+              className={`mb-4 ${inputValid ? "is-valid" : "is-invalid"}`}
               id="yamlInput"
             />
-            <Button className="primary" onClick={handleImport}>
+            <Button
+              className={`primary ${inputValid ? "enabled" : "disabled"}`}
+              onClick={handleImport}
+            >
               Import
             </Button>
             {importSuccess ? (

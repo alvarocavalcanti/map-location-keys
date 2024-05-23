@@ -2,11 +2,12 @@ import React from "react";
 import { Accordion, Card, CardBody, Container } from "react-bootstrap";
 
 const Help: React.FC = () => {
-  const itemsAdd: { header: string; image: string, description?: string }[] = [
+  const itemsAdd: { header: string; image: string; description?: string }[] = [
     {
       header: "1. Add or select an existing TEXT item",
       image: "img/help01.png",
-      description: "Use one or two characters for optimal display, e.g. 'A1', 'B2', '7', '8a'.",
+      description:
+        "Use one or two characters for optimal display, e.g. 'A1', 'B2', '7', '8a'.",
     },
     {
       header: '2. Click the "Add Location Key" button',
@@ -56,14 +57,89 @@ const Help: React.FC = () => {
           ))}
         </Accordion>
       </Container>
+      <Container className="p-3">
+        <Card className="mb-2">
+          <CardBody>
+            <Card.Title>Importing Location Keys</Card.Title>
+          </CardBody>
+        </Card>
+        <Accordion key="1">
+          <Accordion.Item eventKey={"0"} key={0}>
+            <Accordion.Header>1. Paste a valid YAML content</Accordion.Header>
+            <Accordion.Body>
+              Valid YAML content should be in the following format:
+              <br className="mb-3" />
+              <ul>
+                <li>
+                  <strong>description</strong> is a multiline string that can
+                  contain markdown.
+                  <br />
+                </li>
+                <li>
+                  <strong>name</strong> is a string that represents the Location
+                  Key. This will be the text of the TEXT item, please use one or
+                  two characters for optimal display, e.g. 'A1', 'B2', '7', '8a'{" "}
+                  <br />
+                </li>
+                <li>
+                  <strong>id</strong> is a string that represents the ID of the
+                  TEXT item. This is optional and can be left blank.
+                </li>
+              </ul>
+              Example:
+              <br className="mb-3" />
+              <pre className="text-bg-secondary">
+                {`- description: |-
+  # Evocative Name
+
+  **Description:**
+
+  **Features:**
+
+  **Creatures:**
+
+  **Notes:**
+name: '1'
+id: ''
+- description: |-
+  # Other Evocative Name
+
+  **Description:**
+
+  **Features:**
+
+  **Creatures:**
+
+  **Notes:**
+name: '2'
+id: ''`}
+              </pre>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey={"1"} key={1}>
+            <Accordion.Header>2. Click Import</Accordion.Header>
+            <Accordion.Body>
+              If the content is valid, the Location Keys will be imported and
+              added to the scene from the top left corner.
+              <br />
+              <img
+                src="img/help05.png"
+                alt="New Location Key items"
+                className="img-fluid"
+              />
+              You can move them around as needed.
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      </Container>
       <Container className="p-3 text-center">
-      <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
-        <img
-          src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-          alt="Buy Me A Coffee"
-          style={{ height: "60px", width: "217px" }}
-        />
-      </a>
+        <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
+          <img
+            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+            alt="Buy Me A Coffee"
+            style={{ height: "60px", width: "217px" }}
+          />
+        </a>
       </Container>
     </>
   );

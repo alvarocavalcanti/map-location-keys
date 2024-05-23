@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 import yaml, { JSON_SCHEMA } from "js-yaml";
 import React from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { ID } from "../main";
 import { isDevMode } from "../utils";
@@ -94,7 +95,9 @@ const ImportExport: React.FC<{
             })
             .catch((e) => {
               setImportSuccess(false);
-              setImportError("Error importing location keys. Make sure they are valid.");
+              setImportError(
+                "Error importing location keys. Make sure they are valid."
+              );
               console.error(e);
             });
         });
@@ -143,15 +146,24 @@ const ImportExport: React.FC<{
             </Button>
             {importSuccess ? (
               <Container className="alert alert-info p-3 mt-4">
-                Location keys successfully imported.<br />
+                Location keys successfully imported.
                 <br />
-                The text items were added to the map at the top left
-                corner. You can move them around as needed.
+                <br />
+                The text items were added to the map at the top left corner. You
+                can move them around as needed.
               </Container>
-            ) : importError.length > 0 && (
-              <Container className="alert alert-danger p-3 mt-4">
-                {importError}
-              </Container>
+            ) : (
+              importError.length > 0 && (
+                <Container className="alert alert-danger p-3 mt-4">
+                  {importError}
+                  <br />
+                  See the{" "}
+                  <Link to="/help" className="alert-link">
+                    Help
+                  </Link>{" "}
+                  page for more information.
+                </Container>
+              )
             )}
           </Card.Body>
         </Card>

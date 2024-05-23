@@ -7,6 +7,16 @@
 
 Map Location Keys is an extension for [Owlbear Rodeo](https://owlbear.rodeo) that allows you to add location keys to a map by using TEXT items.
 
+<!-- markdownlint-disable MD033 -->
+<a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
+  <img
+    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+    alt="Buy Me A Coffee"
+    height="60px" width="217px"
+  />
+</a>
+<!-- markdownlint-enable MD033 -->
+
 ## Installation
 
 Use the following URL to add this extension to [Owlbear Rodeo](https://owlbear.rodeo):

@@ -49,12 +49,19 @@ const Help: React.FC = () => {
           {itemsExport.map((item, index) => (
             <Accordion.Item eventKey={String(index)} key={index}>
               <Accordion.Header>{item.header}</Accordion.Header>
-              <Accordion.Body>
-                { item.text }
-              </Accordion.Body>
+              <Accordion.Body>{item.text}</Accordion.Body>
             </Accordion.Item>
           ))}
         </Accordion>
+      </Container>
+      <Container className="p-3 text-center">
+      <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
+        <img
+          src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+          alt="Buy Me A Coffee"
+          style={{ height: "60px", width: "217px" }}
+        />
+      </a>
       </Container>
     </>
   );

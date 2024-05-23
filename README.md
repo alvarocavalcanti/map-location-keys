@@ -30,7 +30,7 @@ https://map-location-keys.vercel.app/manifest.json
 - [x] Add location keys to `TEXT` items
 - [x] Markdown support
 - [x] Export location keys to a `YAML` file
-- [ ] Import location keys from a `YAML` file
+- [x] Import location keys from a `YAML` file
 - [x] Re-center the scene on an item from its Location Key
 
 ## Usage

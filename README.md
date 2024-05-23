@@ -21,7 +21,7 @@ https://map-location-keys.vercel.app/manifest.json
 - [x] Markdown support
 - [x] Export location keys to a `YAML` file
 - [ ] Import location keys from a `YAML` file
-- [ ] Re-center the scene on an item from its Location Key
+- [x] Re-center the scene on an item from its Location Key
 
 ## Usage
 

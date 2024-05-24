@@ -17,18 +17,26 @@ learn-more: https://github.com/alvarocavalcanti/map-location-keys
 
 ## Add a Location Key
 
-Select a TEXT item and choose "Add Location Key" from the context menu.
-
-![Add location key](img/add-location-key.png)
+![Add location key](video/01-add-location-key.mp4)
 
 ## Remove a Location Key
 
-Select a TEXT item and choose "Remove Location Key" from the context menu.
-
-![Remove location key](img/remove-location-key.png)
+![Remove location key](video/02-remove-location-key.mp4)
 
 ## Edit a Location Key
 
 You can edit location keys using Markdown.
 
-![Edit a location key](img/edit.png)
+![Edit a location key](video/03-edit-location-key.mp4)
+
+## Import Location Keys
+
+![Import Location Keys](video/04-import-location-keys.mp4)
+
+## Show Location Key
+
+![Show Location Key](video/05-show-location-key.mp4)
+
+## Export Location Keys
+
+![Export Location Keys](video/06-export-location-keys.mp4)

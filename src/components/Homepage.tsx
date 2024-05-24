@@ -85,6 +85,13 @@ const Homepage: React.FC = () => {
             smoother experience.
           </Container>
 
+          <h2>Installation</h2>
+          <Container className="mb-4">
+            You can follow the instructions on <a href="https://extensions.owlbear.rodeo/guide">Owlbear Rodeo</a> to install the extension, and use the following URL:
+            <br />
+            <br />
+            <a href="https://map-location-keys.vercel.app/manifest.json" target="_blank">https://map-location-keys.vercel.app/manifest.json</a>
+          </Container>
           <h2>Features in Action</h2>
           <br />
           <h3>Adding a Location Key</h3>

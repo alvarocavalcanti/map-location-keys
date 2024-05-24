@@ -16,6 +16,41 @@ const Homepage: React.FC = () => {
             width="640"
           />
           <h1>Map Location Keys</h1>
+          <Container className="mb-4">
+            <em>
+              An{" "}
+              <a href="https://owlbear.rodeo" target="_blank">
+                Owlbear Rodeo
+              </a>{" "}
+              extension for adding location descriptions to a map.
+              <br />
+              By{" "}
+              <a href="http://memorablenaton.es" target="_blank">
+                Alvaro Cavalcanti
+              </a>
+              <br />
+              <a
+                href="https://twitter.com/alvarocavalcant"
+                target="_blank"
+                className="m-1"
+              >
+                <img
+                  src="https://img.shields.io/twitter/follow/alvarocavalcant?style=social"
+                  alt="Follow @alvarocavalcant on Twitter"
+                />
+              </a>
+              <a
+                href="https://github.com/alvarocavalcanti"
+                target="_blank"
+                className="m-1"
+              >
+                <img
+                  src="https://img.shields.io/badge/GitHub-alvarocavalcanti-blue?style=flat-square&logo=github"
+                  alt="GitHub Profile"
+                />
+              </a>
+            </em>
+          </Container>
           <h2>Overview</h2>
           <Container className="mb-4">
             With this extension you can add "location keys" to a map, which

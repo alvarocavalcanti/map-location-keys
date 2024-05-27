@@ -134,6 +134,16 @@ const Homepage: React.FC = () => {
             height="480"
             controls
           ></video>
+          <h2>Player View</h2>
+          <Container className="mb-4">
+            The Location Keys <strong>in the extension drawer</strong> are only
+            visible to the GM, the players will see a funny GIF instead.
+            However, the Location Keys <strong>on the map</strong> are visible
+            to everyone unless you <strong>hide</strong>.
+          </Container>
+          <img src="img/player-view.png" width={640} />
+          <br />
+          <br />
           <h2>Help Topics</h2>
           <Help />
         </Col>

@@ -145,7 +145,29 @@ const Homepage: React.FC = () => {
           </Container>
           <PlayerView />
           <br />
+          <h2>Feedback</h2>
+          There are a few ways to provide feedback:
           <br />
+          <ul>
+            <li>
+              <a
+                href="https://discord.com/channels/795808973743194152/1242847926108028988"
+                target="_blank"
+              >
+                Owlbear Rodeo Discord Thread
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/alvarocavalcant" target="_blank">
+                Twitter/X
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/alvarocavalcanti" target="_blank">
+                Github
+              </a>
+            </li>
+          </ul>
           <h2>Help Topics</h2>
           <Help />
         </Col>

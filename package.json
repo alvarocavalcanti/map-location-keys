@@ -26,6 +26,7 @@
     "js-yaml": "^4.1.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
+    "react-code-blocks": "^0.1.6",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.23.1",

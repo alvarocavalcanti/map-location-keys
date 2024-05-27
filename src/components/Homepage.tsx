@@ -3,6 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { CodeBlock } from "react-code-blocks";
 
 import Help from "./Help";
+import PlayerView from "./PlayerView";
 
 const Homepage: React.FC = () => {
   return (
@@ -133,6 +134,7 @@ const Homepage: React.FC = () => {
             width="640"
             height="480"
             controls
+            className="mb-4"
           ></video>
           <h2>Player View</h2>
           <Container className="mb-4">
@@ -141,7 +143,7 @@ const Homepage: React.FC = () => {
             However, the Location Keys <strong>on the map</strong> are visible
             to everyone unless you <strong>hide</strong>.
           </Container>
-          <img src="img/player-view.png" width={640} />
+          <PlayerView />
           <br />
           <br />
           <h2>Help Topics</h2>

@@ -10,17 +10,20 @@ import {
   loadExistingLocationKeys,
   sortLocationKeys,
 } from "../utils";
-import OBR, { Item } from "@owlbear-rodeo/sdk";
+import OBR, { Item, Player } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
 import Help from "./Help";
 import Navbar from "./Navbar";
 import ImportExport from "./ImportExport";
+import { paths } from "./util/constants";
+import PlayerView from "./PlayerView";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
     {} as LocationKeyType
   );
   const [locationKeys, setLocationKeys] = React.useState<LocationKey[]>([]);
+  const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
 
   const loadLocationKeys = (items: Item[]): void => {
     const newLocationKeys: LocationKey[] = [];
@@ -34,6 +37,10 @@ export default function SPA() {
 
   const setTheme = (theme: string): void => {
     document.getElementById("html_root")?.setAttribute("data-bs-theme", theme);
+  };
+
+  const handlePlayerChange = (player: Player) => {
+    setRole(player.role);
   };
 
   useEffect(() => {
@@ -53,10 +60,12 @@ export default function SPA() {
       OBR.theme.onChange((theme) => {
         setTheme(theme.mode.toLowerCase());
       });
+      OBR.player.onChange(handlePlayerChange);
+      OBR.player.getRole().then(setRole);
     });
   }, []);
 
-  return (
+  return role === "GM" ? (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route
@@ -69,7 +78,7 @@ export default function SPA() {
           }
         />
         <Route
-          path="location-key/:id"
+          path={paths.locationKey}
           element={
             <LocationKey
               locationKey={locationKeyToEdit}
@@ -78,15 +87,16 @@ export default function SPA() {
           }
         />
         <Route
-          path="import-export"
-          element={
-            <ImportExport locationKeys={ locationKeys }/>
-          }
+          path={paths.importExport}
+          element={<ImportExport locationKeys={locationKeys} />}
         />
-        <Route path="help" element={<Help />} />
+        <Route path={paths.help} element={<Help />} />
+        <Route path={paths.playerView} element={<PlayerView />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>
+  ) : (
+    <PlayerView />
   );
 }
 

@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
 
 import { isDevMode } from "../utils";
+import { paths } from "./util/constants";
 
 const Navbar: React.FC = () => {
   return (
@@ -14,10 +15,10 @@ const Navbar: React.FC = () => {
         <Link className="nav-item nav-link" to="/">
           Location Keys
         </Link>
-        <Link className="nav-item nav-link" to="/import-export">
+        <Link className="nav-item nav-link" to={paths.importExport}>
           Import/Export
         </Link>
-        <Link className="nav-item nav-link" to="/help">
+        <Link className="nav-item nav-link" to={paths.help}>
           Help
         </Link>
       </nav>

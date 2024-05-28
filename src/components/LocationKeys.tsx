@@ -1,6 +1,6 @@
 import { LocationKey } from "../@types/types";
-import OBR, { Player } from "@owlbear-rodeo/sdk";
-import React, { useEffect, useState } from "react";
+import OBR from "@owlbear-rodeo/sdk";
+import React from "react";
 import {
   Accordion,
   Button,
@@ -14,13 +14,12 @@ import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
-import PlayerView from "./PlayerView";
+import { paths } from "./util/constants";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
   locationKeys: LocationKey[];
 }> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys }) => {
-  const [role, setRole] = useState<"GM" | "PLAYER">("GM");
 
   const showOnMap = (id: string) => {
     OBR.scene.items.getItemBounds([id]).then((bounds) => {
@@ -32,15 +31,7 @@ const LocationKeys: React.FC<{
     });
   };
 
-  useEffect(() => {
-    const handlePlayerChange = (player: Player) => {
-      setRole(player.role);
-    };
-    OBR.player.getRole().then(setRole);
-    return OBR.player.onChange(handlePlayerChange);
-  }, []);
-
-  return role === "GM" ? (
+  return (
     <Container className="p-3">
       <Card className="mb-4">
         <CardBody>
@@ -101,14 +92,12 @@ const LocationKeys: React.FC<{
             <Card.Title className="header">No Location Keys</Card.Title>
             <Card.Text>
               The location keys will show up here once you add them. Click{" "}
-              <Link to="/help">here</Link> to learn how to do so.
+              <Link to={paths.help}>here</Link> to learn how to do so.
             </Card.Text>
           </CardBody>
         </Card>
       )}
     </Container>
-  ) : (
-    <PlayerView />
   );
 };
 

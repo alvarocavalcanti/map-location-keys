@@ -7,6 +7,7 @@ import { Button, Card, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { ID } from "../main";
+import { paths } from "./util/constants";
 
 const ImportExport: React.FC<{
   locationKeys: LocationKey[];
@@ -156,7 +157,7 @@ const ImportExport: React.FC<{
                 {importError}
                 <br />
                 See the{" "}
-                <Link to="/help" className="alert-link">
+                <Link to={paths.help} className="alert-link">
                   Help
                 </Link>{" "}
                 page for more information.

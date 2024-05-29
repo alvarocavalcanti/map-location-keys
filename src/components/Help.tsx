@@ -132,6 +132,18 @@ id: ''`}
           </Accordion.Item>
         </Accordion>
       </Container>
+      <Container className="mt-3 text-center">
+        <a
+          href="https://twitter.com/alvarocavalcant"
+          target="_blank"
+          className="m-1"
+        >
+          <img
+            src="https://img.shields.io/twitter/follow/alvarocavalcant?style=social"
+            alt="Follow @alvarocavalcant on Twitter"
+          />
+        </a>
+      </Container>
       <Container className="p-3 text-center">
         <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
           <img

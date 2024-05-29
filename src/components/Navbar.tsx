@@ -13,7 +13,10 @@ const Navbar: React.FC = () => {
       ) : null}
       <nav className="navbar p-3">
         <Link className="nav-item nav-link" to="/">
-          Location Keys
+          Key List
+        </Link>
+        <Link className="nav-item nav-link" to={paths.bulkActions}>
+          Bulk Actions
         </Link>
         <Link className="nav-item nav-link" to={paths.importExport}>
           Import/Export

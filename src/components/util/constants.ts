@@ -4,4 +4,5 @@ export const paths: { [key: string]: string } = {
   importExport: "/import-export",
   help: "/help",
   playerView: "/player-view",
+  bulkActions: "/bulk-actions",
 };

@@ -40,10 +40,6 @@ const LocationKeys: React.FC<{
     []
   );
 
-  useEffect(() => {
-
-  }, [locationToExpand]);
-
   return (
     <Container>
       {locationKeys.length > 0 && (

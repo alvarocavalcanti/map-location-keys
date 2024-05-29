@@ -32,15 +32,13 @@ const LocationKeys: React.FC<{
 
   return (
     <Container>
-      <Card className="mb-4">
-        <CardBody>
-          <Card.Title className="header">Location Keys</Card.Title>
-          <Card.Text>
-            Location keys are used to provide additional information about
-            locations on the map.
-          </Card.Text>
-        </CardBody>
-      </Card>
+      {locationKeys.length > 0 && (
+        <Card>
+          <CardBody>
+            <Card.Title className="header">Existing Location Keys</Card.Title>
+          </CardBody>
+        </Card>
+      )}
       {locationKeys.length > 0 ? (
         locationKeys.map((locationKey, index) => (
           <Accordion key={index}>

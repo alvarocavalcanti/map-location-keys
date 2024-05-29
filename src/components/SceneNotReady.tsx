@@ -3,7 +3,7 @@ import { Card, CardBody, Container } from "react-bootstrap";
 
 const SceneNotReady: React.FC = () => {
   return (
-    <Container className="p-3">
+    <Container>
       <Card className="mb-4">
         <CardBody>
           <Card.Title className="header">No Active Scene</Card.Title>

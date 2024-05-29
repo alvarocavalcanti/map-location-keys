@@ -31,7 +31,7 @@ const LocationKeys: React.FC<{
   };
 
   return (
-    <Container className="p-3">
+    <Container>
       <Card className="mb-4">
         <CardBody>
           <Card.Title className="header">Location Keys</Card.Title>

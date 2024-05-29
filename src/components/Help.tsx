@@ -24,7 +24,7 @@ const Help: React.FC = () => {
   ];
   return (
     <>
-      <Container className="p-3">
+      <Container>
         <Card className="mb-2">
           <CardBody>
             <Card.Title>Adding Location Keys</Card.Title>
@@ -42,7 +42,7 @@ const Help: React.FC = () => {
           ))}
         </Accordion>
       </Container>
-      <Container className="p-3">
+      <Container className="mt-4">
         <Card className="mb-2">
           <CardBody>
             <Card.Title>Exporting Location Keys</Card.Title>
@@ -57,7 +57,7 @@ const Help: React.FC = () => {
           ))}
         </Accordion>
       </Container>
-      <Container className="p-3">
+      <Container className="mt-4">
         <Card className="mb-2">
           <CardBody>
             <Card.Title>Importing Location Keys</Card.Title>

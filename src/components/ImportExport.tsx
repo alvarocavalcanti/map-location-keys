@@ -105,7 +105,7 @@ const ImportExport: React.FC<{
   };
 
   return (
-    <Container className="p-3">
+    <Container>
       <Card className="mb-4">
         <Card.Body>
           <Card.Title>Export</Card.Title>

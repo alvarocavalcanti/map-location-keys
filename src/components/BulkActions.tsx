@@ -56,7 +56,7 @@ const BulkActions: React.FC = () => {
   };
 
   return (
-    <Container className="p-3">
+    <Container>
       <Card className="mb-4">
         <CardBody>
           <Card.Title className="header">Add All to Location Keys</Card.Title>

@@ -1,7 +1,7 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "./main";
 
-const locationKeyTemplate = `# Evocative Name
+export const locationKeyTemplate = `# Evocative Name
 
 **Description:**
 

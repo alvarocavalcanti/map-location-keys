@@ -57,25 +57,28 @@ const LocationKeys: React.FC<{
   };
 
   const deleteAllLocationKeys = () => {
-    OBR.scene.items
-      .getItems(
-        (item) =>
-          item.layer === "TEXT" && item.metadata[`${ID}/metadata`] != undefined
-      )
-      .then((itemsToRemove) => {
-        OBR.scene.items
-          .updateItems(itemsToRemove, (items) => {
-            for (let item of items) {
-              delete item.metadata[`${ID}/metadata`];
-            }
-          })
-          .then(() => {
-            OBR.notification.show(
-              `Removed ${itemsToRemove.length} items from location keys`,
-              "INFO"
-            );
-          });
-      });
+    if (window.confirm("Are you sure you want to delete all location keys?")) {
+      OBR.scene.items
+        .getItems(
+          (item) =>
+            item.layer === "TEXT" &&
+            item.metadata[`${ID}/metadata`] != undefined
+        )
+        .then((itemsToRemove) => {
+          OBR.scene.items
+            .updateItems(itemsToRemove, (items) => {
+              for (let item of items) {
+                delete item.metadata[`${ID}/metadata`];
+              }
+            })
+            .then(() => {
+              OBR.notification.show(
+                `Removed ${itemsToRemove.length} items from location keys`,
+                "INFO"
+              );
+            });
+        });
+    }
   };
 
   return (

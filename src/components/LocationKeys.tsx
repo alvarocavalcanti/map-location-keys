@@ -30,12 +30,12 @@ const LocationKeys: React.FC<{
       });
     });
   };
-  const [locationToExpand, setLocationToExpand] = React.useState<string>("");
 
   useEffect(
     () =>{
       OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
-        setLocationToExpand(event.data as string);
+        console.log(event.data as string);
+        // setLocationToExpand(event.data as string); // Disabled for now
       });},
     []
   );
@@ -51,7 +51,7 @@ const LocationKeys: React.FC<{
       )}
       {locationKeys.length > 0 ? (
         locationKeys.map((locationKey, index) => (
-          <Accordion key={index} activeKey={locationToExpand}>
+          <Accordion key={index}>
             <Accordion.Item eventKey={locationKey.id}>
               <Accordion.Header>{locationKey.name}</Accordion.Header>
               <Accordion.Body>

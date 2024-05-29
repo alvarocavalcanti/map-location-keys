@@ -1,21 +1,19 @@
 import { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";
-import React, { useEffect } from "react";
+import React from "react";
 import {
-  Accordion,
-  Button,
+  Accordion, Button,
   Card,
   CardBody,
   Col,
   Container,
-  Row,
+  Row
 } from "react-bootstrap";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 import { paths } from "./util/constants";
-import { ID } from "../main";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
@@ -31,68 +29,69 @@ const LocationKeys: React.FC<{
     });
   };
 
-  useEffect(
-    () =>{
-      OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
-        console.log(event.data as string);
-        // setLocationToExpand(event.data as string); // Disabled for now
-      });},
-    []
-  );
+  // const [locationToExpand, setLocationToExpand] = React.useState<string>("");
+
+  // // Disabled for now
+  // useEffect(() => {
+  //   OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
+  //     console.log(event.data as string);
+  //     setLocationToExpand(event.data as string);
+  //   });
+  // }, []);
 
   return (
     <Container>
-      {locationKeys.length > 0 && (
-        <Card>
-          <CardBody>
-            <Card.Title className="header">Existing Location Keys</Card.Title>
-          </CardBody>
-        </Card>
-      )}
       {locationKeys.length > 0 ? (
-        locationKeys.map((locationKey, index) => (
-          <Accordion key={index}>
-            <Accordion.Item eventKey={locationKey.id}>
-              <Accordion.Header>{locationKey.name}</Accordion.Header>
-              <Accordion.Body>
-                <Markdown remarkPlugins={[remarkGfm]}>
-                  {locationKey.description}
-                </Markdown>
-                <Row className="text-center">
-                  <Col>
-                    <Link
-                      to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}
-                      className="gx-2"
-                    >
-                      <Button
-                        variant="primary"
-                        onClick={() =>
-                          setLocationKeyToEdit({
-                            id: locationKey.id,
-                            name: locationKey.name,
-                            description: locationKey.description,
-                          })
-                        }
+        <>
+          <Card>
+            <CardBody>
+              <Card.Title className="header">Existing Location Keys</Card.Title>
+            </CardBody>
+          </Card>
+          <Accordion defaultActiveKey={[locationKeys[0].id]}>
+            {locationKeys.map((locationKey, index) => (
+              <Accordion.Item eventKey={locationKey.id} key={index}>
+                <Accordion.Header>{locationKey.name}</Accordion.Header>
+                <Accordion.Body>
+                  <Markdown remarkPlugins={[remarkGfm]}>
+                    {locationKey.description}
+                  </Markdown>
+                  <Row className="text-center">
+                    <Col>
+                      <Link
+                        to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}
+                        className="gx-2"
                       >
-                        Edit
+                        <Button
+                          variant="primary"
+                          onClick={() =>
+                            setLocationKeyToEdit({
+                              id: locationKey.id,
+                              name: locationKey.name,
+                              description: locationKey.description,
+                            })
+                          }
+                        >
+                          Edit
+                        </Button>
+                      </Link>
+                    </Col>
+                    <Col>
+                      <Button
+                        variant="secondary"
+                        onClick={() => showOnMap(locationKey.id)}
+                      >
+                        Show
                       </Button>
-                    </Link>
-                  </Col>
-                  <Col>
-                    <Button
-                      variant="secondary"
-                      onClick={() => showOnMap(locationKey.id)}
-                    >
-                      Show
-                    </Button>
-                  </Col>
-                  <Col>{""}</Col>
-                  <Col>{""}</Col>
-                </Row>
-              </Accordion.Body>
-            </Accordion.Item>
+                    </Col>
+                    <Col>{""}</Col>
+                    <Col>{""}</Col>
+                  </Row>
+                </Accordion.Body>
+              </Accordion.Item>
+            ))}
           </Accordion>
-        ))
+        </>
       ) : (
         <Card className="mb-4">
           <CardBody>

@@ -83,7 +83,7 @@ const BulkActions: React.FC = () => {
               className="mt-3"
               onClick={deleteAllLocationKeys}
             >
-              Add All
+              Delete All
             </Button>
           </Card.Text>
         </CardBody>

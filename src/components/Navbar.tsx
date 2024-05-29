@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
           <RBNavbar.Toggle aria-controls="basic-navbar-nav" />
           <RBNavbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto navbar-right">
-              <NavDropdown title="Map Location Keys" id="basic-nav-dropdown">
+              <NavDropdown title="Menu" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <Link className="nav-item nav-link" to="/">
                     Existing Location Keys

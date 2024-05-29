@@ -1,7 +1,7 @@
 import OBR from "@owlbear-rodeo/sdk";
 import React, { useEffect, useState } from "react";
 
-import Homepage from "./Homepage";
+import OBRLoading from "./OBRLoading";
 
 /**
  * Only render the children when we're within a plugin
@@ -17,7 +17,7 @@ const PluginGate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   if (ready) {
     return <>{children}</>;
   } else {
-    return <Homepage />;
+    return <OBRLoading />;
   }
 };
 

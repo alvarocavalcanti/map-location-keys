@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
 
 import LocationKey from "./LocationKey";
 import LocationKeys from "./LocationKeys";
@@ -91,12 +91,14 @@ export default function SPA() {
           element={<ImportExport locationKeys={locationKeys} />}
         />
         <Route path={paths.help} element={<Help />} />
-        <Route path={paths.playerView} element={<PlayerView />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>
   ) : (
-    <PlayerView />
+    <Routes>
+      <Route path="/" element={<Navigate to={paths.playerView} />} />
+      <Route path={paths.playerView} element={<PlayerView />} />
+    </Routes>
   );
 }
 

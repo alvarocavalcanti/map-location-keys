@@ -14,4 +14,5 @@
 - [x] Add documentation
 - [x] Create help page and add navbar
 - [x] Empty state points to help page
-- [ ] Add all existing TEXT items as Location Keys
+- [x] Add all existing TEXT items as Location Keys
+- [x] Remove all existing Location Keys

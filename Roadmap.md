@@ -11,6 +11,7 @@
 - [x] Use a theme more aligned with OBR
 - [x] Improve Player View
 - [ ] Improve edit screen layout
-- [ ] Add documentation
-- [ ] Create help page and add navbar
-- [ ] Empty state points to help page
+- [x] Add documentation
+- [x] Create help page and add navbar
+- [x] Empty state points to help page
+- [ ] Add all existing TEXT items as Location Keys

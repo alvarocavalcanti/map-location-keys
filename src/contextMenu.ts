@@ -13,7 +13,7 @@ export const locationKeyTemplate = `# Evocative Name
 
 export function setupContextMenu() {
   OBR.contextMenu.create({
-    id: `${ID}/context-menu`,
+    id: `${ID}/context-menu-add-remove`,
     icons: [
       {
         icon: "/img/add.svg",
@@ -53,6 +53,23 @@ export function setupContextMenu() {
           }
         });
       }
+    },
+  });
+  OBR.contextMenu.create({
+    id: `${ID}/context-menu-expand`,
+    icons: [
+      {
+        icon: "/img/expand.svg",
+        label: "Expand Location Key",
+        filter: {
+          every: [
+            { key: "layer", value: "TEXT" },
+          ],
+        },
+      },
+    ],
+    onClick(context) {
+      OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {destination: "LOCAL"});
     },
   });
 }

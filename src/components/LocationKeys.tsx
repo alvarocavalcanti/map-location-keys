@@ -1,6 +1,6 @@
 import { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Accordion,
   Button,
@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 import { paths } from "./util/constants";
+import { ID } from "../main";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
@@ -29,6 +30,19 @@ const LocationKeys: React.FC<{
       });
     });
   };
+  const [locationToExpand, setLocationToExpand] = React.useState<string>("");
+
+  useEffect(
+    () =>{
+      OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
+        setLocationToExpand(event.data as string);
+      });},
+    []
+  );
+
+  useEffect(() => {
+
+  }, [locationToExpand]);
 
   return (
     <Container>
@@ -41,7 +55,7 @@ const LocationKeys: React.FC<{
       )}
       {locationKeys.length > 0 ? (
         locationKeys.map((locationKey, index) => (
-          <Accordion key={index}>
+          <Accordion key={index} activeKey={locationToExpand}>
             <Accordion.Item eventKey={locationKey.id}>
               <Accordion.Header>{locationKey.name}</Accordion.Header>
               <Accordion.Body>

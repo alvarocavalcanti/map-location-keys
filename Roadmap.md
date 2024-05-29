@@ -16,3 +16,4 @@
 - [x] Empty state points to help page
 - [x] Add all existing TEXT items as Location Keys
 - [x] Remove all existing Location Keys
+- [ ] Use OBR.broadcast from context menu to expand location key

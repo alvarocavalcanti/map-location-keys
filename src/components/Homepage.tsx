@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { CodeBlock } from "react-code-blocks";
 
@@ -6,6 +6,15 @@ import Help from "./Help";
 import PlayerView from "./PlayerView";
 
 const Homepage: React.FC = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const isHomepage = urlParams.has("homepage");
+
+  useEffect(() => {
+    if (!isHomepage) {
+      window.location.href = "/?homepage";
+    }
+  }, []);
+
   return (
     <Container>
       <Row className="justify-content-md-center">

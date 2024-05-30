@@ -5,7 +5,7 @@ import { Button, Card, CardBody, Container } from "react-bootstrap";
 import { locationKeyTemplate } from "../contextMenu";
 import { ID } from "../main";
 
-const BulkActions: React.FC = () => {
+const AddDeleteAll: React.FC = () => {
   const addAllToLocationKeys = () => {
     OBR.scene.items
       .getItems(
@@ -92,4 +92,4 @@ const BulkActions: React.FC = () => {
   );
 };
 
-export default BulkActions;
+export default AddDeleteAll;

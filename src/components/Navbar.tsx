@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item>
                   <Link className="nav-item nav-link" to={paths.bulkActions}>
-                    Bulk Actions
+                    Add/Delete All
                   </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>

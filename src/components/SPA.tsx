@@ -17,7 +17,7 @@ import Navbar from "./Navbar";
 import ImportExport from "./ImportExport";
 import { paths } from "./util/constants";
 import PlayerView from "./PlayerView";
-import BulkActions from "./BulkActions";
+import AddDeleteAll from "./AddDeleteAll";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
@@ -91,7 +91,7 @@ export default function SPA() {
           path={paths.importExport}
           element={<ImportExport locationKeys={locationKeys} />}
         />
-        <Route path={paths.bulkActions} element={<BulkActions />} />
+        <Route path={paths.bulkActions} element={<AddDeleteAll />} />
         <Route path={paths.help} element={<Help />} />
         <Route path="*" element={<NoMatch />} />
       </Route>

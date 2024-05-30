@@ -59,11 +59,8 @@ const AddDeleteAll: React.FC = () => {
     <Container>
       <Card className="mb-4">
         <CardBody>
-          <Card.Title className="header">Add All to Location Keys</Card.Title>
+          <Card.Title className="header">Add all TEXT items to Location Keys</Card.Title>
           <Card.Text>
-            You can use the button bellow to add all TEXT items that haven't
-            been added to the location keys yet.
-            <br />
             <Button
               variant="primary"
               className="mt-3"
@@ -76,7 +73,7 @@ const AddDeleteAll: React.FC = () => {
       </Card>
       <Card className="mb-4 mt-4">
         <CardBody>
-          <Card.Title className="header">Delete All Location Keys</Card.Title>
+          <Card.Title className="header">Delete all Location Keys</Card.Title>
           <Card.Text>
             <Button
               variant="danger"

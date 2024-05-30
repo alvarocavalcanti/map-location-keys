@@ -48,7 +48,7 @@ const LocationKeys: React.FC<{
               <Card.Title className="header">Existing Location Keys</Card.Title>
             </CardBody>
           </Card>
-          <Accordion defaultActiveKey={[locationKeys[0].id]}>
+          <Accordion>
             {locationKeys.map((locationKey, index) => (
               <Accordion.Item eventKey={locationKey.id} key={index}>
                 <Accordion.Header>{locationKey.name}</Accordion.Header>

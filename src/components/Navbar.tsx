@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
               <NavDropdown title="Menu" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <Link className="nav-item nav-link" to="/">
-                    Existing Location Keys
+                    Location Keys
                   </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>

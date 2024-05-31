@@ -1,5 +1,6 @@
 import React from "react";
 import { Accordion, Card, CardBody, Container } from "react-bootstrap";
+import { analytics } from "../utils";
 
 const Help: React.FC = () => {
   const itemsAdd: { header: string; image: string; description?: string }[] = [
@@ -22,6 +23,9 @@ const Help: React.FC = () => {
       text: "A YAML file will be downloaded to your computer.",
     },
   ];
+
+  analytics.page();
+
   return (
     <>
       <Container>

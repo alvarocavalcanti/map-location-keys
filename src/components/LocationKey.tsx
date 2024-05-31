@@ -14,6 +14,7 @@ import type { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "../main";
 import { track } from "@vercel/analytics";
+import { analytics } from "../utils";
 
 const LocationKey: React.FC<{
   locationKey: LocationKey;
@@ -26,6 +27,7 @@ const LocationKey: React.FC<{
 
   const handleSave = () => {
     track("edit_location_key");
+    analytics.track("edit_location_key");
     OBR.scene.items
       .updateItems(
         (item) => item.id === locationKey.id,
@@ -39,6 +41,9 @@ const LocationKey: React.FC<{
         navigate("/");
       });
   };
+
+  analytics.page();
+
   return (
     <Container>
       <Card className="mb-4">

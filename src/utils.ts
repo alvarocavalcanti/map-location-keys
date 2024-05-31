@@ -2,6 +2,9 @@ import { Item, Metadata } from "@owlbear-rodeo/sdk";
 import { LocationKey } from "./@types/types";
 import { ID } from "./main";
 
+import Analytics from 'analytics';
+import googleAnalytics from '@analytics/google-analytics';
+
 export function loadExistingLocationKeys(
   items: Item[],
   newLocationKeys: LocationKey[],
@@ -34,3 +37,12 @@ export const getItemText = (item: any) => {
 export const isDevMode = (): boolean => {
   return localStorage.getItem("dev-mode") === "true";
 };
+
+export const analytics = Analytics({
+  app: 'awesome-app',
+  plugins: [
+    googleAnalytics({
+      measurementIds: ['G-1TBFXRLMWR']
+    })
+  ]
+})

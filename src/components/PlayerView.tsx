@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Container } from "react-bootstrap";
+import { analytics } from "../utils";
 
 const PlayerView: React.FC = () => {
   const gifs = [
@@ -17,6 +18,8 @@ const PlayerView: React.FC = () => {
   useEffect(() => {
     setGif(gifs[Math.floor(Math.random() * gifs.length)]);
   }, []);
+
+  analytics.page();
 
   return (
     <Container>

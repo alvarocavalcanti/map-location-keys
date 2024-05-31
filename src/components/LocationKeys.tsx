@@ -17,6 +17,7 @@ import remarkGfm from "remark-gfm";
 
 import { ID } from "../main";
 import { paths } from "./util/constants";
+import { analytics } from "../utils";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
@@ -30,6 +31,7 @@ const LocationKeys: React.FC<{
 
   const showOnMap = (id: string) => {
     track("show_location_key_on_map");
+    analytics.track("show_location_key_on_map");
     OBR.scene.items.getItemBounds([id]).then((bounds) => {
       OBR.viewport.animateToBounds({
         ...bounds,
@@ -47,6 +49,8 @@ const LocationKeys: React.FC<{
         ?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }, []);
+
+  analytics.page();
 
   return (
     <Container>

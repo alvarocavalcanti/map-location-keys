@@ -1,5 +1,6 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "./main";
+import { track } from "@vercel/analytics";
 
 export const locationKeyTemplate = `# Evocative Name
 
@@ -39,6 +40,7 @@ export function setupContextMenu() {
       );
 
       if (addToLocationKeys) {
+        track("add_to_location_keys");
         OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items) {
             item.metadata[`${ID}/metadata`] = {
@@ -47,6 +49,7 @@ export function setupContextMenu() {
           }
         });
       } else {
+        track("remove_from_location_keys");
         OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items) {
             delete item.metadata[`${ID}/metadata`];

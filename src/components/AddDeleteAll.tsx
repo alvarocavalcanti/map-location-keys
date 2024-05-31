@@ -4,9 +4,11 @@ import { Button, Card, CardBody, Container } from "react-bootstrap";
 
 import { locationKeyTemplate } from "../contextMenu";
 import { ID } from "../main";
+import { track } from "@vercel/analytics";
 
 const AddDeleteAll: React.FC = () => {
   const addAllToLocationKeys = () => {
+    track("add_all_to_location_keys");
     OBR.scene.items
       .getItems(
         (item) =>
@@ -32,6 +34,7 @@ const AddDeleteAll: React.FC = () => {
 
   const deleteAllLocationKeys = () => {
     if (window.confirm("Are you sure you want to delete all location keys?")) {
+      track("delete_all_location_keys");
       OBR.scene.items
         .getItems(
           (item) =>
@@ -59,7 +62,9 @@ const AddDeleteAll: React.FC = () => {
     <Container>
       <Card className="mb-4">
         <CardBody>
-          <Card.Title className="header">Add all TEXT items to Location Keys</Card.Title>
+          <Card.Title className="header">
+            Add all TEXT items to Location Keys
+          </Card.Title>
           <Card.Text>
             <Button
               variant="primary"

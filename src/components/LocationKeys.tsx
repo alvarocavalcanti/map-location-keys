@@ -14,12 +14,14 @@ import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
 import { paths } from "./util/constants";
+import { track } from "@vercel/analytics";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
   locationKeys: LocationKey[];
 }> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys }) => {
   const showOnMap = (id: string) => {
+    track("show_location_key_on_map");
     OBR.scene.items.getItemBounds([id]).then((bounds) => {
       OBR.viewport.animateToBounds({
         ...bounds,

@@ -58,21 +58,21 @@ export function setupContextMenu() {
       }
     },
   });
-  // OBR.contextMenu.create({
-  //   id: `${ID}/context-menu-expand`,
-  //   icons: [
-  //     {
-  //       icon: "/img/expand.svg",
-  //       label: "Expand Location Key",
-  //       filter: {
-  //         every: [
-  //           { key: "layer", value: "TEXT" },
-  //         ],
-  //       },
-  //     },
-  //   ],
-  //   onClick(context) {
-  //     OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {destination: "LOCAL"});
-  //   },
-  // });
+  OBR.contextMenu.create({
+    id: `${ID}/context-menu-expand`,
+    icons: [
+      {
+        icon: "/img/expand.svg",
+        label: "Reveal Location Key",
+        filter: {
+          every: [{ key: "layer", value: "TEXT" }],
+        },
+      },
+    ],
+    onClick(context) {
+      OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {
+        destination: "LOCAL",
+      });
+    },
+  });
 }

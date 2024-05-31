@@ -1,25 +1,33 @@
 import { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";
-import React from "react";
+import { track } from "@vercel/analytics";
+import React, { useEffect } from "react";
 import {
-  Accordion, Button,
+  Accordion,
+  Button,
   Card,
   CardBody,
   Col,
   Container,
-  Row
+  Row,
 } from "react-bootstrap";
 import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 
+import { ID } from "../main";
 import { paths } from "./util/constants";
-import { track } from "@vercel/analytics";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
   locationKeys: LocationKey[];
 }> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys }) => {
+  const [locationToReveal, setLocationToReveal] = React.useState<string>("");
+
+  const handleToggleClick = (id: string) => {
+    setLocationToReveal((prevKey) => (prevKey === id ? "" : id));
+  };
+
   const showOnMap = (id: string) => {
     track("show_location_key_on_map");
     OBR.scene.items.getItemBounds([id]).then((bounds) => {
@@ -31,15 +39,12 @@ const LocationKeys: React.FC<{
     });
   };
 
-  // const [locationToExpand, setLocationToExpand] = React.useState<string>("");
-
-  // // Disabled for now
-  // useEffect(() => {
-  //   OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
-  //     console.log(event.data as string);
-  //     setLocationToExpand(event.data as string);
-  //   });
-  // }, []);
+  useEffect(() => {
+    OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
+      setLocationToReveal(event.data as string);
+      // TODO: Focus on the item
+    });
+  }, []);
 
   return (
     <Container>
@@ -50,10 +55,20 @@ const LocationKeys: React.FC<{
               <Card.Title className="header">Existing Location Keys</Card.Title>
             </CardBody>
           </Card>
-          <Accordion>
+          <Accordion activeKey={locationToReveal}>
             {locationKeys.map((locationKey, index) => (
-              <Accordion.Item eventKey={locationKey.id} key={index}>
-                <Accordion.Header>{locationKey.name}</Accordion.Header>
+              <Accordion.Item
+                eventKey={locationKey.id}
+                key={String(index)}
+                tabIndex={index}
+              >
+                <Accordion.Header
+                  onClick={() => {
+                    handleToggleClick(locationKey.id);
+                  }}
+                >
+                  {locationKey.name}
+                </Accordion.Header>
                 <Accordion.Body>
                   <Markdown remarkPlugins={[remarkGfm]}>
                     {locationKey.description}

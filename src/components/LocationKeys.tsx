@@ -42,7 +42,9 @@ const LocationKeys: React.FC<{
   useEffect(() => {
     OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
       setLocationToReveal(event.data as string);
-      // TODO: Focus on the item
+      window.document
+        .getElementById(`accordion-${event.data as string}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }, []);
 
@@ -60,7 +62,7 @@ const LocationKeys: React.FC<{
               <Accordion.Item
                 eventKey={locationKey.id}
                 key={String(index)}
-                tabIndex={index}
+                id={`accordion-${locationKey.id}`}
               >
                 <Accordion.Header
                   onClick={() => {

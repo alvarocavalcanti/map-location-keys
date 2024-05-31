@@ -73,6 +73,8 @@ export function setupContextMenu() {
       },
     ],
     onClick(context) {
+      track("reveal_location_key");
+      analytics.track("reveal_location_key");
       OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {
         destination: "LOCAL",
       });

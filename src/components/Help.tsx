@@ -1,6 +1,7 @@
 import React from "react";
 import { Accordion, Card, CardBody, Container } from "react-bootstrap";
 import { analytics } from "../utils";
+import YouTube from "react-youtube";
 
 const Help: React.FC = () => {
   const itemsAdd: { header: string; image: string; description?: string }[] = [
@@ -26,9 +27,21 @@ const Help: React.FC = () => {
 
   analytics.page();
 
+  const opts = {
+    width: '300',
+  };
+
   return (
     <>
       <Container>
+        <Card className="mb-2">
+          <CardBody>
+            <Card.Title>Video Tutorial</Card.Title>
+            <Card.Text>
+              <YouTube videoId="jJM_600M1eo" opts={opts} />
+            </Card.Text>
+          </CardBody>
+        </Card>
         <Card className="mb-2">
           <CardBody>
             <Card.Title>Adding Location Keys</Card.Title>

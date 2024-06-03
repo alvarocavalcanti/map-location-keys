@@ -21,6 +21,7 @@ export function setupContextMenu() {
         icon: "/img/add.svg",
         label: "Add Location Key",
         filter: {
+          roles: ["GM"],
           every: [
             { key: "layer", value: "TEXT" },
             { key: ["metadata", `${ID}/metadata`], value: undefined },
@@ -31,6 +32,7 @@ export function setupContextMenu() {
         icon: "/img/remove.svg",
         label: "Remove Location Key",
         filter: {
+          roles: ["GM"],
           every: [{ key: "layer", value: "TEXT" }],
         },
       },
@@ -68,7 +70,11 @@ export function setupContextMenu() {
         icon: "/img/expand.svg",
         label: "Reveal Location Key",
         filter: {
-          every: [{ key: "layer", value: "TEXT" }],
+          roles: ["GM"],
+          every: [
+            { key: "layer", value: "TEXT" },
+            { key: ["metadata", `${ID}/metadata`], value: undefined, operator: "!="},
+          ],
         },
       },
     ],

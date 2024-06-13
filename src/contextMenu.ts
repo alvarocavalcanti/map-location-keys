@@ -55,11 +55,13 @@ export function setupContextMenu() {
       } else {
         track("remove_from_location_keys");
         analytics.track("remove_from_location_keys");
-        OBR.scene.items.updateItems(context.items, (items) => {
-          for (let item of items) {
-            delete item.metadata[`${ID}/metadata`];
-          }
-        });
+        if (window.confirm("Are you sure you want to remove this location key?")) {
+          OBR.scene.items.updateItems(context.items, (items) => {
+            for (let item of items) {
+              delete item.metadata[`${ID}/metadata`];
+            }
+          });
+        }
       }
     },
   });

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { CodeBlock } from "react-code-blocks";
 
@@ -10,6 +10,14 @@ const Homepage: React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const isHomepage = urlParams.has("homepage");
 
+  const [version, setVersion] = useState("unknown");
+  useEffect(() => {
+    fetch("/manifest.json")
+      .then((b) => b.json())
+      .then((j) => j.version)
+      .then(setVersion);
+  }, []);
+  
   useEffect(() => {
     if (!isHomepage) {
       window.location.href = "/?homepage";
@@ -181,7 +189,7 @@ const Homepage: React.FC = () => {
             </li>
           </ul>
           <h2>Help Topics</h2>
-          <Help />
+          <Help version={version} />
         </Col>
         <Col xs lg="3"></Col>
       </Row>

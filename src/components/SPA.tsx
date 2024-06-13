@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 
 import LocationKey from "./LocationKey";
@@ -43,6 +43,14 @@ export default function SPA() {
   const handlePlayerChange = (player: Player) => {
     setRole(player.role);
   };
+
+  const [version, setVersion] = useState("unknown");
+  useEffect(() => {
+    fetch("/manifest.json")
+      .then((b) => b.json())
+      .then((j) => j.version)
+      .then(setVersion);
+  }, []);
 
   useEffect(() => {
     OBR.onReady(() => {
@@ -92,7 +100,7 @@ export default function SPA() {
           element={<ImportExport locationKeys={locationKeys} />}
         />
         <Route path={paths.bulkActions} element={<AddDeleteAll />} />
-        <Route path={paths.help} element={<Help />} />
+        <Route path={paths.help} element={<Help version={version} />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>

@@ -3,7 +3,7 @@ import { Accordion, Card, CardBody, Container } from "react-bootstrap";
 import { analytics } from "../utils";
 import YouTube from "react-youtube";
 
-const Help: React.FC = () => {
+const Help: React.FC<{ version: string }> = ({ version }) => {
   const itemsAdd: { header: string; image: string; description?: string }[] = [
     {
       header: "1. Add or select an existing TEXT item",
@@ -28,7 +28,7 @@ const Help: React.FC = () => {
   analytics.page();
 
   const opts = {
-    width: '300',
+    width: "300",
   };
 
   return (
@@ -170,6 +170,7 @@ id: ''`}
           />
         </a>
       </Container>
+      <em className="text-secondary mb-3">Version: {version}</em>
     </>
   );
 };

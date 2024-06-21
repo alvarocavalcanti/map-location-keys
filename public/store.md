@@ -5,7 +5,7 @@ author: Alvaro Cavalcanti
 image: https://map-location-keys.vercel.app/img/hero.png
 icon: https://map-location-keys.vercel.app/img/logo.png
 tags:
-  - other
+  - tool
 manifest: https://map-location-keys.vercel.app/manifest.json
 learn-more: https://github.com/alvarocavalcanti/map-location-keys
 ---

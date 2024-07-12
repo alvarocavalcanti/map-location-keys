@@ -31,7 +31,7 @@ export function sortLocationKeys(newLocationKeys: LocationKey[]) {
 }
 
 export const getItemText = (item: any) => {
-  return item.text.richText[0].children[0].text;
+  return item.text.richText[0].children[0].text ? item.text.richText[0].children[0].text : item.text.plainText;
 };
 
 export const isDevMode = (): boolean => {

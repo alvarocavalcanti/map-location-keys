@@ -52,3 +52,9 @@ Select a TEXT item and choose "Remove Location Key" from the context menu.
 You can edit location keys using Markdown.
 
 ![Edit a location key](public/img/edit.png)
+
+### Release Notes
+
+#### 2024-07-12
+
+- Support for `PROP` layer (documentation pending)

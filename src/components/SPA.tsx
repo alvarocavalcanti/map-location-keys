@@ -57,11 +57,11 @@ export default function SPA() {
       setupContextMenu();
       OBR.scene.items
         .getItems((item) => {
-          return item.layer === "TEXT";
+          return item.layer === "TEXT" || item.layer === "PROP";
         })
         .then((items) => loadLocationKeys(items));
       OBR.scene.items.onChange((items) => {
-        loadLocationKeys(items.filter((item) => item.layer === "TEXT"));
+        loadLocationKeys(items.filter((item) => item.layer === "TEXT" || item.layer === "PROP"));
       });
       OBR.theme.getTheme().then((theme) => {
         setTheme(theme.mode.toLowerCase());

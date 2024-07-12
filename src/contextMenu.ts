@@ -23,7 +23,8 @@ export function setupContextMenu() {
         filter: {
           roles: ["GM"],
           every: [
-            { key: "layer", value: "TEXT" },
+            { key: "layer", value: "TEXT", coordinator: "||" },
+            { key: "layer", value: "PROP" },
             { key: ["metadata", `${ID}/metadata`], value: undefined },
           ],
         },
@@ -33,7 +34,11 @@ export function setupContextMenu() {
         label: "Remove Location Key",
         filter: {
           roles: ["GM"],
-          every: [{ key: "layer", value: "TEXT" }],
+          every: [
+            { key: "layer", value: "TEXT", coordinator: "||" },
+            { key: "layer", value: "PROP" },
+
+          ],
         },
       },
     ],
@@ -74,7 +79,8 @@ export function setupContextMenu() {
         filter: {
           roles: ["GM"],
           every: [
-            { key: "layer", value: "TEXT" },
+            { key: "layer", value: "TEXT", coordinator: "||" },
+            { key: "layer", value: "PROP" },
             { key: ["metadata", `${ID}/metadata`], value: undefined, operator: "!="},
           ],
         },

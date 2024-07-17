@@ -38,6 +38,9 @@ const LocationKey: React.FC<{
         }
       )
       .then(() => {
+        OBR.broadcast.sendMessage(`${ID}/broadcast`, `${locationKey.id}`, {
+          destination: "LOCAL",
+        });
         navigate("/");
       });
   };

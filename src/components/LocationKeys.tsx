@@ -11,9 +11,9 @@ import {
   Container,
   Row,
 } from "react-bootstrap";
-import Markdown from "react-markdown";
+import { Remarkable } from 'remarkable';
+import RemarkableReactRenderer from 'remarkable-react';
 import { Link } from "react-router-dom";
-import remarkGfm from "remark-gfm";
 
 import { ID } from "../main";
 import { paths } from "./util/constants";
@@ -52,6 +52,9 @@ const LocationKeys: React.FC<{
 
   analytics.page();
 
+  const md = new Remarkable('full');
+  md.renderer = new RemarkableReactRenderer();
+
   return (
     <Container>
       {locationKeys.length > 0 ? (
@@ -76,9 +79,7 @@ const LocationKeys: React.FC<{
                   {locationKey.name}
                 </Accordion.Header>
                 <Accordion.Body>
-                  <Markdown remarkPlugins={[remarkGfm]}>
-                    {locationKey.description}
-                  </Markdown>
+                  {md.render(locationKey.description)}
                   <Row className="text-center">
                     <Col>
                       <Link

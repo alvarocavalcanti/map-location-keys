@@ -55,6 +55,10 @@ You can edit location keys using Markdown.
 
 ### Release Notes
 
+#### 2024-07-17
+
+- Expanding the location after editing
+
 #### 2024-07-12
 
 - Support for `PROP` layer (documentation pending)

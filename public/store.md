@@ -29,26 +29,26 @@ The idea here is to reduce tab switching between OBR and wherever your map descr
 ## Add a Location Key
 
 <!-- markdownlint-disable MD033 -->
-<video src="video/01-add-location-key.mp4" width="320" height="240" controls></video>
+<video src="https://github.com/alvarocavalcanti/map-location-keys/raw/main/public/video/01-add-location-key.mp4" width="320" height="240" controls></video>
 
 ## Remove a Location Key
 
-<video src="video/02-remove-location-key.mp4" width="320" height="240" controls></video>
+<video src="https://github.com/alvarocavalcanti/map-location-keys/raw/main/public/video/02-remove-location-key.mp4" width="320" height="240" controls></video>
 
 ## Edit a Location Key
 
 You can edit location keys using Markdown.
 
-<video src="video/03-edit-location-key.mp4" width="320" height="240" controls></video>
+<video src="https://github.com/alvarocavalcanti/map-location-keys/raw/main/public/video/03-edit-location-key.mp4" width="320" height="240" controls></video>
 
 ## Import Location Keys
 
-<video src="video/04-import-location-keys.mp4" width="320" height="240" controls></video>
+<video src="https://github.com/alvarocavalcanti/map-location-keys/raw/main/public/video/04-import-location-keys.mp4" width="320" height="240" controls></video>
 
 ## Show Location Key
 
-<video src="video/05-show-location-key.mp4" width="320" height="240" controls></video>
+<video src="https://github.com/alvarocavalcanti/map-location-keys/raw/main/public/video/05-show-location-key.mp4" width="320" height="240" controls></video>
 
 ## Export Location Keys
 
-<video src="video/06-export-location-keys.mp4" width="320" height="240" controls></video>
+<video src="https://github.com/alvarocavalcanti/map-location-keys/raw/main/public/video/06-export-location-keys.mp4" width="320" height="240" controls></video>

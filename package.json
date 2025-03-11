@@ -15,14 +15,14 @@
     "@types/react-dom": "^18.3.0",
     "@types/remarkable": "^2.0.8",
     "typescript": "^5.4.5",
-    "vite": "^5.4.14"
+    "vite": "^6.2.1"
   },
   "dependencies": {
     "@analytics/google-analytics": "^1.0.7",
     "@owlbear-rodeo/sdk": "^2.4.0",
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "analytics": "^0.8.13",
     "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",

@@ -2,6 +2,11 @@ import React from "react";
 import { Accordion, Card, CardBody, Container } from "react-bootstrap";
 import { analytics } from "../utils";
 import YouTube from "react-youtube";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBluesky } from "@fortawesome/free-brands-svg-icons";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faGlobeAfrica } from "@fortawesome/free-solid-svg-icons";
 
 const Help: React.FC<{ version: string }> = ({ version }) => {
   const itemsAdd: { header: string; image: string; description?: string }[] = [
@@ -151,14 +156,38 @@ id: ''`}
       </Container>
       <Container className="mt-3 text-center">
         <a
+          href="https://shadowcrawler.vercel.app"
+          target="_blank"
+          className="m-1"
+        >
+          <FontAwesomeIcon icon={faGlobeAfrica} /> shadowcrawler.vercel.app
+        </a>
+      </Container>
+      <Container className="mt-3 text-center">
+        <a
+          href="https://github.com/alvarocavalcanti/shadowcrawler"
+          target="_blank"
+          className="m-1"
+        >
+          <FontAwesomeIcon icon={faGithub} /> alvarocavalcanti/shadowcrawler
+        </a>
+      </Container>
+      <Container className="mt-3 text-center">
+        <a
+          href="https://bsky.app/profile/alvarocavalcanti.bsky.social"
+          target="_blank"
+          className="m-1"
+        >
+          <FontAwesomeIcon icon={faBluesky} /> alvarocavalcanti.bsky.social
+        </a>
+      </Container>
+      <Container className="mt-3 text-center">
+        <a
           href="https://twitter.com/alvarocavalcant"
           target="_blank"
           className="m-1"
         >
-          <img
-            src="https://img.shields.io/twitter/follow/alvarocavalcant?style=social"
-            alt="Follow @alvarocavalcant on Twitter"
-          />
+          <FontAwesomeIcon icon={faTwitter} /> alvarocavalcant
         </a>
       </Container>
       <Container className="p-3 text-center">

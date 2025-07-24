@@ -31,7 +31,12 @@ export function sortLocationKeys(newLocationKeys: LocationKey[]) {
 }
 
 export const getItemText = (item: any) => {
-  return item.text.richText[0].children[0].text ? item.text.richText[0].children[0].text : item.text.plainText;
+  if (item.text.richText && item.text.richText.length > 0) {
+    return item.text.richText
+      .map((line: any) => line.children.map((child: any) => child.text).join(''))
+      .join(' ');
+  }
+  return item.text.plainText;
 };
 
 export const isDevMode = (): boolean => {

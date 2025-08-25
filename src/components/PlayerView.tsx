@@ -1,38 +1,135 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Container } from "react-bootstrap";
-import { analytics } from "../utils";
+import { 
+  Accordion, 
+  Card, 
+  CardBody, 
+  Container,
+  Button,
+  Row,
+  Col 
+} from "react-bootstrap";
+import { Remarkable } from 'remarkable';
+import RemarkableReactRenderer from 'remarkable-react';
+import OBR, { Item } from "@owlbear-rodeo/sdk";
+import { LocationKey } from "../@types/types";
+import { 
+  getItemText,
+  loadExistingLocationKeys,
+  sortLocationKeys,
+  analytics 
+} from "../utils";
+import { track } from "@vercel/analytics";
+import { ID } from "../main";
 
 const PlayerView: React.FC = () => {
-  const gifs = [
-    "https://media.giphy.com/media/Ri8IaAbBNULxVTYzWw/giphy.gif?cid=790b7611moh0bd3xhuosnketp0y49q8dq5ak1irs0uct4fku&ep=v1_gifs_search&rid=giphy.gif&ct=g",
-    "https://media.giphy.com/media/eIV8AvO3EC3xhscTIW/giphy.gif?cid=790b7611moh0bd3xhuosnketp0y49q8dq5ak1irs0uct4fku&ep=v1_gifs_search&rid=giphy.gif&ct=g",
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9oMGJkM3hodW9zbmtldHAweTQ5cThkcTVhazFpcnMwdWN0NGZrdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/a93jwI0wkWTQs/giphy.gif",
-    "https://media.giphy.com/media/Ri8IaAbBNULxVTYzWw/giphy.gif?cid=790b7611moh0bd3xhuosnketp0y49q8dq5ak1irs0uct4fku&ep=v1_gifs_search&rid=giphy.gif&ct=g",
-    "https://media.giphy.com/media/w89ak63KNl0nJl80ig/giphy.gif?cid=790b7611moh0bd3xhuosnketp0y49q8dq5ak1irs0uct4fku&ep=v1_gifs_search&rid=giphy.gif&ct=g",
-    "https://media.giphy.com/media/xFpT7lMV5Mkqq0E6YM/giphy.gif?cid=790b7611moh0bd3xhuosnketp0y49q8dq5ak1irs0uct4fku&ep=v1_gifs_search&rid=giphy.gif&ct=g",
-    "https://media.giphy.com/media/3o7TKVYGDRzuyxfo1a/giphy.gif?cid=ecf05e4724h30hzclb2v9mxsaprw252urqy6cy1z8rzcvgbv&ep=v1_gifs_search&rid=giphy.gif&ct=g",
-  ];
+  const [playerVisibleKeys, setPlayerVisibleKeys] = useState<LocationKey[]>([]);
+  const [locationToReveal, setLocationToReveal] = useState<string>("");
 
-  const [gif, setGif] = useState<string>("");
+  const handleToggleClick = (id: string) => {
+    setLocationToReveal((prevKey) => (prevKey === id ? "" : id));
+  };
+
+  const showOnMap = (id: string) => {
+    track("player_show_location_on_map");
+    analytics.track("player_show_location_on_map");
+    OBR.scene.items.getItemBounds([id]).then((bounds) => {
+      OBR.viewport.animateToBounds({
+        ...bounds,
+        min: { x: bounds.min.x - 1000, y: bounds.min.y - 1000 },
+        max: { x: bounds.max.x + 1000, y: bounds.max.y + 1000 },
+      });
+    });
+  };
+
+  const loadPlayerVisibleKeys = (items: Item[]): void => {
+    const allLocationKeys: LocationKey[] = [];
+    loadExistingLocationKeys(items, allLocationKeys, getItemText);
+
+    const visibleKeys = allLocationKeys.filter(key => key.isPlayerVisible);
+    sortLocationKeys(visibleKeys);
+
+    setPlayerVisibleKeys(visibleKeys);
+  };
 
   useEffect(() => {
-    setGif(gifs[Math.floor(Math.random() * gifs.length)]);
+    OBR.scene.items.onChange(loadPlayerVisibleKeys);
+    OBR.scene.isReady().then(() => {
+      OBR.scene.items.getItems().then(loadPlayerVisibleKeys);
+    });
+
+    OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
+      setLocationToReveal(event.data as string);
+      window.document
+        .getElementById(`player-accordion-${event.data as string}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   }, []);
 
   analytics.page();
 
+  const md = new Remarkable('full');
+  md.renderer = new RemarkableReactRenderer();
+
   return (
     <Container>
-      <Card className="mb-4">
-        <CardBody>
-          <Card.Img variant="top" src={gif} />
-          <Card.Title className="header">Nothing to See Here</Card.Title>
-          <Card.Text>
-            This tool is intended for GMs to manage their games. Players will
-            not see anything here.
-          </Card.Text>
-        </CardBody>
-      </Card>
+      {playerVisibleKeys.length > 0 ? (
+        <>
+          <Card className="mt-3">
+            <CardBody>
+              <Card.Title className="header">Location Information</Card.Title>
+              <Card.Text>
+                Your GM has shared these location details with you.
+              </Card.Text>
+            </CardBody>
+          </Card>
+          <Accordion activeKey={locationToReveal}>
+            {playerVisibleKeys.map((locationKey, index) => (
+              <Accordion.Item
+                eventKey={locationKey.id}
+                key={String(index)}
+                id={`player-accordion-${locationKey.id}`}
+              >
+                <Accordion.Header
+                  onClick={() => {
+                    handleToggleClick(locationKey.id);
+                  }}
+                >
+                  {locationKey.name}
+                </Accordion.Header>
+                <Accordion.Body>
+                  {locationKey.playerInfo ? (
+                    md.render(locationKey.playerInfo)
+                  ) : (
+                    <p><em>No additional information provided.</em></p>
+                  )}
+                  <Row className="text-center">
+                    <Col>
+                      <Button
+                        variant="secondary"
+                        onClick={() => showOnMap(locationKey.id)}
+                      >
+                        Show
+                      </Button>
+                    </Col>
+                    <Col>{""}</Col>
+                    <Col>{""}</Col>
+                    <Col>{""}</Col>
+                  </Row>
+                </Accordion.Body>
+              </Accordion.Item>
+            ))}
+          </Accordion>
+        </>
+      ) : (
+        <Card className="mb-4">
+          <CardBody>
+            <Card.Title className="header">No Location Information</Card.Title>
+            <Card.Text>
+              Your GM hasn't shared any location information with players yet.
+            </Card.Text>
+          </CardBody>
+        </Card>
+      )}
     </Container>
   );
 };

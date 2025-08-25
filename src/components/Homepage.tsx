@@ -79,8 +79,8 @@ const Homepage: React.FC = () => {
             usually contain descriptions of a particular room or feature.
           </Container>
           <Container className="mb-4">
-            It's almost like adding notes/post-its but they are only visible to
-            the GM.
+            Location Keys can be kept private to the GM or shared with players
+            using the new player visibility feature.
           </Container>
           <Container className="mb-4">
             You only need to add a text item to the map, ideally one or two
@@ -93,7 +93,9 @@ const Homepage: React.FC = () => {
           </Container>
           <Container className="mb-4">
             The description supports Markdown and there are Import/Export
-            features for handling several locations at a time.
+            features for handling several locations at a time. You can also
+            add player-specific information and control which location keys
+            are visible to players.
           </Container>
           <Container className="mb-4">
             The idea here is to reduce tab switching between OBR and wherever
@@ -156,12 +158,37 @@ const Homepage: React.FC = () => {
             controls
             className="mb-4"
           ></video>
+          <h3 className="mt-4">Player Visibility Features</h3>
+          <Container className="mb-4">
+            <strong>New Feature:</strong> GMs can now share location information with players by:
+            <ul>
+              <li>Adding custom "Player Information" content when editing location keys</li>
+              <li>Toggling player visibility via context menu, edit form, or GM view buttons</li>
+              <li>Players see a dedicated interface with only shared location information</li>
+            </ul>
+            <em>Video demonstration coming soon!</em>
+          </Container>
           <h2>Player View</h2>
           <Container className="mb-4">
-            The Location Keys <strong>in the extension drawer</strong> are only
-            visible to the GM, the players will see a funny GIF instead.
-            However, the Location Keys <strong>on the map</strong> are visible
-            to everyone unless you <strong>hide</strong>.
+            Players can now see location information that GMs choose to share!
+            When GMs mark location keys as player-visible and add player-specific
+            information, players will see a clean interface showing only the
+            shared content. The Location Keys <strong>on the map</strong> remain
+            visible to everyone unless you <strong>hide</strong> them.
+          </Container>
+          <Container className="mb-4">
+            <strong>GM Controls:</strong>
+            <ul>
+              <li>Add custom "Player Information" when editing location keys</li>
+              <li>Toggle visibility using the context menu, edit form, or eye icon buttons</li>
+              <li>Visual indicators show which keys are shared with players</li>
+            </ul>
+            <strong>Player Experience:</strong>
+            <ul>
+              <li>See only location keys marked as player-visible</li>
+              <li>View custom player-friendly descriptions (supports Markdown)</li>
+              <li>Navigate to locations using "Show" buttons</li>
+            </ul>
           </Container>
           <PlayerView />
           <br />

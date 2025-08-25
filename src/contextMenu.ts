@@ -11,7 +11,9 @@ export const locationKeyTemplate = `# Evocative Name
 
 **Creatures:**
 
-**Notes:**`;
+**Notes:**
+
+**Information for Players:**`;
 
 export function setupContextMenu() {
   OBR.contextMenu.create({
@@ -92,6 +94,36 @@ export function setupContextMenu() {
       OBR.action.open();
       OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {
         destination: "LOCAL",
+      });
+    },
+  });
+  OBR.contextMenu.create({
+    id: `${ID}/context-menu-player-visibility`,
+    icons: [
+      {
+        icon: "/img/icon.svg",
+        label: "Toggle Player Visibility",
+        filter: {
+          roles: ["GM"],
+          every: [
+            { key: "layer", value: "TEXT", coordinator: "||" },
+            { key: "layer", value: "PROP" },
+            { key: ["metadata", `${ID}/metadata`], value: undefined, operator: "!="},
+          ],
+        },
+      },
+    ],
+    onClick(context) {
+      track("toggle_player_visibility");
+      analytics.track("toggle_player_visibility");
+      OBR.scene.items.updateItems(context.items, (items) => {
+        for (let item of items) {
+          const metadata = item.metadata[`${ID}/metadata`] as any;
+          if (metadata) {
+            metadata.isPlayerVisible = !metadata.isPlayerVisible;
+            item.metadata[`${ID}/metadata`] = metadata;
+          }
+        }
       });
     },
   });

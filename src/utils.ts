@@ -1,4 +1,4 @@
-import { Item, Metadata } from "@owlbear-rodeo/sdk";
+import { Item } from "@owlbear-rodeo/sdk";
 import { LocationKey } from "./@types/types";
 import { ID } from "./main";
 
@@ -12,11 +12,13 @@ export function loadExistingLocationKeys(
 ) {
   for (const item of items) {
     if (item.metadata[`${ID}/metadata`]) {
-      const metadata = item.metadata[`${ID}/metadata`] as Metadata;
+      const metadata = item.metadata[`${ID}/metadata`] as any;
       newLocationKeys.push({
         description: metadata.locationKey as string,
         name: getItemText(item),
         id: item.id,
+        playerInfo: metadata.playerInfo || "",
+        isPlayerVisible: metadata.isPlayerVisible || false,
       });
     }
   }

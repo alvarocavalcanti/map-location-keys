@@ -107,34 +107,51 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
                   <strong>id</strong> is a string that represents the ID of the
                   TEXT item. This is optional and can be left blank.
                 </li>
+                <li>
+                  <strong>playerInfo</strong> is an optional string that contains
+                  information visible to players when the location key is shared with them.
+                  Supports Markdown.
+                </li>
+                <li>
+                  <strong>isPlayerVisible</strong> is an optional boolean that
+                  determines if the location key is visible to players. Defaults to false.
+                </li>
               </ul>
               Example:
               <br className="mb-3" />
               <pre className="text-bg-secondary">
                 {`- description: |-
-  # Evocative Name
+    # Evocative Name
 
-  **Description:**
+    **Description:**
 
-  **Features:**
+    **Features:**
 
-  **Creatures:**
+    **Creatures:**
 
-  **Notes:**
-name: '1'
-id: ''
+    **Notes:**
+
+    **Information for Players:**
+  name: '1'
+  id: ''
+  playerInfo: 'A mysterious room with ancient symbols on the walls.'
+  isPlayerVisible: true
 - description: |-
-  # Other Evocative Name
+    # Other Evocative Name
 
-  **Description:**
+    **Description:**
 
-  **Features:**
+    **Features:**
 
-  **Creatures:**
+    **Creatures:**
 
-  **Notes:**
-name: '2'
-id: ''`}
+    **Notes:**
+
+    **Information for Players:**
+  name: '2'
+  id: ''
+  playerInfo: ''
+  isPlayerVisible: false`}
               </pre>
             </Accordion.Body>
           </Accordion.Item>
@@ -150,6 +167,48 @@ id: ''`}
                 className="img-fluid"
               />
               You can move them around as needed.
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      </Container>
+      <Container className="mt-4">
+        <Card className="mb-2">
+          <CardBody>
+            <Card.Title>Sharing Location Keys with Players</Card.Title>
+          </CardBody>
+        </Card>
+        <Accordion key="3">
+          <Accordion.Item eventKey="0" key={0}>
+            <Accordion.Header>1. Add Player Information</Accordion.Header>
+            <Accordion.Body>
+              When editing a location key, you can add information specifically for players in the "Player Information" field. This content supports Markdown and will be shown to players when the location key is made visible to them.
+              <br /><br />
+              This field is separate from your GM notes, so you can include player-appropriate descriptions while keeping your GM-only information private.
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1" key={1}>
+            <Accordion.Header>2. Make Location Key Visible to Players</Accordion.Header>
+            <Accordion.Body>
+              You can make location keys visible to players in several ways:
+              <ul>
+                <li><strong>Edit Form:</strong> Check the "Make visible to players" checkbox when editing a location key</li>
+                <li><strong>Context Menu:</strong> Right-click any location key and select "Toggle Player Visibility"</li>
+                <li><strong>GM View:</strong> Click the eye icon button next to any location key to quickly toggle visibility</li>
+              </ul>
+              Location keys that are visible to players will show an eye icon (👁️) next to their name in the GM view.
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="2" key={2}>
+            <Accordion.Header>3. Player Experience</Accordion.Header>
+            <Accordion.Body>
+              When players open the extension, they will see:
+              <ul>
+                <li>A "Location Information" section instead of the full GM interface</li>
+                <li>Only location keys that you've marked as player-visible</li>
+                <li>The custom "Player Information" content you've written for each location</li>
+                <li>A "Show" button to navigate to each visible location</li>
+              </ul>
+              If no location keys are made visible to players, they'll see a message saying "Your GM hasn't shared any location information with players yet."
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

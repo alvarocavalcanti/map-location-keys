@@ -1,7 +1,7 @@
 {
   "name": "map-location-keys",
   "private": true,
-  "version": "2024-04-03",
+  "version": "2025-08-25",
   "type": "module",
   "scripts": {
     "dev": "vite",

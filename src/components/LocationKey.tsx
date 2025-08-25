@@ -23,6 +23,12 @@ const LocationKey: React.FC<{
   const [description, setDescription] = React.useState(
     locationKey.description || ""
   );
+  const [playerInfo, setPlayerInfo] = React.useState(
+    locationKey.playerInfo || ""
+  );
+  const [isPlayerVisible, setIsPlayerVisible] = React.useState(
+    locationKey.isPlayerVisible || false
+  );
   const navigate = useNavigate();
 
   const handleSave = () => {
@@ -33,7 +39,11 @@ const LocationKey: React.FC<{
         (item) => item.id === locationKey.id,
         (items) => {
           for (let item of items) {
-            item.metadata[`${ID}/metadata`] = { locationKey: description };
+            item.metadata[`${ID}/metadata`] = { 
+              locationKey: description,
+              playerInfo: playerInfo,
+              isPlayerVisible: isPlayerVisible
+            };
           }
         }
       )
@@ -70,6 +80,27 @@ const LocationKey: React.FC<{
                 defaultValue={description}
                 onChange={(e) => setDescription(e.target.value)}
                 data-bs-theme="light"
+                className="mb-4"
+              />
+              <Card.Title className="header">Player Information</Card.Title>
+              <Card.Text>
+                <em>Information visible to players when enabled (Markdown supported).</em>
+              </Card.Text>
+              <Form.Control
+                as="textarea"
+                rows={6}
+                placeholder="Enter information that players will see when this location key is made visible to them..."
+                value={playerInfo}
+                onChange={(e) => setPlayerInfo(e.target.value)}
+                data-bs-theme="light"
+                className="mb-3"
+              />
+              <Form.Check
+                type="checkbox"
+                id="player-visibility-checkbox"
+                label="Make visible to players"
+                checked={isPlayerVisible}
+                onChange={(e) => setIsPlayerVisible(e.target.checked)}
                 className="mb-4"
               />
               <Row className="text-center">

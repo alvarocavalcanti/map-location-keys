@@ -14,6 +14,8 @@ import {
 import { Remarkable } from 'remarkable';
 import RemarkableReactRenderer from 'remarkable-react';
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { ID } from "../main";
 import { paths } from "./util/constants";
@@ -38,6 +40,20 @@ const LocationKeys: React.FC<{
         min: { x: bounds.min.x - 1000, y: bounds.min.y - 1000 },
         max: { x: bounds.max.x + 1000, y: bounds.max.y + 1000 },
       });
+    });
+  };
+
+  const togglePlayerVisibility = (id: string) => {
+    track("toggle_player_visibility");
+    analytics.track("toggle_player_visibility");
+    OBR.scene.items.updateItems([id], (items) => {
+      for (let item of items) {
+        const metadata = item.metadata[`${ID}/metadata`] as any;
+        if (metadata) {
+          metadata.isPlayerVisible = !metadata.isPlayerVisible;
+          item.metadata[`${ID}/metadata`] = metadata;
+        }
+      }
     });
   };
 
@@ -76,7 +92,16 @@ const LocationKeys: React.FC<{
                     handleToggleClick(locationKey.id);
                   }}
                 >
-                  {locationKey.name}
+                  <span className="me-2">
+                    {locationKey.name}
+                  </span>
+                  {locationKey.isPlayerVisible && (
+                    <FontAwesomeIcon 
+                      icon={faEye} 
+                      className="text-success" 
+                      title="Visible to players"
+                    />
+                  )}
                 </Accordion.Header>
                 <Accordion.Body>
                   {md.render(locationKey.description)}
@@ -93,6 +118,8 @@ const LocationKeys: React.FC<{
                               id: locationKey.id,
                               name: locationKey.name,
                               description: locationKey.description,
+                              playerInfo: locationKey.playerInfo,
+                              isPlayerVisible: locationKey.isPlayerVisible,
                             })
                           }
                         >
@@ -108,7 +135,17 @@ const LocationKeys: React.FC<{
                         Show
                       </Button>
                     </Col>
-                    <Col>{""}</Col>
+                    <Col>
+                      <Button
+                        variant={locationKey.isPlayerVisible ? "success" : "outline-secondary"}
+                        onClick={() => togglePlayerVisibility(locationKey.id)}
+                        title={locationKey.isPlayerVisible ? "Hide from players" : "Show to players"}
+                      >
+                        <FontAwesomeIcon 
+                          icon={locationKey.isPlayerVisible ? faEye : faEyeSlash} 
+                        />
+                      </Button>
+                    </Col>
                     <Col>{""}</Col>
                   </Row>
                 </Accordion.Body>

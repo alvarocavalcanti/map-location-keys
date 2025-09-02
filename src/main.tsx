@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./components/App";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/markdown.css";
 import PluginGate from "./components/PluginGate";
 import Homepage from "./components/Homepage";
 

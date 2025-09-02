@@ -36,9 +36,8 @@
     "react-bootstrap": "^2.10.2",
     "react-code-blocks": "^0.1.6",
     "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^6.23.1",
-    "react-youtube": "^10.1.0",
-    "remarkable": "^2.0.1",
-    "remarkable-react": "^1.4.3"
+    "react-youtube": "^10.1.0"
   }
 }

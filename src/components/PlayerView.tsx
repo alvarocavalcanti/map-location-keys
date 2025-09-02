@@ -8,8 +8,7 @@ import {
   Row,
   Col 
 } from "react-bootstrap";
-import { Remarkable } from 'remarkable';
-import RemarkableReactRenderer from 'remarkable-react';
+import Markdown from 'react-markdown';
 import OBR, { Item } from "@owlbear-rodeo/sdk";
 import { LocationKey } from "../@types/types";
 import { 
@@ -67,9 +66,6 @@ const PlayerView: React.FC = () => {
 
   analytics.page();
 
-  const md = new Remarkable('full');
-  md.renderer = new RemarkableReactRenderer();
-
   return (
     <Container>
       {playerVisibleKeys.length > 0 ? (
@@ -98,7 +94,9 @@ const PlayerView: React.FC = () => {
                 </Accordion.Header>
                 <Accordion.Body>
                   {locationKey.playerInfo ? (
-                    md.render(locationKey.playerInfo)
+                    <div className="markdown-content">
+                      <Markdown>{locationKey.playerInfo}</Markdown>
+                    </div>
                   ) : (
                     <p><em>No additional information provided.</em></p>
                   )}

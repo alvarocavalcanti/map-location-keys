@@ -11,8 +11,7 @@ import {
   Container,
   Row,
 } from "react-bootstrap";
-import { Remarkable } from 'remarkable';
-import RemarkableReactRenderer from 'remarkable-react';
+import Markdown from 'react-markdown';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -68,9 +67,6 @@ const LocationKeys: React.FC<{
 
   analytics.page();
 
-  const md = new Remarkable('full');
-  md.renderer = new RemarkableReactRenderer();
-
   return (
     <Container>
       {locationKeys.length > 0 ? (
@@ -104,7 +100,9 @@ const LocationKeys: React.FC<{
                   )}
                 </Accordion.Header>
                 <Accordion.Body>
-                  {md.render(locationKey.description)}
+                  <div className="markdown-content">
+                    <Markdown>{locationKey.description || ''}</Markdown>
+                  </div>
                   <Row className="text-center">
                     <Col>
                       <Link

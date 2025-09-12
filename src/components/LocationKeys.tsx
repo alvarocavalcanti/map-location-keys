@@ -11,10 +11,10 @@ import {
   Container,
   Row,
 } from "react-bootstrap";
-import Markdown from 'react-markdown';
+import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import { ID } from "../main";
 import { paths } from "./util/constants";
@@ -88,20 +88,18 @@ const LocationKeys: React.FC<{
                     handleToggleClick(locationKey.id);
                   }}
                 >
-                  <span className="me-2">
-                    {locationKey.name}
-                  </span>
+                  <span className="me-2">{locationKey.name}</span>
                   {locationKey.isPlayerVisible && (
-                    <FontAwesomeIcon 
-                      icon={faEye} 
-                      className="text-success" 
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      className="text-success"
                       title="Visible to players"
                     />
                   )}
                 </Accordion.Header>
                 <Accordion.Body>
                   <div className="markdown-content">
-                    <Markdown>{locationKey.description || ''}</Markdown>
+                    <Markdown>{locationKey.description || ""}</Markdown>
                   </div>
                   <Row className="text-center mt-3">
                     <Col>
@@ -135,12 +133,22 @@ const LocationKeys: React.FC<{
                     </Col>
                     <Col>
                       <Button
-                        variant={locationKey.isPlayerVisible ? "success" : "outline-secondary"}
+                        variant={
+                          locationKey.isPlayerVisible
+                            ? "success"
+                            : "outline-secondary"
+                        }
                         onClick={() => togglePlayerVisibility(locationKey.id)}
-                        title={locationKey.isPlayerVisible ? "Hide from players" : "Show to players"}
+                        title={
+                          locationKey.isPlayerVisible
+                            ? "Hide from players"
+                            : "Show to players"
+                        }
                       >
-                        <FontAwesomeIcon 
-                          icon={locationKey.isPlayerVisible ? faEye : faEyeSlash} 
+                        <FontAwesomeIcon
+                          icon={
+                            locationKey.isPlayerVisible ? faEye : faEyeSlash
+                          }
                         />
                       </Button>
                     </Col>
@@ -164,6 +172,15 @@ const LocationKeys: React.FC<{
       )}
     </Container>
   );
+  <Container className="p-3 text-center">
+    <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
+      <img
+        src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+        alt="Buy Me A Coffee"
+        style={{ height: "60px", width: "217px" }}
+      />
+    </a>
+  </Container>;
 };
 
 export default LocationKeys;

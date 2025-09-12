@@ -103,7 +103,7 @@ const LocationKey: React.FC<{
                 onChange={(e) => setIsPlayerVisible(e.target.checked)}
                 className="mb-4"
               />
-              <Row className="text-center">
+              <Row className="text-center mt-3">
                 <Col>
                   <Button
                     variant="primary"

@@ -11,9 +11,7 @@ export const locationKeyTemplate = `# Evocative Name
 
 **Creatures:**
 
-**Notes:**
-
-**Information for Players:**`;
+**Notes:**`;
 
 export function setupContextMenu() {
   OBR.contextMenu.create({

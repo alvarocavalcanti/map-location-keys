@@ -103,7 +103,7 @@ const LocationKeys: React.FC<{
                   <div className="markdown-content">
                     <Markdown>{locationKey.description || ''}</Markdown>
                   </div>
-                  <Row className="text-center">
+                  <Row className="text-center mt-3">
                     <Col>
                       <Link
                         to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}

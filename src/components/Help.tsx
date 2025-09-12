@@ -130,8 +130,6 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
     **Creatures:**
 
     **Notes:**
-
-    **Information for Players:**
   name: '1'
   id: ''
   playerInfo: 'A mysterious room with ancient symbols on the walls.'
@@ -146,8 +144,6 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
     **Creatures:**
 
     **Notes:**
-
-    **Information for Players:**
   name: '2'
   id: ''
   playerInfo: ''

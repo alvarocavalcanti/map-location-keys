@@ -127,3 +127,4 @@ npm run build
 - **Consistent formatting**: Follow existing code style patterns
 - **Clean imports**: Remove unused imports and maintain proper organization
 - **Proper indentation**: Maintain consistent spacing and formatting
+- always lint/format the files you generate

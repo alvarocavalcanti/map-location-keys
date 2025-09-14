@@ -2,6 +2,12 @@
 
 This document tracks the major features and improvements to the Map Location Keys extension for Owlbear Rodeo.
 
+## 2025-09-14
+
+### Documentation
+
+- **Release Notes**: Added comprehensive RELEASE-NOTES.md documenting all major features and improvements from the past year
+
 ## 2025-09-12
 
 ### UI/UX Improvements

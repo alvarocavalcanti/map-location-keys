@@ -4,6 +4,12 @@ This document tracks the major features and improvements to the Map Location Key
 
 ## 2025-09-14
 
+### Import/Export Improvements
+
+- **Staircase Layout**: Implemented intelligent staircase positioning for imported location keys, replacing linear horizontal layout with 2D distribution that reduces visual clutter and scales efficiently for large datasets
+- **Chunked Import Processing**: Enhanced import functionality with batch processing to handle large location key sets (50+ items) without exceeding OBR update size limits
+- **Progress Indicators**: Added real-time import progress feedback with batch status and improved error handling
+
 ### Documentation
 
 - **Release Notes**: Added comprehensive RELEASE-NOTES.md documenting all major features and improvements from the past year

@@ -254,7 +254,17 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
           />
         </a>
       </Container>
-      <em className="text-secondary mb-3">Version: {version}</em>
+      <em className="text-secondary mb-3">
+        Version: {version} |
+        <a
+          href="https://github.com/alvarocavalcanti/map-location-keys/blob/main/RELEASE-NOTES.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-secondary ms-1"
+        >
+          Release Notes
+        </a>
+      </em>
     </>
   );
 };

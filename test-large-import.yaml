@@ -1,0 +1,300 @@
+- description: |
+    # Room 1 - Entrance Hall
+
+    **Description:**
+    A grand entrance hall with marble floors and tall columns.
+
+    **Features:**
+    - Ornate chandelier hanging from the ceiling
+    - Two staircases leading to upper floors
+    - Large oak doors leading deeper into the building
+
+    **Creatures:**
+    None visible
+
+    **Notes:**
+    The dust on the floor shows recent footprints leading east.
+  name: Entrance Hall
+  id: '1'
+  playerInfo: 'A magnificent entrance with marble floors and twin staircases.'
+  isPlayerVisible: true
+- description: |
+    # Room 2 - Guard Room
+
+    **Description:**
+    A small chamber with weapon racks and armor stands.
+
+    **Features:**
+    - Rusty weapons on wall racks
+    - Overturned furniture
+    - Arrow slits facing the entrance
+
+    **Creatures:**
+    2 Skeletons (AC 13, HP 13, ATK +4 1d6+2)
+
+    **Notes:**
+    The guards turned undead long ago.
+  name: Guard Room
+  id: '2'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 3 - Library
+
+    **Description:**
+    A vast library with towering bookshelves reaching the ceiling.
+
+    **Features:**
+    - Ancient tomes and scrolls
+    - Reading tables with burnt candles
+    - Ladder for reaching high shelves
+
+    **Creatures:**
+    1 Spectral Librarian (AC 12, HP 22, ATK +5 1d8+3)
+
+    **Notes:**
+    Many books contain valuable information about the local area.
+  name: Library
+  id: '3'
+  playerInfo: 'A grand library filled with ancient knowledge.'
+  isPlayerVisible: true
+- description: |
+    # Room 4 - Kitchen
+
+    **Description:**
+    A large kitchen with cold hearths and empty cupboards.
+
+    **Features:**
+    - Large cooking hearths
+    - Preparation tables
+    - Pantry with empty shelves
+
+    **Creatures:**
+    None
+
+    **Notes:**
+    A secret door behind the pantry leads to the wine cellar.
+  name: Kitchen
+  id: '4'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 5 - Wine Cellar
+
+    **Description:**
+    A cool underground cellar with stone walls and wine racks.
+
+    **Features:**
+    - Rows of wine racks (mostly empty)
+    - Stone floor with drainage
+    - Heavy wooden door
+
+    **Creatures:**
+    Giant Rats (3) (AC 12, HP 7, ATK +4 1d4+2)
+
+    **Notes:**
+    Some bottles still contain good wine worth 10gp each.
+  name: Wine Cellar
+  id: '5'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 6 - Great Hall
+
+    **Description:**
+    A massive hall with a vaulted ceiling and stained glass windows.
+
+    **Features:**
+    - Long dining table for 20 people
+    - Massive fireplace
+    - Portraits of noble family members
+
+    **Creatures:**
+    None
+
+    **Notes:**
+    One portrait has glowing eyes that follow observers.
+  name: Great Hall
+  id: '6'
+  playerInfo: 'A magnificent dining hall with an enormous table.'
+  isPlayerVisible: true
+- description: |
+    # Room 7 - Armory
+
+    **Description:**
+    A well-organized weapons and armor storage room.
+
+    **Features:**
+    - Weapon racks with various arms
+    - Armor stands with plate mail
+    - Workbench for maintenance
+
+    **Creatures:**
+    1 Animated Armor (AC 18, HP 33, ATK +4 1d6+2)
+
+    **Notes:**
+    The armor activates when weapons are touched.
+  name: Armory
+  id: '7'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 8 - Chapel
+
+    **Description:**
+    A small religious shrine with wooden pews and altar.
+
+    **Features:**
+    - Wooden altar with religious symbols
+    - Stained glass window depicting saints
+    - Prayer books on the pews
+
+    **Creatures:**
+    None
+
+    **Notes:**
+    The altar radiates a faint magical aura of protection.
+  name: Chapel
+  id: '8'
+  playerInfo: 'A peaceful chapel with beautiful stained glass.'
+  isPlayerVisible: true
+- description: |
+    # Room 9 - Bedroom
+
+    **Description:**
+    A luxurious master bedroom with fine furnishings.
+
+    **Features:**
+    - Four-poster bed with silk curtains
+    - Ornate wardrobe and dresser
+    - Balcony overlooking the gardens
+
+    **Creatures:**
+    1 Ghost (AC 11, HP 45, ATK +5 4d6+3)
+
+    **Notes:**
+    The ghost is the former lord of the manor.
+  name: Master Bedroom
+  id: '9'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 10 - Study
+
+    **Description:**
+    A private study with desk, maps, and personal items.
+
+    **Features:**
+    - Large oak desk with papers
+    - Maps of the surrounding region
+    - Personal journals and correspondence
+
+    **Creatures:**
+    None
+
+    **Notes:**
+    The desk contains important documents about local politics.
+  name: Study
+  id: '10'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 11 - Servant Quarters
+
+    **Description:**
+    Simple rooms where the manor staff once lived.
+
+    **Features:**
+    - Simple beds and furniture
+    - Personal belongings left behind
+    - Small windows overlooking the courtyard
+
+    **Creatures:**
+    None
+
+    **Notes:**
+    A hidden compartment contains the servants' savings.
+  name: Servant Quarters
+  id: '11'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 12 - Attic
+
+    **Description:**
+    A dusty attic filled with stored furniture and memories.
+
+    **Features:**
+    - Covered furniture and trunks
+    - Thick dust and cobwebs
+    - Small dormer windows
+
+    **Creatures:**
+    Giant Spiders (2) (AC 14, HP 26, ATK +5 1d8+3)
+
+    **Notes:**
+    An old trunk contains family heirlooms worth 500gp.
+  name: Attic
+  id: '12'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 13 - Basement
+
+    **Description:**
+    A damp basement used for storage and as a root cellar.
+
+    **Features:**
+    - Stone walls with moisture
+    - Storage bins and barrels
+    - Narrow stairs leading up
+
+    **Creatures:**
+    None
+
+    **Notes:**
+    Strange symbols are carved into one wall.
+  name: Basement
+  id: '13'
+  playerInfo: ''
+  isPlayerVisible: false
+- description: |
+    # Room 14 - Tower Room
+
+    **Description:**
+    A circular room at the top of the manor's tower.
+
+    **Features:**
+    - Panoramic view of the countryside
+    - Telescope pointing skyward
+    - Star charts and astronomical instruments
+
+    **Creatures:**
+    None
+
+    **Notes:**
+    The telescope reveals unusual celestial phenomena.
+  name: Tower Observatory
+  id: '14'
+  playerInfo: 'A tower room with an amazing view of the surrounding lands.'
+  isPlayerVisible: true
+- description: |
+    # Room 15 - Secret Chamber
+
+    **Description:**
+    A hidden chamber behind a revolving bookshelf.
+
+    **Features:**
+    - Treasure chest with gold and gems
+    - Ancient magical artifacts
+    - Protective wards and traps
+
+    **Creatures:**
+    None (but heavily trapped)
+
+    **Notes:**
+    Contains the family's most precious treasures.
+  name: Secret Treasure Room
+  id: '15'
+  playerInfo: ''
+  isPlayerVisible: false

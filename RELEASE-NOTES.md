@@ -2,6 +2,27 @@
 
 This document tracks the major features and improvements to the Map Location Keys extension for Owlbear Rodeo.
 
+## 2025-11-08
+
+### Fog Export/Import
+
+- **Fog Layer Support**: Added comprehensive fog layer export/import functionality with support for both SHAPE and PATH fog items
+- **Fog Preservation**: Export fog items as YAML preserving all styling (fill/stroke colors, opacity, width, dash patterns), geometry (width, height, shape type, path commands), position coordinates, and visibility state
+- **Automatic Cleanup**: Import automatically removes existing fog layer items before restoring from YAML to prevent duplicates
+- **Shape Type Support**: Full support for fog drawing shapes (circle, rectangle, triangle, hexagon) and custom path-based fog
+
+### Location Key Enhancements
+
+- **Position Preservation**: Export/import now preserves exact position coordinates of location keys on the map
+- **Text Styling Persistence**: Save and restore all text styling properties including font family, size, weight, colors (fill/stroke), opacity, alignment (horizontal/vertical), line height, and padding
+- **Text Dimensions**: Preserve text box width and height settings during export/import
+- **Visibility Control**: Added "import as hidden" checkbox to control OBR scene visibility when importing location keys
+- **Complete Restoration**: All exports now maintain exact visual appearance and positioning for seamless backup/restore workflows
+
+### Documentation
+
+- **Comprehensive Architecture Guide**: Major update to CLAUDE.md with detailed documentation covering initialization lifecycle, state management patterns, role-based routing, component hierarchy, complete data models, performance optimizations, analytics integration, and full OBR SDK reference
+
 ## 2025-09-14
 
 ### Import/Export Improvements

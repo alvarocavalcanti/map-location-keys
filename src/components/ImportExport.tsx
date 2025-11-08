@@ -20,6 +20,7 @@ const ImportExport: React.FC<{
   const [importError, setImportError] = React.useState("");
   const [isImporting, setIsImporting] = React.useState(false);
   const [importProgress, setImportProgress] = React.useState("");
+  const [importAsHidden, setImportAsHidden] = React.useState(true);
 
   const handleOnChange = (target: HTMLTextAreaElement) => {
     setImportSuccess(false);
@@ -129,28 +130,55 @@ const ImportExport: React.FC<{
 
         for (let i = 0; i < newLocationKeys.length; i++) {
           const locationKey = newLocationKeys[i];
-          const item = buildText()
+          const builder = buildText()
             .richText([
               {
                 type: "paragraph",
                 children: [{ text: locationKey.name }],
               },
-            ])
-            // TODO: Parametrise
-            .fillColor("red")
-            .fontSize(120)
-            .fontWeight(700)
-            .strokeColor("white")
-            .strokeWidth(20)
-            .build();
+            ]);
+
+          // Apply saved style if available, otherwise use defaults
+          if (locationKey.style) {
+            builder
+              .fillColor(locationKey.style.fillColor)
+              .fillOpacity(locationKey.style.fillOpacity)
+              .strokeColor(locationKey.style.strokeColor)
+              .strokeOpacity(locationKey.style.strokeOpacity)
+              .strokeWidth(locationKey.style.strokeWidth)
+              .textAlign(locationKey.style.textAlign)
+              .textAlignVertical(locationKey.style.textAlignVertical)
+              .fontFamily(locationKey.style.fontFamily)
+              .fontSize(locationKey.style.fontSize)
+              .fontWeight(locationKey.style.fontWeight)
+              .lineHeight(locationKey.style.lineHeight)
+              .padding(locationKey.style.padding);
+          } else {
+            builder
+              .fillColor("red")
+              .fontSize(120)
+              .fontWeight(700)
+              .strokeColor("white")
+              .strokeWidth(20);
+          }
+
+          // Apply text size if available
+          if (locationKey.textSize) {
+            builder.width(locationKey.textSize.width).height(locationKey.textSize.height);
+          }
+
+          // Apply visibility based on checkbox and YAML value
+          builder.visible(importAsHidden ? false : (locationKey.visible ?? true));
+
+          const item = builder.build();
           item.metadata[`${ID}/metadata`] = {
             locationKey: locationKey.description,
             playerInfo: locationKey.playerInfo || "",
             isPlayerVisible: locationKey.isPlayerVisible || false,
           };
 
-          // Use staircase positioning instead of linear
-          const position = calculateStaircasePosition(i, newLocationKeys.length, startPosition);
+          // Use saved position if available, otherwise use staircase positioning
+          const position = locationKey.position || calculateStaircasePosition(i, newLocationKeys.length, startPosition);
           item.position = position;
 
           newItems.push(item);
@@ -221,6 +249,14 @@ const ImportExport: React.FC<{
             data-bs-theme="light"
             className={`mb-4 ${inputValid ? "is-valid" : "is-invalid"}`}
             id="yamlInput"
+          />
+          <Form.Check
+            type="checkbox"
+            id="importAsHiddenCheckbox"
+            label="Import as hidden (not visible in scene)"
+            checked={importAsHidden}
+            onChange={(e) => setImportAsHidden(e.target.checked)}
+            className="mb-2"
           />
           <Button
             className={`primary ${inputValid && !isImporting ? "enabled" : "disabled"}`}

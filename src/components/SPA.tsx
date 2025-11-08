@@ -4,17 +4,20 @@ import { Link, Navigate, Route, Routes } from "react-router-dom";
 import LocationKey from "./LocationKey";
 import LocationKeys from "./LocationKeys";
 
-import type { LocationKey as LocationKeyType } from "../@types/types";
+import type { LocationKey as LocationKeyType, FogKey } from "../@types/types";
 import {
   getItemText,
   loadExistingLocationKeys,
+  loadExistingFogKeys,
   sortLocationKeys,
+  sortFogKeys,
 } from "../utils";
 import OBR, { Item, Player } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
 import Help from "./Help";
 import Navbar from "./Navbar";
 import ImportExport from "./ImportExport";
+import FogExportImport from "./FogExportImport";
 import { paths } from "./util/constants";
 import PlayerView from "./PlayerView";
 import AddDeleteAll from "./AddDeleteAll";
@@ -24,6 +27,7 @@ export default function SPA() {
     {} as LocationKeyType
   );
   const [locationKeys, setLocationKeys] = React.useState<LocationKey[]>([]);
+  const [fogKeys, setFogKeys] = React.useState<FogKey[]>([]);
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
 
   const loadLocationKeys = (items: Item[]): void => {
@@ -34,6 +38,16 @@ export default function SPA() {
     sortLocationKeys(newLocationKeys);
 
     setLocationKeys(newLocationKeys);
+  };
+
+  const loadFogKeys = (items: Item[]): void => {
+    const newFogKeys: FogKey[] = [];
+
+    loadExistingFogKeys(items, newFogKeys);
+
+    sortFogKeys(newFogKeys);
+
+    setFogKeys(newFogKeys);
   };
 
   const setTheme = (theme: string): void => {
@@ -60,8 +74,14 @@ export default function SPA() {
           return item.layer === "TEXT" || item.layer === "PROP";
         })
         .then((items) => loadLocationKeys(items));
+      OBR.scene.items
+        .getItems((item) => {
+          return item.layer === "FOG";
+        })
+        .then((items) => loadFogKeys(items));
       OBR.scene.items.onChange((items) => {
         loadLocationKeys(items.filter((item) => item.layer === "TEXT" || item.layer === "PROP"));
+        loadFogKeys(items.filter((item) => item.layer === "FOG"));
       });
       OBR.theme.getTheme().then((theme) => {
         setTheme(theme.mode.toLowerCase());
@@ -98,6 +118,10 @@ export default function SPA() {
         <Route
           path={paths.importExport}
           element={<ImportExport locationKeys={locationKeys} />}
+        />
+        <Route
+          path={paths.fogExportImport}
+          element={<FogExportImport fogKeys={fogKeys} />}
         />
         <Route path={paths.bulkActions} element={<AddDeleteAll />} />
         <Route path={paths.help} element={<Help version={version} />} />

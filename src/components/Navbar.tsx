@@ -37,6 +37,11 @@ const Navbar: React.FC = () => {
                     Export/Import
                   </Link>
                 </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link className="nav-item nav-link" to={paths.fogExportImport}>
+                    Fog Export/Import
+                  </Link>
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
                   <Link className="nav-item nav-link" to={paths.help}>

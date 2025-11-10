@@ -1,5 +1,5 @@
 import { FogKey } from "../@types/types";
-import OBR, { buildPath, buildShape, Item } from "@owlbear-rodeo/sdk";
+import OBR, { buildCurve, buildPath, buildShape, Item } from "@owlbear-rodeo/sdk";
 import { saveAs } from "file-saver";
 import yaml, { JSON_SCHEMA } from "js-yaml";
 import React from "react";
@@ -35,7 +35,7 @@ const FogExportImport: React.FC<{
         setInputValid(false);
       },
     });
-    console.log("Valid YAML");
+    // console.log("Valid YAML");
     setImportYAML(target.value);
     setInputValid(true);
   };
@@ -43,8 +43,8 @@ const FogExportImport: React.FC<{
   const handleExport = () => {
     track("export_fog_keys");
     analytics.track("export_fog_keys");
-    console.log("Exporting fog keys:", fogKeys);
-    console.log("Fog keys count:", fogKeys.length);
+    // console.log("Exporting fog keys:", fogKeys);
+    // console.log("Fog keys count:", fogKeys.length);
     const yamlText = yaml.dump(fogKeys, { schema: JSON_SCHEMA });
     const blob = new Blob([yamlText], { type: "text/yaml;charset=utf-8" });
     saveAs(blob, "fogKeys.yaml");
@@ -91,7 +91,7 @@ const FogExportImport: React.FC<{
 
         for (let i = 0; i < newFogKeys.length; i++) {
           const fogKey = newFogKeys[i];
-          console.log("Processing fog key:", fogKey);
+          // console.log("Processing fog key:", fogKey);
           let item: Item;
 
           if (fogKey.type === "SHAPE") {
@@ -110,7 +110,7 @@ const FogExportImport: React.FC<{
               .name(fogKey.name);
 
             item = builder.build();
-          } else {
+          } else if (fogKey.type === "PATH") {
             const builder = buildPath()
               .commands(fogKey.commands!)
               .fillRule(fogKey.fillRule!)
@@ -125,10 +125,32 @@ const FogExportImport: React.FC<{
               .name(fogKey.name);
 
             item = builder.build();
+          } else {
+            const builder = buildCurve()
+              .points(fogKey.points!)
+              .strokeColor(fogKey.style.strokeColor)
+              .strokeOpacity(fogKey.style.strokeOpacity)
+              .strokeWidth(fogKey.style.strokeWidth)
+              .strokeDash(fogKey.style.strokeDash)
+              .fillColor(fogKey.style.fillColor)
+              .fillOpacity(fogKey.style.fillOpacity)
+              .layer("FOG")
+              .visible(fogKey.visible ?? true)
+              .name(fogKey.name);
+
+            if (fogKey.style.tension !== undefined) {
+              builder.tension(fogKey.style.tension);
+            }
+
+            item = builder.build();
           }
 
           if (fogKey.position) {
             item.position = fogKey.position;
+          }
+
+          if (fogKey.metadata) {
+            item.metadata = fogKey.metadata;
           }
 
           newItems.push(item);

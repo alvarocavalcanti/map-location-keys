@@ -63,21 +63,22 @@ export function loadExistingFogKeys(
   items: Item[],
   newFogKeys: FogKey[]
 ) {
-  console.log("loadExistingFogKeys called with items:", items);
-  console.log("Items count:", items.length);
+  // console.log("loadExistingFogKeys called with items:", items);
+  // console.log("Items count:", items.length);
   for (const item of items) {
-    console.log("Checking item:", item.id, "layer:", item.layer, "type:", item.type);
-    if (item.layer === "FOG" && (item.type === "SHAPE" || item.type === "PATH")) {
+    // console.log("Checking item:", item.id, "layer:", item.layer, "type:", item.type);
+    if (item.layer === "FOG" && (item.type === "SHAPE" || item.type === "PATH" || item.type === "CURVE")) {
       const fogItem = item as any;
-      console.log("Found FOG item:", item.id, item.type);
+      // console.log("Found FOG item:", item.id, item.type);
 
       const fogKey: FogKey = {
         id: item.id,
         name: item.name,
-        type: item.type as "SHAPE" | "PATH",
+        type: item.type as "SHAPE" | "PATH" | "CURVE",
         style: fogItem.style,
         position: item.position,
         visible: item.visible,
+        metadata: item.metadata,
       };
 
       if (item.type === "SHAPE") {
@@ -87,12 +88,14 @@ export function loadExistingFogKeys(
       } else if (item.type === "PATH") {
         fogKey.commands = fogItem.commands;
         fogKey.fillRule = fogItem.fillRule;
+      } else if (item.type === "CURVE") {
+        fogKey.points = fogItem.points;
       }
 
       newFogKeys.push(fogKey);
     }
   }
-  console.log("Loaded fog keys:", newFogKeys.length);
+  // console.log("Loaded fog keys:", newFogKeys.length);
 }
 
 export function sortFogKeys(newFogKeys: FogKey[]) {

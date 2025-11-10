@@ -2,6 +2,20 @@
 
 This document tracks the major features and improvements to the Map Location Keys extension for Owlbear Rodeo.
 
+## 2025-11-10
+
+### Fog Export/Import Enhancements
+
+- **CURVE Type Support**: Extended fog export/import to support CURVE type items (drawn polygons and freeform shapes), in addition to existing SHAPE and PATH support
+- **Complete Item Type Coverage**: Fog export now correctly handles all three fog drawing types (SHAPE for rectangles/circles/triangles/hexagons, PATH for custom paths, CURVE for drawn polygons)
+- **Metadata Preservation**: Fog export/import now preserves all item metadata, including Dynamic Fog extension data (doors with open/closed states, light configurations)
+- **Cross-Extension Compatibility**: Full support for exporting and importing fog setups created with the Dynamic Fog extension, preserving door positions, states, and light source configurations
+
+### Bug Fixes
+
+- **Tension Property Handling**: Fixed CURVE item import by correctly placing the tension property within the style object to match OBR SDK validation requirements
+- **Item Detection**: Resolved issue where only 5 of 24 fog items were being detected due to missing CURVE type filtering
+
 ## 2025-11-08
 
 ### Fog Export/Import

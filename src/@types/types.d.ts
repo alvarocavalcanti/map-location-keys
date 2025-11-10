@@ -29,12 +29,13 @@ export interface LocationKey {
 export interface FogKey {
   id: string;
   name: string;
-  type: "SHAPE" | "PATH";
+  type: "SHAPE" | "PATH" | "CURVE";
   commands?: any[];
   fillRule?: string;
   width?: number;
   height?: number;
   shapeType?: "RECTANGLE" | "CIRCLE" | "TRIANGLE" | "HEXAGON";
+  points?: any[];
   style: {
     fillColor: string;
     fillOpacity: number;
@@ -42,7 +43,9 @@ export interface FogKey {
     strokeOpacity: number;
     strokeWidth: number;
     strokeDash: number[];
+    tension?: number;
   };
   position?: { x: number; y: number };
   visible?: boolean;
+  metadata?: Record<string, unknown>;
 }

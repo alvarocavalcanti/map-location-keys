@@ -37,7 +37,7 @@ const ImportExport: React.FC<{
         setInputValid(false);
       },
     });
-    console.log("Valid YAML");
+    // console.log("Valid YAML");
     setImportYAML(target.value);
     setInputValid(true);
   };

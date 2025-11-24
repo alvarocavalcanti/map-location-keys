@@ -79,11 +79,13 @@ This application uses **local React state** without global state management libr
 
 - **Owlbear Rodeo SDK Integration**: Uses `@owlbear-rodeo/sdk` for all map interactions
 - **React SPA**: Single-page application with React Router for navigation
+- **Tab-Based Navigation**: Bootstrap Tab.Container with horizontal tabs (Location Keys, Tools, Help)
 - **Context Menu System**: Adds right-click options to TEXT and PROP layer items
 - **Metadata Storage**: Location keys stored in item metadata using pattern `${ID}/metadata`
 - **Role-Based Routing**: Separate route trees for GM and Player roles
 - **Theme Synchronization**: Matches OBR dark/light mode via `data-bs-theme` attribute
 - **Broadcasting**: Local broadcast channel for context menu ↔ popover communication
+- **Compact Spacing**: Optimized padding and margins throughout (`p-2`, `py-2`, `mb-3`) for maximum content visibility
 
 ### Component Hierarchy
 
@@ -97,14 +99,18 @@ main.tsx (Entry Point)
         └── App
             ├── SceneNotReady (if !scene.isReady)
             └── SPA (if scene.isReady)
-                ├── GM Routes (if role === "GM")
-                │   ├── Layout (Navbar wrapper)
-                │   │   ├── "/" → LocationKeys (main list)
-                │   │   ├── "/location-key/:id" → LocationKey (edit form)
-                │   │   ├── "/import-export" → ImportExport (YAML operations)
-                │   │   ├── "/bulk-actions" → AddDeleteAll (bulk operations)
-                │   │   └── "/help" → Help (documentation)
-                │   └── Navbar (dropdown navigation menu)
+                ├── GM Interface (if role === "GM")
+                │   ├── Tab Navigation (Bootstrap Tab.Container)
+                │   │   ├── "Location Keys" Tab
+                │   │   │   ├── "/" → LocationKeys (main list)
+                │   │   │   └── "/location-key/:id" → LocationKey (edit form)
+                │   │   ├── "Tools" Tab
+                │   │   │   ├── "/import-export" → ImportExport (YAML operations)
+                │   │   │   ├── "/fog-export-import" → FogExportImport (Fog operations)
+                │   │   │   └── "/bulk-actions" → AddDeleteAll (bulk operations)
+                │   │   └── "Help" Tab
+                │   │       └── "/help" → Help (documentation)
+                │   └── Version display (right-aligned in tab navigation)
                 │
                 └── Player Routes (if role === "PLAYER")
                     ├── "/" → redirects to "/player-view"
@@ -123,8 +129,7 @@ main.tsx (Entry Point)
 
 **Core Application**:
 
-- `src/components/SPA.tsx` - Main routing, context menu setup, OBR subscriptions
-- `src/components/Navbar.tsx` - Navigation menu (GM only)
+- `src/components/SPA.tsx` - Main routing, tab navigation, context menu setup, OBR subscriptions
 
 **GM Views**:
 
@@ -148,6 +153,34 @@ main.tsx (Entry Point)
 - `src/utils.ts` - Shared functions (loadExistingLocationKeys, sortLocationKeys, getItemText)
 - `src/@types/types.d.ts` - LocationKey interface definition
 - `src/components/util/constants.ts` - Route path constants
+
+### Navigation Architecture
+
+**Tab-Based Navigation (GM Interface)**:
+
+The extension uses Bootstrap Tab components for navigation, replacing the previous dropdown navbar:
+
+- **Three Main Tabs**:
+  - **Location Keys**: Main list view and edit form routes
+  - **Tools**: Consolidated tab containing Import/Export, Fog Export/Import, and Bulk Actions
+  - **Help**: Documentation and tutorial content
+- **Tab State Management**:
+  - Active tab tracked in `SPA.tsx` state: `activeTab: string`
+  - Tab selection triggers navigation via `useNavigate()` hook
+  - Route changes automatically update active tab via `useLocation()` hook
+- **Version Display**: Extension version shown in top-right of tab navigation
+- **Benefits**:
+  - Always-visible navigation (no dropdown required)
+  - Single-click access to all sections
+  - Reduced vertical space usage (~60-80px saved)
+  - Cleaner, more modern interface
+
+**Routing Integration**:
+
+- Each tab contains its own `<Routes>` component with nested routes
+- Navigation persists across route changes within the same tab
+- Edit form (`/location-key/:id`) stays within Location Keys tab
+- All tool-related routes consolidated under Tools tab
 
 ### Role-Based Architecture
 
@@ -185,11 +218,16 @@ The extension provides completely separate interfaces for GMs and Players:
 - Content separation: `description` field for GM notes, `playerInfo` field for player-facing content
 - Toggle methods: context menu, edit form, list view button
 
+**Navigation Differences**:
+
+- GM: Tab-based navigation with 3 main sections
+- Player: No navigation menu, single-page view
+- Role detection: `OBR.player.getRole()` determines interface
+
 **Route Separation**:
 
-- GM routes: Full navigation with Layout wrapper and Navbar
+- GM routes: Tab-based navigation with nested routes in SPA.tsx
 - Player routes: Single route (`/player-view`) with no navigation menu
-- Role detection: `OBR.player.getRole()` determines routing
 - Dynamic updates: `OBR.player.onChange()` triggers re-routing if role changes
 
 ### Complete Data Model
@@ -519,7 +557,7 @@ Complete list of Owlbear Rodeo SDK methods used:
 
 ### Extension Architecture
 
-- **Manifest**: `public/manifest.json` defines extension metadata and popover dimensions (400x600)
+- **Manifest**: `public/manifest.json` defines extension metadata and popover dimensions (600x600)
 - **Extension ID**: `es.memorablenaton.map-location-keys`
 - **Popover Mode**: Opens in Owlbear Rodeo drawer/popover
 - **Standalone Access**: Marketing homepage accessible at root URL without `?obrref` parameter

@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion, Card, CardBody, Container } from "react-bootstrap";
+import { Accordion, Card, CardBody } from "react-bootstrap";
 import { analytics } from "../utils";
 import YouTube from "react-youtube";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,57 +38,52 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
 
   return (
     <>
-      <Container>
-        <Card className="mb-2">
-          <CardBody>
-            <Card.Title>Video Tutorial</Card.Title>
-            <Card.Text>
-              <YouTube videoId="jJM_600M1eo" opts={opts} />
-            </Card.Text>
-          </CardBody>
-        </Card>
-        <Card className="mb-2">
-          <CardBody>
-            <Card.Title>Adding Location Keys</Card.Title>
-          </CardBody>
-        </Card>
-        <Accordion key="1">
-          {itemsAdd.map((item, index) => (
-            <Accordion.Item eventKey={String(index)} key={index}>
-              <Accordion.Header>{item.header}</Accordion.Header>
-              <Accordion.Body>
-                {item.description && <p>{item.description}</p>}
-                <img src={item.image} alt={item.header} className="img-fluid" />
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-      </Container>
-      <Container className="mt-4">
-        <Card className="mb-2">
-          <CardBody>
-            <Card.Title>Exporting Location Keys</Card.Title>
-          </CardBody>
-        </Card>
-        <Accordion key="1">
-          {itemsExport.map((item, index) => (
-            <Accordion.Item eventKey={String(index)} key={index}>
-              <Accordion.Header>{item.header}</Accordion.Header>
-              <Accordion.Body>{item.text}</Accordion.Body>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-      </Container>
-      <Container className="mt-4">
-        <Card className="mb-2">
-          <CardBody>
-            <Card.Title>Importing Location Keys</Card.Title>
-          </CardBody>
-        </Card>
-        <Accordion key="1">
+      <Card className="mb-3">
+        <CardBody className="py-2">
+          <Card.Title>Video Tutorial</Card.Title>
+          <Card.Text>
+            <YouTube videoId="jJM_600M1eo" opts={opts} />
+          </Card.Text>
+        </CardBody>
+      </Card>
+      <Card className="mb-2">
+        <CardBody className="py-2">
+          <Card.Title>Adding Location Keys</Card.Title>
+        </CardBody>
+      </Card>
+      <Accordion key="1" className="mb-3">
+        {itemsAdd.map((item, index) => (
+          <Accordion.Item eventKey={String(index)} key={index}>
+            <Accordion.Header className="py-2">{item.header}</Accordion.Header>
+            <Accordion.Body className="py-2">
+              {item.description && <p>{item.description}</p>}
+              <img src={item.image} alt={item.header} className="img-fluid" />
+            </Accordion.Body>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+      <Card className="mb-2">
+        <CardBody className="py-2">
+          <Card.Title>Exporting Location Keys</Card.Title>
+        </CardBody>
+      </Card>
+      <Accordion key="2" className="mb-3">
+        {itemsExport.map((item, index) => (
+          <Accordion.Item eventKey={String(index)} key={index}>
+            <Accordion.Header className="py-2">{item.header}</Accordion.Header>
+            <Accordion.Body className="py-2">{item.text}</Accordion.Body>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+      <Card className="mb-2">
+        <CardBody className="py-2">
+          <Card.Title>Importing Location Keys</Card.Title>
+        </CardBody>
+      </Card>
+        <Accordion key="3" className="mb-3">
           <Accordion.Item eventKey={"0"} key={0}>
-            <Accordion.Header>1. Paste a valid YAML content</Accordion.Header>
-            <Accordion.Body>
+            <Accordion.Header className="py-2">1. Paste a valid YAML content</Accordion.Header>
+            <Accordion.Body className="py-2">
               Valid YAML content should be in the following format:
               <br className="mb-3" />
               <ul>
@@ -152,8 +147,8 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey={"1"} key={1}>
-            <Accordion.Header>2. Click Import</Accordion.Header>
-            <Accordion.Body>
+            <Accordion.Header className="py-2">2. Click Import</Accordion.Header>
+            <Accordion.Body className="py-2">
               If the content is valid, the Location Keys will be imported and
               added to the scene from the top left corner.
               <br />
@@ -166,25 +161,23 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-      </Container>
-      <Container className="mt-4">
-        <Card className="mb-2">
-          <CardBody>
-            <Card.Title>Sharing Location Keys with Players</Card.Title>
-          </CardBody>
-        </Card>
-        <Accordion key="3">
-          <Accordion.Item eventKey="0" key={0}>
-            <Accordion.Header>1. Add Player Information</Accordion.Header>
-            <Accordion.Body>
+      <Card className="mb-2">
+        <CardBody className="py-2">
+          <Card.Title>Sharing Location Keys with Players</Card.Title>
+        </CardBody>
+      </Card>
+      <Accordion key="4" className="mb-3">
+        <Accordion.Item eventKey="0" key={0}>
+          <Accordion.Header className="py-2">1. Add Player Information</Accordion.Header>
+          <Accordion.Body className="py-2">
               When editing a location key, you can add information specifically for players in the "Player Information" field. This content supports Markdown and will be shown to players when the location key is made visible to them.
               <br /><br />
               This field is separate from your GM notes, so you can include player-appropriate descriptions while keeping your GM-only information private.
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1" key={1}>
-            <Accordion.Header>2. Make Location Key Visible to Players</Accordion.Header>
-            <Accordion.Body>
+            <Accordion.Header className="py-2">2. Make Location Key Visible to Players</Accordion.Header>
+            <Accordion.Body className="py-2">
               You can make location keys visible to players in several ways:
               <ul>
                 <li><strong>Edit Form:</strong> Check the "Make visible to players" checkbox when editing a location key</li>
@@ -195,8 +188,8 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="2" key={2}>
-            <Accordion.Header>3. Player Experience</Accordion.Header>
-            <Accordion.Body>
+            <Accordion.Header className="py-2">3. Player Experience</Accordion.Header>
+            <Accordion.Body className="py-2">
               When players open the extension, they will see:
               <ul>
                 <li>A "Location Information" section instead of the full GM interface</li>
@@ -208,8 +201,7 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-      </Container>
-      <Container className="mt-3 text-center">
+      <div className="mt-2 text-center">
         <a
           href="https://shadowcrawler.vercel.app"
           target="_blank"
@@ -217,8 +209,8 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         >
           <FontAwesomeIcon icon={faGlobeAfrica} /> shadowcrawler.vercel.app
         </a>
-      </Container>
-      <Container className="mt-3 text-center">
+      </div>
+      <div className="mt-2 text-center">
         <a
           href="https://github.com/alvarocavalcanti/shadowcrawler"
           target="_blank"
@@ -226,8 +218,8 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         >
           <FontAwesomeIcon icon={faGithub} /> alvarocavalcanti/shadowcrawler
         </a>
-      </Container>
-      <Container className="mt-3 text-center">
+      </div>
+      <div className="mt-2 text-center">
         <a
           href="https://bsky.app/profile/alvarocavalcanti.bsky.social"
           target="_blank"
@@ -235,8 +227,8 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         >
           <FontAwesomeIcon icon={faBluesky} /> alvarocavalcanti.bsky.social
         </a>
-      </Container>
-      <Container className="mt-3 text-center">
+      </div>
+      <div className="mt-2 text-center">
         <a
           href="https://twitter.com/alvarocavalcant"
           target="_blank"
@@ -244,8 +236,8 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         >
           <FontAwesomeIcon icon={faTwitter} /> alvarocavalcant
         </a>
-      </Container>
-      <Container className="p-3 text-center">
+      </div>
+      <div className="p-2 text-center">
         <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
           <img
             src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
@@ -253,8 +245,8 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
             style={{ height: "60px", width: "217px" }}
           />
         </a>
-      </Container>
-      <em className="text-secondary mb-3">
+      </div>
+      <em className="text-secondary mb-2">
         Version: {version} |
         <a
           href="https://github.com/alvarocavalcanti/map-location-keys/blob/main/RELEASE-NOTES.md"

@@ -3,7 +3,7 @@ import OBR, { buildText, Item } from "@owlbear-rodeo/sdk";
 import { saveAs } from "file-saver";
 import yaml, { JSON_SCHEMA } from "js-yaml";
 import React from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
+import { Button, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { ID } from "../main";
@@ -218,36 +218,36 @@ const ImportExport: React.FC<{
   analytics.page();
 
   return (
-    <Container>
-      <Card className="mb-4">
-        <Card.Body>
+    <>
+      <Card className="mb-3">
+        <Card.Body className="py-2">
           <Card.Title>Export</Card.Title>
           <Card.Text>
             Click the button below to export your location keys as a YAML file.
-            <br className="mb-4" />
+            <br className="mb-2" />
             <Button className="primary" onClick={handleExport}>
               Export
             </Button>
           </Card.Text>
         </Card.Body>
       </Card>
-      <Card className="mb-4">
-        <Card.Body>
+      <Card className="mb-3">
+        <Card.Body className="py-2">
           <Card.Title>Import</Card.Title>
           <Card.Text className="mb-2">
             Paste the contents of a YAML file below and click the button to
             import location keys.
           </Card.Text>
-          <Container className="mb-4 alert alert-warning" role="alert">
+          <div className="mb-3 alert alert-warning p-2" role="alert">
             Importing will overwrite any existing location keys.
-          </Container>
+          </div>
           <Form.Control
             as="textarea"
             rows={13}
             defaultValue={importYAML}
             onChange={(e) => handleOnChange(e.target as HTMLTextAreaElement)}
             data-bs-theme="light"
-            className={`mb-4 ${inputValid ? "is-valid" : "is-invalid"}`}
+            className={`mb-3 ${inputValid ? "is-valid" : "is-invalid"}`}
             id="yamlInput"
           />
           <Form.Check
@@ -266,21 +266,21 @@ const ImportExport: React.FC<{
             {isImporting ? "Importing..." : "Import"}
           </Button>
           {isImporting && importProgress && (
-            <Container className="alert alert-info p-3 mt-4">
+            <div className="alert alert-info p-2 mt-3">
               {importProgress}
-            </Container>
+            </div>
           )}
           {importSuccess ? (
-            <Container className="alert alert-info p-3 mt-4">
+            <div className="alert alert-info p-2 mt-3">
               Location keys successfully imported.
               <br />
               <br />
               The text items were added to the map at the top left corner. You
               can move them around as needed.
-            </Container>
+            </div>
           ) : (
             importError.length > 0 && (
-              <Container className="alert alert-danger p-3 mt-4">
+              <div className="alert alert-danger p-2 mt-3">
                 {importError}
                 <br />
                 See the{" "}
@@ -288,12 +288,12 @@ const ImportExport: React.FC<{
                   Help
                 </Link>{" "}
                 page for more information.
-              </Container>
+              </div>
             )
           )}
         </Card.Body>
       </Card>
-    </Container>
+    </>
   );
 };
 

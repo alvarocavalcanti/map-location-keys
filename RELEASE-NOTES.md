@@ -2,6 +2,14 @@
 
 This document tracks the major features and improvements to the Map Location Keys extension for Owlbear Rodeo.
 
+## 2025-11-24
+
+### UI/UX Improvements
+
+- **Tab-Based Navigation**: Replaced dropdown navbar with horizontal tab navigation for improved accessibility and reduced vertical space usage
+- **Compact Layout**: Removed redundant "Existing Location Keys" heading and reduced accordion vertical padding throughout the interface
+- **Visual Hierarchy**: Streamlined location key list view with tighter spacing for better content density
+
 ## 2025-11-10
 
 ### Fog Export/Import Enhancements

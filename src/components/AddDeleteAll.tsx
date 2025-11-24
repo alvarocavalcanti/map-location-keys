@@ -1,7 +1,7 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { track } from "@vercel/analytics";
 import React from "react";
-import { Button, Card, CardBody, Container } from "react-bootstrap";
+import { Button, Card, CardBody } from "react-bootstrap";
 
 import { locationKeyTemplate } from "../contextMenu";
 import { ID } from "../main";
@@ -64,16 +64,16 @@ const AddDeleteAll: React.FC = () => {
   analytics.page();
 
   return (
-    <Container>
-      <Card className="mb-4">
-        <CardBody>
+    <>
+      <Card className="mb-3">
+        <CardBody className="py-2">
           <Card.Title className="header">
             Add all TEXT items to Location Keys
           </Card.Title>
           <Card.Text>
             <Button
               variant="primary"
-              className="mt-3"
+              className="mt-2"
               onClick={addAllToLocationKeys}
             >
               Add All
@@ -81,13 +81,13 @@ const AddDeleteAll: React.FC = () => {
           </Card.Text>
         </CardBody>
       </Card>
-      <Card className="mb-4 mt-4">
-        <CardBody>
+      <Card className="mb-3">
+        <CardBody className="py-2">
           <Card.Title className="header">Delete all Location Keys</Card.Title>
           <Card.Text>
             <Button
               variant="danger"
-              className="mt-3"
+              className="mt-2"
               onClick={deleteAllLocationKeys}
             >
               Delete All
@@ -95,7 +95,7 @@ const AddDeleteAll: React.FC = () => {
           </Card.Text>
         </CardBody>
       </Card>
-    </Container>
+    </>
   );
 };
 

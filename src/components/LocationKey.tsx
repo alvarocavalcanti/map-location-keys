@@ -4,7 +4,6 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Form,
   Row,
 } from "react-bootstrap";
@@ -58,29 +57,28 @@ const LocationKey: React.FC<{
   analytics.page();
 
   return (
-    <Container>
-      <Card className="mb-4">
-        <CardBody>
-          <Card.Title className="header">Edit Location Key</Card.Title>
-          <Card.Text>Name: {locationKey.name}</Card.Text>
+    <>
+      <Card className="mb-3">
+        <CardBody className="py-2">
+          <Card.Title className="header mb-0">Edit Location Key</Card.Title>
+          <Card.Text className="mb-0">Name: {locationKey.name}</Card.Text>
         </CardBody>
       </Card>
-      <Card className="mb-4">
+      <Card className="mb-3">
         <Form>
           <Form.Group controlId="form.LocationKeyDetails">
-            <CardBody>
+            <CardBody className="py-2">
               <Card.Title className="header">Details</Card.Title>
               <Card.Text>
                 <em>Markdown supported.</em>
               </Card.Text>
-              {/* #TODO: Use https://uiwjs.github.io/react-markdown-editor/ to add markdown support */}
               <Form.Control
                 as="textarea"
                 rows={13}
                 defaultValue={description}
                 onChange={(e) => setDescription(e.target.value)}
                 data-bs-theme="light"
-                className="mb-4"
+                className="mb-3"
               />
               <Card.Title className="header">Player Information</Card.Title>
               <Card.Text>
@@ -93,7 +91,7 @@ const LocationKey: React.FC<{
                 value={playerInfo}
                 onChange={(e) => setPlayerInfo(e.target.value)}
                 data-bs-theme="light"
-                className="mb-3"
+                className="mb-2"
               />
               <Form.Check
                 type="checkbox"
@@ -101,9 +99,9 @@ const LocationKey: React.FC<{
                 label="Make visible to players"
                 checked={isPlayerVisible}
                 onChange={(e) => setIsPlayerVisible(e.target.checked)}
-                className="mb-4"
+                className="mb-3"
               />
-              <Row className="text-center mt-3">
+              <Row className="text-center mt-2">
                 <Col>
                   <Button
                     variant="primary"
@@ -132,7 +130,7 @@ const LocationKey: React.FC<{
           </Form.Group>
         </Form>
       </Card>
-    </Container>
+    </>
   );
 };
 

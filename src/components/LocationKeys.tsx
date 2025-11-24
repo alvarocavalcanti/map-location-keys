@@ -8,7 +8,6 @@ import {
   Card,
   CardBody,
   Col,
-  Container,
   Row,
 } from "react-bootstrap";
 import Markdown from "react-markdown";
@@ -68,14 +67,9 @@ const LocationKeys: React.FC<{
   analytics.page();
 
   return (
-    <Container>
+    <>
       {locationKeys.length > 0 ? (
         <>
-          <Card>
-            <CardBody>
-              <Card.Title className="header">Existing Location Keys</Card.Title>
-            </CardBody>
-          </Card>
           <Accordion activeKey={locationToReveal}>
             {locationKeys.map((locationKey, index) => (
               <Accordion.Item
@@ -97,11 +91,11 @@ const LocationKeys: React.FC<{
                     />
                   )}
                 </Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body className="py-1">
                   <div className="markdown-content">
                     <Markdown>{locationKey.description || ""}</Markdown>
                   </div>
-                  <Row className="text-center mt-3">
+                  <Row className="text-center mt-1">
                     <Col>
                       <Link
                         to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}
@@ -160,17 +154,17 @@ const LocationKeys: React.FC<{
           </Accordion>
         </>
       ) : (
-        <Card className="mb-4">
-          <CardBody>
-            <Card.Title className="header">No Location Keys</Card.Title>
-            <Card.Text>
+        <Card className="mb-3">
+          <CardBody className="py-2">
+            <Card.Title className="header mb-2">No Location Keys</Card.Title>
+            <Card.Text className="mb-0">
               The location keys will show up here once you add them. Click{" "}
               <Link to={paths.help}>here</Link> to learn how to do so.
             </Card.Text>
           </CardBody>
         </Card>
       )}
-      <Container className="p-3 text-center">
+      <div className="p-2 text-center">
         <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
           <img
             src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
@@ -178,8 +172,8 @@ const LocationKeys: React.FC<{
             style={{ height: "60px", width: "217px" }}
           />
         </a>
-      </Container>
-    </Container>
+      </div>
+    </>
   );
 };
 

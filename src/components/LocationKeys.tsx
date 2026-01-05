@@ -10,8 +10,8 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import Markdown from "react-markdown";
 import { Link } from "react-router-dom";
+import MarkdownRenderer from "./util/MarkdownRenderer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -93,7 +93,7 @@ const LocationKeys: React.FC<{
                 </Accordion.Header>
                 <Accordion.Body className="py-1">
                   <div className="markdown-content">
-                    <Markdown>{locationKey.description || ""}</Markdown>
+                    <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
                   </div>
                   <Row className="text-center mt-1">
                     <Col>

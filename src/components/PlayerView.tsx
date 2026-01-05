@@ -8,8 +8,8 @@ import {
   Row,
   Col 
 } from "react-bootstrap";
-import Markdown from 'react-markdown';
 import OBR, { Item } from "@owlbear-rodeo/sdk";
+import MarkdownRenderer from "./util/MarkdownRenderer";
 import { LocationKey } from "../@types/types";
 import { 
   getItemText,
@@ -95,7 +95,7 @@ const PlayerView: React.FC = () => {
                 <Accordion.Body>
                   {locationKey.playerInfo ? (
                     <div className="markdown-content">
-                      <Markdown>{locationKey.playerInfo}</Markdown>
+                      <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
                     </div>
                   ) : (
                     <p><em>No additional information provided.</em></p>

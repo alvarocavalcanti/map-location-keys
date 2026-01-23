@@ -1,6 +1,6 @@
 {
   "name": "Map Location Keys",
-  "version": "2026-01-05",
+  "version": "2026-01-23",
   "manifest_version": 1,
   "icon": "/img/logo.png",
   "author": "Alvaro Cavalcanti",
@@ -10,7 +10,7 @@
     "title": "Map Location Keys",
     "icon": "/img/icon.svg",
     "popover": "/",
-    "height": 600,
-    "width": 600
+    "height": 800,
+    "width": 800
   }
 }

@@ -2,6 +2,20 @@
 
 This document tracks the major features and improvements to the Map Location Keys extension for Owlbear Rodeo.
 
+## 2026-01-23
+
+### Player Experience Enhancements
+
+- **Player Editing**: Players can now edit location information directly through the player view, allowing them to add their own notes and observations to shared location keys
+- **Player Context Menu**: Added "Reveal Location Key" context menu option for players, enabling them to quickly navigate to and view visible location keys on the map
+- **Larger Window Size**: Increased extension popover dimensions from 600x600 to 800x800 pixels, reducing scrolling and improving content visibility for both GMs and players
+
+### Technical Improvements
+
+- **Edit Mode UI**: Implemented toggle-based edit mode in player view with save/cancel functionality and form validation
+- **Analytics Tracking**: Added player-specific analytics events for editing and revealing location keys
+- **Context Menu Filtering**: Enhanced context menu system with role-based filtering to ensure players only see reveal options for visible location keys
+
 ## 2025-11-24
 
 ### UI/UX Improvements

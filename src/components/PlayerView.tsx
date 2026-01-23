@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { 
-  Accordion, 
-  Card, 
-  CardBody, 
+import {
+  Accordion,
+  Card,
+  CardBody,
   Container,
   Button,
   Row,
-  Col 
+  Col,
+  Form
 } from "react-bootstrap";
 import OBR, { Item } from "@owlbear-rodeo/sdk";
 import MarkdownRenderer from "./util/MarkdownRenderer";
@@ -23,9 +24,41 @@ import { ID } from "../main";
 const PlayerView: React.FC = () => {
   const [playerVisibleKeys, setPlayerVisibleKeys] = useState<LocationKey[]>([]);
   const [locationToReveal, setLocationToReveal] = useState<string>("");
+  const [editingLocationId, setEditingLocationId] = useState<string | null>(null);
+  const [editedPlayerInfo, setEditedPlayerInfo] = useState<string>("");
 
   const handleToggleClick = (id: string) => {
     setLocationToReveal((prevKey) => (prevKey === id ? "" : id));
+  };
+
+  const handleEdit = (locationKey: LocationKey) => {
+    setEditingLocationId(locationKey.id);
+    setEditedPlayerInfo(locationKey.playerInfo || "");
+  };
+
+  const handleSave = (locationKey: LocationKey) => {
+    track("player_edit_location_info");
+    analytics.track("player_edit_location_info");
+    OBR.scene.items.updateItems(
+      (item) => item.id === locationKey.id,
+      (items) => {
+        for (let item of items) {
+          const metadata = item.metadata[`${ID}/metadata`] as any;
+          if (metadata) {
+            metadata.playerInfo = editedPlayerInfo;
+            item.metadata[`${ID}/metadata`] = metadata;
+          }
+        }
+      }
+    ).then(() => {
+      setEditingLocationId(null);
+      setEditedPlayerInfo("");
+    });
+  };
+
+  const handleCancel = () => {
+    setEditingLocationId(null);
+    setEditedPlayerInfo("");
   };
 
   const showOnMap = (id: string) => {
@@ -93,26 +126,76 @@ const PlayerView: React.FC = () => {
                   {locationKey.name}
                 </Accordion.Header>
                 <Accordion.Body>
-                  {locationKey.playerInfo ? (
-                    <div className="markdown-content">
-                      <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
-                    </div>
+                  {editingLocationId === locationKey.id ? (
+                    <>
+                      <Form.Control
+                        as="textarea"
+                        rows={6}
+                        value={editedPlayerInfo}
+                        onChange={(e) => setEditedPlayerInfo(e.target.value)}
+                        data-bs-theme="light"
+                        className="mb-3"
+                        placeholder="Enter your notes about this location..."
+                      />
+                      <Row className="text-center">
+                        <Col>
+                          <Button
+                            variant="primary"
+                            onClick={() => handleSave(locationKey)}
+                          >
+                            Save
+                          </Button>
+                        </Col>
+                        <Col>
+                          <Button
+                            variant="danger"
+                            onClick={handleCancel}
+                          >
+                            Cancel
+                          </Button>
+                        </Col>
+                        <Col>
+                          <Button
+                            variant="secondary"
+                            onClick={() => showOnMap(locationKey.id)}
+                          >
+                            Show
+                          </Button>
+                        </Col>
+                        <Col>{""}</Col>
+                      </Row>
+                    </>
                   ) : (
-                    <p><em>No additional information provided.</em></p>
+                    <>
+                      {locationKey.playerInfo ? (
+                        <div className="markdown-content">
+                          <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
+                        </div>
+                      ) : (
+                        <p><em>No additional information provided.</em></p>
+                      )}
+                      <Row className="text-center">
+                        <Col>
+                          <Button
+                            variant="secondary"
+                            onClick={() => showOnMap(locationKey.id)}
+                          >
+                            Show
+                          </Button>
+                        </Col>
+                        <Col>
+                          <Button
+                            variant="primary"
+                            onClick={() => handleEdit(locationKey)}
+                          >
+                            Edit
+                          </Button>
+                        </Col>
+                        <Col>{""}</Col>
+                        <Col>{""}</Col>
+                      </Row>
+                    </>
                   )}
-                  <Row className="text-center">
-                    <Col>
-                      <Button
-                        variant="secondary"
-                        onClick={() => showOnMap(locationKey.id)}
-                      >
-                        Show
-                      </Button>
-                    </Col>
-                    <Col>{""}</Col>
-                    <Col>{""}</Col>
-                    <Col>{""}</Col>
-                  </Row>
                 </Accordion.Body>
               </Accordion.Item>
             ))}

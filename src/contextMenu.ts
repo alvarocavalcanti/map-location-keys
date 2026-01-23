@@ -125,4 +125,30 @@ export function setupContextMenu() {
       });
     },
   });
+  OBR.contextMenu.create({
+    id: `${ID}/context-menu-player-reveal`,
+    icons: [
+      {
+        icon: "/img/expand.svg",
+        label: "Reveal Location Key",
+        filter: {
+          roles: ["PLAYER"],
+          every: [
+            { key: "layer", value: "TEXT", coordinator: "||" },
+            { key: "layer", value: "PROP" },
+            { key: ["metadata", `${ID}/metadata`], value: undefined, operator: "!="},
+            { key: ["metadata", `${ID}/metadata`, "isPlayerVisible"], value: true },
+          ],
+        },
+      },
+    ],
+    onClick(context) {
+      track("player_reveal_location_key");
+      analytics.track("player_reveal_location_key");
+      OBR.action.open();
+      OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {
+        destination: "LOCAL",
+      });
+    },
+  });
 }

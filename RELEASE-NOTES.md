@@ -2,6 +2,18 @@
 
 This document tracks the major features and improvements to the Map Location Keys extension for Owlbear Rodeo.
 
+## 2026-01-27
+
+### Security Improvements
+
+- **Vulnerability Fix**: Removed `react-code-blocks` dependency to address moderate severity DOM Clobbering vulnerability (GHSA-x7hr-w5r2-h6wg) in PrismJS
+- **Dependency Cleanup**: Eliminated 37 vulnerable packages from dependency tree (react-code-blocks, react-syntax-highlighter, refractor, prismjs)
+- **Bundle Size Reduction**: Reduced build output from 1703 to 656 modules, improving load times and bundle size
+
+### UI Improvements
+
+- **Simplified Code Display**: Replaced syntax highlighting component with Bootstrap-styled code block for manifest URL display on homepage
+
 ## 2026-01-23
 
 ### Player Experience Enhancements

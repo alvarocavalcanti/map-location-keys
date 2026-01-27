@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { CodeBlock } from "react-code-blocks";
 
 import Help from "./Help";
 import PlayerView from "./PlayerView";
@@ -110,7 +109,7 @@ const Homepage: React.FC = () => {
             to install the extension, and use the following URL:
             <br />
             <br />
-            <CodeBlock text="https://map-location-keys.vercel.app/manifest.json" />
+            <pre className="bg-light p-3 rounded"><code>https://map-location-keys.vercel.app/manifest.json</code></pre>
           </Container>
           <h2>Features in Action</h2>
           <br />

@@ -1,7 +1,7 @@
 {
   "name": "map-location-keys",
   "private": true,
-  "version": "2026-01-23",
+  "version": "2026-01-27",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -34,7 +34,6 @@
     "js-yaml": "^4.1.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
-    "react-code-blocks": "^0.1.6",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.30.3",

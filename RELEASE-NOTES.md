@@ -2,6 +2,12 @@
 
 This document tracks the major features and improvements to the Map Location Keys extension for Owlbear Rodeo.
 
+## 2026-02-03
+
+### UI Improvements
+
+- **Support Links**: Added Ko-fi donation link alongside existing Buy Me A Coffee option in Help page
+
 ## 2026-01-27
 
 ### Security Improvements

@@ -246,6 +246,16 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
           />
         </a>
       </div>
+      <div className="p-2 text-center">
+        <a href="https://ko-fi.com/O4O1WSP5B" target="_blank" rel="noreferrer">
+          <img
+            height="36"
+            style={{ border: 0, height: "36px" }}
+            src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
+            alt="Buy Me a Coffee at ko-fi.com"
+          />
+        </a>
+      </div>
       <em className="text-secondary mb-2">
         Version: {version} |
         <a

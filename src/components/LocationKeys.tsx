@@ -2,14 +2,6 @@ import { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";
 import { track } from "@vercel/analytics";
 import React, { useEffect } from "react";
-import {
-  Accordion,
-  Button,
-  Card,
-  CardBody,
-  Col,
-  Row,
-} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MarkdownRenderer from "./util/MarkdownRenderer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -70,39 +62,44 @@ const LocationKeys: React.FC<{
     <>
       {locationKeys.length > 0 ? (
         <>
-          <Accordion activeKey={locationToReveal}>
+          <div className="space-y-2">
             {locationKeys.map((locationKey, index) => (
-              <Accordion.Item
-                eventKey={locationKey.id}
+              <div
                 key={String(index)}
                 id={`accordion-${locationKey.id}`}
+                className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden"
               >
-                <Accordion.Header
-                  onClick={() => {
-                    handleToggleClick(locationKey.id);
-                  }}
+                <button
+                  onClick={() => handleToggleClick(locationKey.id)}
+                  className="w-full px-4 py-3 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
                 >
-                  <span className="me-2">{locationKey.name}</span>
-                  {locationKey.isPlayerVisible && (
-                    <FontAwesomeIcon
-                      icon={faEye}
-                      className="text-success"
-                      title="Visible to players"
-                    />
-                  )}
-                </Accordion.Header>
-                <Accordion.Body className="py-1">
-                  <div className="markdown-content">
-                    <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
-                  </div>
-                  <Row className="text-center mt-1">
-                    <Col>
-                      <Link
-                        to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}
-                        className="gx-2"
-                      >
-                        <Button
-                          variant="primary"
+                  <span className="flex items-center gap-2">
+                    {locationKey.name}
+                    {locationKey.isPlayerVisible && (
+                      <FontAwesomeIcon
+                        icon={faEye}
+                        className="text-green-600 dark:text-green-400"
+                        title="Visible to players"
+                      />
+                    )}
+                  </span>
+                  <svg
+                    className={`w-5 h-5 transition-transform ${locationToReveal === locationKey.id ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {locationToReveal === locationKey.id && (
+                  <div className="p-4 border-t border-gray-300 dark:border-gray-600">
+                    <div className="markdown-content mb-3 text-gray-700 dark:text-gray-300">
+                      <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2 text-center mt-1">
+                      <Link to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}>
+                        <button
                           onClick={() =>
                             setLocationKeyToEdit({
                               id: locationKey.id,
@@ -112,27 +109,24 @@ const LocationKeys: React.FC<{
                               isPlayerVisible: locationKey.isPlayerVisible,
                             })
                           }
+                          className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                         >
                           Edit
-                        </Button>
+                        </button>
                       </Link>
-                    </Col>
-                    <Col>
-                      <Button
-                        variant="secondary"
+                      <button
                         onClick={() => showOnMap(locationKey.id)}
+                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
                       >
                         Show
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button
-                        variant={
-                          locationKey.isPlayerVisible
-                            ? "success"
-                            : "outline-secondary"
-                        }
+                      </button>
+                      <button
                         onClick={() => togglePlayerVisibility(locationKey.id)}
+                        className={`px-4 py-2 rounded ${
+                          locationKey.isPlayerVisible
+                            ? "bg-green-600 text-white hover:bg-green-700"
+                            : "bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+                        }`}
                         title={
                           locationKey.isPlayerVisible
                             ? "Hide from players"
@@ -140,36 +134,32 @@ const LocationKeys: React.FC<{
                         }
                       >
                         <FontAwesomeIcon
-                          icon={
-                            locationKey.isPlayerVisible ? faEye : faEyeSlash
-                          }
+                          icon={locationKey.isPlayerVisible ? faEye : faEyeSlash}
                         />
-                      </Button>
-                    </Col>
-                    <Col>{""}</Col>
-                  </Row>
-                </Accordion.Body>
-              </Accordion.Item>
+                      </button>
+                      <div></div>
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
-          </Accordion>
+          </div>
         </>
       ) : (
-        <Card className="mb-3">
-          <CardBody className="py-2">
-            <Card.Title className="header mb-2">No Location Keys</Card.Title>
-            <Card.Text className="mb-0">
-              The location keys will show up here once you add them. Click{" "}
-              <Link to={paths.help}>here</Link> to learn how to do so.
-            </Card.Text>
-          </CardBody>
-        </Card>
+        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
+          <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">No Location Keys</h2>
+          <p className="text-gray-700 dark:text-gray-300 mb-0">
+            The location keys will show up here once you add them. Click{" "}
+            <Link to={paths.help} className="text-blue-600 dark:text-blue-400 hover:underline">here</Link> to learn how to do so.
+          </p>
+        </div>
       )}
       <div className="p-2 text-center">
         <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
           <img
             src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
             alt="Buy Me A Coffee"
-            style={{ height: "60px", width: "217px" }}
+            className="h-[60px] w-[217px] inline-block"
           />
         </a>
       </div>

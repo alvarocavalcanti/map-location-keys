@@ -1,7 +1,7 @@
 {
   "name": "map-location-keys",
   "private": true,
-  "version": "2026-02-03",
+  "version": "2026-02-04",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,16 +9,17 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
     "@types/file-saver": "^2.0.7",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.12.12",
     "@types/react-dom": "^18.3.0",
     "@types/remarkable": "^2.0.8",
+    "autoprefixer": "^10.4.24",
     "typescript": "^5.4.5",
     "vite": "^6.4.1"
   },
   "dependencies": {
-    "@analytics/google-analytics": "^1.0.7",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
@@ -28,12 +29,9 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "@vitejs/plugin-react": "^4.3.4",
-    "analytics": "^0.8.13",
-    "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",
     "js-yaml": "^4.1.1",
     "react": "^18.3.1",
-    "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.30.3",

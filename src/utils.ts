@@ -2,8 +2,11 @@ import { Item } from "@owlbear-rodeo/sdk";
 import { LocationKey, FogKey } from "./@types/types";
 import { ID } from "./main";
 
-import Analytics from 'analytics';
-import googleAnalytics from '@analytics/google-analytics';
+declare global {
+  interface Window {
+    gtag: (...args: unknown[]) => void;
+  }
+}
 
 export function loadExistingLocationKeys(
   items: Item[],
@@ -50,14 +53,18 @@ export const isDevMode = (): boolean => {
   return localStorage.getItem("dev-mode") === "true";
 };
 
-export const analytics = Analytics({
-  app: 'awesome-app',
-  plugins: [
-    googleAnalytics({
-      measurementIds: ['G-1TBFXRLMWR']
-    })
-  ]
-})
+export const analytics = {
+  page: () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view');
+    }
+  },
+  track: (eventName: string, properties?: Record<string, unknown>) => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, properties);
+    }
+  }
+};
 
 export function loadExistingFogKeys(
   items: Item[],

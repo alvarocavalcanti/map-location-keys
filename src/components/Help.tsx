@@ -1,5 +1,4 @@
 import React from "react";
-import { Accordion, Card, CardBody } from "react-bootstrap";
 import { analytics } from "../utils";
 import YouTube from "react-youtube";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +8,8 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faGlobeAfrica } from "@fortawesome/free-solid-svg-icons";
 
 const Help: React.FC<{ version: string }> = ({ version }) => {
+  const [activeSection, setActiveSection] = React.useState<string>("");
+
   const itemsAdd: { header: string; image: string; description?: string }[] = [
     {
       header: "1. Add or select an existing TEXT item",
@@ -30,92 +31,42 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
     },
   ];
 
-  analytics.page();
-
-  const opts = {
-    width: "300",
-  };
-
-  return (
-    <>
-      <Card className="mb-3">
-        <CardBody className="py-2">
-          <Card.Title>Video Tutorial</Card.Title>
-          <Card.Text>
-            <YouTube videoId="jJM_600M1eo" opts={opts} />
-          </Card.Text>
-        </CardBody>
-      </Card>
-      <Card className="mb-2">
-        <CardBody className="py-2">
-          <Card.Title>Adding Location Keys</Card.Title>
-        </CardBody>
-      </Card>
-      <Accordion key="1" className="mb-3">
-        {itemsAdd.map((item, index) => (
-          <Accordion.Item eventKey={String(index)} key={index}>
-            <Accordion.Header className="py-2">{item.header}</Accordion.Header>
-            <Accordion.Body className="py-2">
-              {item.description && <p>{item.description}</p>}
-              <img src={item.image} alt={item.header} className="img-fluid" />
-            </Accordion.Body>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-      <Card className="mb-2">
-        <CardBody className="py-2">
-          <Card.Title>Exporting Location Keys</Card.Title>
-        </CardBody>
-      </Card>
-      <Accordion key="2" className="mb-3">
-        {itemsExport.map((item, index) => (
-          <Accordion.Item eventKey={String(index)} key={index}>
-            <Accordion.Header className="py-2">{item.header}</Accordion.Header>
-            <Accordion.Body className="py-2">{item.text}</Accordion.Body>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-      <Card className="mb-2">
-        <CardBody className="py-2">
-          <Card.Title>Importing Location Keys</Card.Title>
-        </CardBody>
-      </Card>
-        <Accordion key="3" className="mb-3">
-          <Accordion.Item eventKey={"0"} key={0}>
-            <Accordion.Header className="py-2">1. Paste a valid YAML content</Accordion.Header>
-            <Accordion.Body className="py-2">
-              Valid YAML content should be in the following format:
-              <br className="mb-3" />
-              <ul>
-                <li>
-                  <strong>description</strong> is a multiline string that can
-                  contain markdown.
-                  <br />
-                </li>
-                <li>
-                  <strong>name</strong> is a string that represents the Location
-                  Key. This will be the text of the TEXT item, please use one or
-                  two characters for optimal display, e.g. 'A1', 'B2', '7', '8a'{" "}
-                  <br />
-                </li>
-                <li>
-                  <strong>id</strong> is a string that represents the ID of the
-                  TEXT item. This is optional and can be left blank.
-                </li>
-                <li>
-                  <strong>playerInfo</strong> is an optional string that contains
-                  information visible to players when the location key is shared with them.
-                  Supports Markdown.
-                </li>
-                <li>
-                  <strong>isPlayerVisible</strong> is an optional boolean that
-                  determines if the location key is visible to players. Defaults to false.
-                </li>
-              </ul>
-              Example:
-              <br className="mb-3" />
-              <pre className="text-bg-secondary">
-                {`- description: |-
+  const itemsImport = [
+    {
+      id: "import-0",
+      header: "1. Paste a valid YAML content",
+      content: (
+        <div className="text-gray-700 dark:text-gray-300">
+          Valid YAML content should be in the following format:
+          <br className="mb-3" />
+          <ul className="list-disc list-inside my-2">
+            <li>
+              <strong>description</strong> is a multiline string that can
+              contain markdown.
+            </li>
+            <li>
+              <strong>name</strong> is a string that represents the Location
+              Key. This will be the text of the TEXT item, please use one or
+              two characters for optimal display, e.g. 'A1', 'B2', '7', '8a'
+            </li>
+            <li>
+              <strong>id</strong> is a string that represents the ID of the
+              TEXT item. This is optional and can be left blank.
+            </li>
+            <li>
+              <strong>playerInfo</strong> is an optional string that contains
+              information visible to players when the location key is shared with them.
+              Supports Markdown.
+            </li>
+            <li>
+              <strong>isPlayerVisible</strong> is an optional boolean that
+              determines if the location key is visible to players. Defaults to false.
+            </li>
+          </ul>
+          Example:
+          <br className="mb-3" />
+          <pre className="bg-gray-700 text-gray-100 p-3 rounded overflow-x-auto">
+{`- description: |-
     # Evocative Name
 
     **Description:**
@@ -143,69 +94,213 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
   id: ''
   playerInfo: ''
   isPlayerVisible: false`}
-              </pre>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey={"1"} key={1}>
-            <Accordion.Header className="py-2">2. Click Import</Accordion.Header>
-            <Accordion.Body className="py-2">
-              If the content is valid, the Location Keys will be imported and
-              added to the scene from the top left corner.
-              <br />
-              <img
-                src="img/help05.png"
-                alt="New Location Key items"
-                className="img-fluid"
-              />
-              You can move them around as needed.
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-      <Card className="mb-2">
-        <CardBody className="py-2">
-          <Card.Title>Sharing Location Keys with Players</Card.Title>
-        </CardBody>
-      </Card>
-      <Accordion key="4" className="mb-3">
-        <Accordion.Item eventKey="0" key={0}>
-          <Accordion.Header className="py-2">1. Add Player Information</Accordion.Header>
-          <Accordion.Body className="py-2">
-              When editing a location key, you can add information specifically for players in the "Player Information" field. This content supports Markdown and will be shown to players when the location key is made visible to them.
-              <br /><br />
-              This field is separate from your GM notes, so you can include player-appropriate descriptions while keeping your GM-only information private.
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="1" key={1}>
-            <Accordion.Header className="py-2">2. Make Location Key Visible to Players</Accordion.Header>
-            <Accordion.Body className="py-2">
-              You can make location keys visible to players in several ways:
-              <ul>
-                <li><strong>Edit Form:</strong> Check the "Make visible to players" checkbox when editing a location key</li>
-                <li><strong>Context Menu:</strong> Right-click any location key and select "Toggle Player Visibility"</li>
-                <li><strong>GM View:</strong> Click the eye icon button next to any location key to quickly toggle visibility</li>
-              </ul>
-              Location keys that are visible to players will show an eye icon (👁️) next to their name in the GM view.
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="2" key={2}>
-            <Accordion.Header className="py-2">3. Player Experience</Accordion.Header>
-            <Accordion.Body className="py-2">
-              When players open the extension, they will see:
-              <ul>
-                <li>A "Location Information" section instead of the full GM interface</li>
-                <li>Only location keys that you've marked as player-visible</li>
-                <li>The custom "Player Information" content you've written for each location</li>
-                <li>A "Show" button to navigate to each visible location</li>
-              </ul>
-              If no location keys are made visible to players, they'll see a message saying "Your GM hasn't shared any location information with players yet."
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+          </pre>
+        </div>
+      )
+    },
+    {
+      id: "import-1",
+      header: "2. Click Import",
+      content: (
+        <div className="text-gray-700 dark:text-gray-300">
+          If the content is valid, the Location Keys will be imported and
+          added to the scene from the top left corner.
+          <br />
+          <img
+            src="img/help05.png"
+            alt="New Location Key items"
+            className="w-full rounded border border-gray-300 dark:border-gray-600 my-2"
+          />
+          You can move them around as needed.
+        </div>
+      )
+    }
+  ];
+
+  const itemsPlayerSharing = [
+    {
+      id: "player-0",
+      header: "1. Add Player Information",
+      content: (
+        <div className="text-gray-700 dark:text-gray-300">
+          When editing a location key, you can add information specifically for players in the "Player Information" field. This content supports Markdown and will be shown to players when the location key is made visible to them.
+          <br /><br />
+          This field is separate from your GM notes, so you can include player-appropriate descriptions while keeping your GM-only information private.
+        </div>
+      )
+    },
+    {
+      id: "player-1",
+      header: "2. Make Location Key Visible to Players",
+      content: (
+        <div className="text-gray-700 dark:text-gray-300">
+          You can make location keys visible to players in several ways:
+          <ul className="list-disc list-inside my-2">
+            <li><strong>Edit Form:</strong> Check the "Make visible to players" checkbox when editing a location key</li>
+            <li><strong>Context Menu:</strong> Right-click any location key and select "Toggle Player Visibility"</li>
+            <li><strong>GM View:</strong> Click the eye icon button next to any location key to quickly toggle visibility</li>
+          </ul>
+          Location keys that are visible to players will show an eye icon (👁️) next to their name in the GM view.
+        </div>
+      )
+    },
+    {
+      id: "player-2",
+      header: "3. Player Experience",
+      content: (
+        <div className="text-gray-700 dark:text-gray-300">
+          When players open the extension, they will see:
+          <ul className="list-disc list-inside my-2">
+            <li>A "Location Information" section instead of the full GM interface</li>
+            <li>Only location keys that you've marked as player-visible</li>
+            <li>The custom "Player Information" content you've written for each location</li>
+            <li>A "Show" button to navigate to each visible location</li>
+          </ul>
+          If no location keys are made visible to players, they'll see a message saying "Your GM hasn't shared any location information with players yet."
+        </div>
+      )
+    }
+  ];
+
+  analytics.page();
+
+  const opts = {
+    width: "300",
+  };
+
+  const toggleSection = (id: string) => {
+    setActiveSection(prev => prev === id ? "" : id);
+  };
+
+  return (
+    <>
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Video Tutorial</h2>
+        <YouTube videoId="jJM_600M1eo" opts={opts} />
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-2">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Adding Location Keys</h2>
+      </div>
+      <div className="mb-3 space-y-2">
+        {itemsAdd.map((item, index) => (
+          <div key={index} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
+            <button
+              onClick={() => toggleSection(`add-${index}`)}
+              className="w-full px-4 py-2 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
+            >
+              <span>{item.header}</span>
+              <svg
+                className={`w-5 h-5 transition-transform ${activeSection === `add-${index}` ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {activeSection === `add-${index}` && (
+              <div className="p-4 border-t border-gray-300 dark:border-gray-600">
+                {item.description && <p className="text-gray-700 dark:text-gray-300 mb-2">{item.description}</p>}
+                <img src={item.image} alt={item.header} className="w-full rounded border border-gray-300 dark:border-gray-600" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-2">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Exporting Location Keys</h2>
+      </div>
+      <div className="mb-3 space-y-2">
+        {itemsExport.map((item, index) => (
+          <div key={index} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
+            <button
+              onClick={() => toggleSection(`export-${index}`)}
+              className="w-full px-4 py-2 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
+            >
+              <span>{item.header}</span>
+              <svg
+                className={`w-5 h-5 transition-transform ${activeSection === `export-${index}` ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {activeSection === `export-${index}` && (
+              <div className="p-4 border-t border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300">
+                {item.text}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-2">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Importing Location Keys</h2>
+      </div>
+      <div className="mb-3 space-y-2">
+        {itemsImport.map((item) => (
+          <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
+            <button
+              onClick={() => toggleSection(item.id)}
+              className="w-full px-4 py-2 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
+            >
+              <span>{item.header}</span>
+              <svg
+                className={`w-5 h-5 transition-transform ${activeSection === item.id ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {activeSection === item.id && (
+              <div className="p-4 border-t border-gray-300 dark:border-gray-600">
+                {item.content}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-2">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Sharing Location Keys with Players</h2>
+      </div>
+      <div className="mb-3 space-y-2">
+        {itemsPlayerSharing.map((item) => (
+          <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
+            <button
+              onClick={() => toggleSection(item.id)}
+              className="w-full px-4 py-2 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
+            >
+              <span>{item.header}</span>
+              <svg
+                className={`w-5 h-5 transition-transform ${activeSection === item.id ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {activeSection === item.id && (
+              <div className="p-4 border-t border-gray-300 dark:border-gray-600">
+                {item.content}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
       <div className="mt-2 text-center">
         <a
           href="https://shadowcrawler.vercel.app"
           target="_blank"
-          className="m-1"
+          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
         >
           <FontAwesomeIcon icon={faGlobeAfrica} /> shadowcrawler.vercel.app
         </a>
@@ -214,7 +309,7 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         <a
           href="https://github.com/alvarocavalcanti/shadowcrawler"
           target="_blank"
-          className="m-1"
+          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
         >
           <FontAwesomeIcon icon={faGithub} /> alvarocavalcanti/shadowcrawler
         </a>
@@ -223,7 +318,7 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         <a
           href="https://bsky.app/profile/alvarocavalcanti.bsky.social"
           target="_blank"
-          className="m-1"
+          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
         >
           <FontAwesomeIcon icon={faBluesky} /> alvarocavalcanti.bsky.social
         </a>
@@ -232,7 +327,7 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         <a
           href="https://twitter.com/alvarocavalcant"
           target="_blank"
-          className="m-1"
+          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
         >
           <FontAwesomeIcon icon={faTwitter} /> alvarocavalcant
         </a>
@@ -242,7 +337,7 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
           <img
             src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
             alt="Buy Me A Coffee"
-            style={{ height: "60px", width: "217px" }}
+            className="h-[60px] w-[217px] inline-block"
           />
         </a>
       </div>
@@ -250,23 +345,25 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
         <a href="https://ko-fi.com/O4O1WSP5B" target="_blank" rel="noreferrer">
           <img
             height="36"
-            style={{ border: 0, height: "36px" }}
+            className="h-9 inline-block"
             src="https://storage.ko-fi.com/cdn/kofi6.png?v=6"
             alt="Buy Me a Coffee at ko-fi.com"
           />
         </a>
       </div>
-      <em className="text-secondary mb-2">
-        Version: {version} |
-        <a
-          href="https://github.com/alvarocavalcanti/map-location-keys/blob/main/RELEASE-NOTES.md"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-secondary ms-1"
-        >
-          Release Notes
-        </a>
-      </em>
+      <div className="text-center">
+        <em className="text-gray-500 dark:text-gray-400 text-sm">
+          Version: {version} |
+          <a
+            href="https://github.com/alvarocavalcanti/map-location-keys/blob/main/RELEASE-NOTES.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 dark:text-gray-400 hover:underline ml-1"
+          >
+            Release Notes
+          </a>
+        </em>
+      </div>
     </>
   );
 };

@@ -3,7 +3,6 @@ import OBR, { buildText, Item } from "@owlbear-rodeo/sdk";
 import { saveAs } from "file-saver";
 import yaml, { JSON_SCHEMA } from "js-yaml";
 import React from "react";
-import { Button, Card, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { ID } from "../main";
@@ -219,80 +218,82 @@ const ImportExport: React.FC<{
 
   return (
     <>
-      <Card className="mb-3">
-        <Card.Body className="py-2">
-          <Card.Title>Export</Card.Title>
-          <Card.Text>
-            Click the button below to export your location keys as a YAML file.
-            <br className="mb-2" />
-            <Button className="primary" onClick={handleExport}>
-              Export
-            </Button>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <Card className="mb-3">
-        <Card.Body className="py-2">
-          <Card.Title>Import</Card.Title>
-          <Card.Text className="mb-2">
-            Paste the contents of a YAML file below and click the button to
-            import location keys.
-          </Card.Text>
-          <div className="mb-3 alert alert-warning p-2" role="alert">
-            Importing will overwrite any existing location keys.
-          </div>
-          <Form.Control
-            as="textarea"
-            rows={13}
-            defaultValue={importYAML}
-            onChange={(e) => handleOnChange(e.target as HTMLTextAreaElement)}
-            data-bs-theme="light"
-            className={`mb-3 ${inputValid ? "is-valid" : "is-invalid"}`}
-            id="yamlInput"
-          />
-          <Form.Check
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Export</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-3">
+          Click the button below to export your location keys as a YAML file.
+        </p>
+        <button onClick={handleExport} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          Export
+        </button>
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Import</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-2">
+          Paste the contents of a YAML file below and click the button to
+          import location keys.
+        </p>
+        <div className="mb-3 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 dark:border-yellow-700 p-2 rounded text-yellow-800 dark:text-yellow-200">
+          Importing will overwrite any existing location keys.
+        </div>
+        <textarea
+          rows={13}
+          defaultValue={importYAML}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleOnChange(e.target as HTMLTextAreaElement)}
+          className={`w-full px-3 py-2 mb-3 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+            inputValid ? "border-green-500" : "border-red-500"
+          }`}
+          id="yamlInput"
+        />
+        <label className="flex items-center mb-2 cursor-pointer">
+          <input
             type="checkbox"
             id="importAsHiddenCheckbox"
-            label="Import as hidden (not visible in scene)"
             checked={importAsHidden}
-            onChange={(e) => setImportAsHidden(e.target.checked)}
-            className="mb-2"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImportAsHidden(e.target.checked)}
+            className="mr-2"
           />
-          <Button
-            className={`primary ${inputValid && !isImporting ? "enabled" : "disabled"}`}
-            onClick={handleImport}
-            disabled={!inputValid || isImporting}
-          >
-            {isImporting ? "Importing..." : "Import"}
-          </Button>
-          {isImporting && importProgress && (
-            <div className="alert alert-info p-2 mt-3">
-              {importProgress}
-            </div>
-          )}
-          {importSuccess ? (
-            <div className="alert alert-info p-2 mt-3">
-              Location keys successfully imported.
+          <span className="text-gray-900 dark:text-white">Import as hidden (not visible in scene)</span>
+        </label>
+        <button
+          onClick={handleImport}
+          disabled={!inputValid || isImporting}
+          className={`px-4 py-2 rounded ${
+            inputValid && !isImporting
+              ? "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-gray-400 text-gray-200 cursor-not-allowed"
+          }`}
+        >
+          {isImporting ? "Importing..." : "Import"}
+        </button>
+        {isImporting && importProgress && (
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 p-2 mt-3 rounded text-blue-800 dark:text-blue-200">
+            {importProgress}
+          </div>
+        )}
+        {importSuccess ? (
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 p-2 mt-3 rounded text-blue-800 dark:text-blue-200">
+            Location keys successfully imported.
+            <br />
+            <br />
+            The text items were added to the map at the top left corner. You
+            can move them around as needed.
+          </div>
+        ) : (
+          importError.length > 0 && (
+            <div className="bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 p-2 mt-3 rounded text-red-800 dark:text-red-200">
+              {importError}
               <br />
-              <br />
-              The text items were added to the map at the top left corner. You
-              can move them around as needed.
+              See the{" "}
+              <Link to={paths.help} className="text-red-700 dark:text-red-300 underline">
+                Help
+              </Link>{" "}
+              page for more information.
             </div>
-          ) : (
-            importError.length > 0 && (
-              <div className="alert alert-danger p-2 mt-3">
-                {importError}
-                <br />
-                See the{" "}
-                <Link to={paths.help} className="alert-link">
-                  Help
-                </Link>{" "}
-                page for more information.
-              </div>
-            )
-          )}
-        </Card.Body>
-      </Card>
+          )
+        )}
+      </div>
     </>
   );
 };

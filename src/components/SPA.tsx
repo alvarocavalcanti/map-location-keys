@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import { Nav, Tab } from "react-bootstrap";
 
 import LocationKey from "./LocationKey";
 import LocationKeys from "./LocationKeys";
@@ -55,7 +54,12 @@ export default function SPA() {
   };
 
   const setTheme = (theme: string): void => {
-    document.getElementById("html_root")?.setAttribute("data-bs-theme", theme);
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
   };
 
   const handlePlayerChange = (player: Player) => {
@@ -124,45 +128,87 @@ export default function SPA() {
   };
 
   return role === "GM" ? (
-    <div className="p-2">
+    <div className="p-4">
       {isDevMode() ? (
-        <div className="alert alert-warning p-2 mb-3">Development Mode</div>
+        <div className="bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 dark:border-yellow-700 p-2 mb-3 text-yellow-800 dark:text-yellow-200 rounded">
+          Development Mode
+        </div>
       ) : null}
-      <h1 className="mb-3">Map Location Keys</h1>
+      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Map Location Keys</h1>
 
-      <Tab.Container activeKey={activeTab} onSelect={handleTabSelect}>
-        <Nav variant="tabs" className="mb-3">
-          <Nav.Item>
-            <Nav.Link eventKey="location-keys">Location Keys</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="tools">Tools</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="help">Help</Nav.Link>
-          </Nav.Item>
-          <div className="ms-auto text-secondary small align-self-center">v{version}</div>
-        </Nav>
-      </Tab.Container>
+      {/* Main Tabs */}
+      <div className="mb-4">
+        <div className="flex border-b border-gray-300 dark:border-gray-600">
+          <button
+            onClick={() => handleTabSelect("location-keys")}
+            className={`px-4 py-2 font-medium text-sm ${
+              activeTab === "location-keys"
+                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-300"
+                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            }`}
+          >
+            Location Keys
+          </button>
+          <button
+            onClick={() => handleTabSelect("tools")}
+            className={`px-4 py-2 font-medium text-sm ${
+              activeTab === "tools"
+                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-300"
+                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            }`}
+          >
+            Tools
+          </button>
+          <button
+            onClick={() => handleTabSelect("help")}
+            className={`px-4 py-2 font-medium text-sm ${
+              activeTab === "help"
+                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-300"
+                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            }`}
+          >
+            Help
+          </button>
+          <div className="ml-auto self-center text-gray-500 dark:text-gray-400 text-xs">
+            v{version}
+          </div>
+        </div>
+      </div>
 
+      {/* Sub-navigation for Tools */}
       {activeTab === "tools" && (
-        <Nav variant="pills" className="mb-3" activeKey={location.pathname}>
-          <Nav.Item>
-            <Nav.Link eventKey={paths.importExport} onClick={() => navigate(paths.importExport)}>
-              Location Keys
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey={paths.fogExportImport} onClick={() => navigate(paths.fogExportImport)}>
-              Fog
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey={paths.bulkActions} onClick={() => navigate(paths.bulkActions)}>
-              Bulk Actions
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
+        <div className="flex gap-2 mb-4">
+          <button
+            onClick={() => navigate(paths.importExport)}
+            className={`px-3 py-1.5 rounded text-sm ${
+              location.pathname === paths.importExport
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
+            }`}
+          >
+            Location Keys
+          </button>
+          <button
+            onClick={() => navigate(paths.fogExportImport)}
+            className={`px-3 py-1.5 rounded text-sm ${
+              location.pathname === paths.fogExportImport
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
+            }`}
+          >
+            Fog
+          </button>
+          <button
+            onClick={() => navigate(paths.bulkActions)}
+            className={`px-3 py-1.5 rounded text-sm ${
+              location.pathname === paths.bulkActions
+                ? "bg-blue-600 text-white"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
+            }`}
+          >
+            Bulk Actions
+          </button>
+        </div>
       )}
 
       <Routes>

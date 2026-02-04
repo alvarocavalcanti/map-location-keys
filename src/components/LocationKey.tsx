@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  Col,
-  Form,
-  Row,
-} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import type { LocationKey } from "../@types/types";
@@ -58,78 +50,59 @@ const LocationKey: React.FC<{
 
   return (
     <>
-      <Card className="mb-3">
-        <CardBody className="py-2">
-          <Card.Title className="header mb-0">Edit Location Key</Card.Title>
-          <Card.Text className="mb-0">Name: {locationKey.name}</Card.Text>
-        </CardBody>
-      </Card>
-      <Card className="mb-3">
-        <Form>
-          <Form.Group controlId="form.LocationKeyDetails">
-            <CardBody className="py-2">
-              <Card.Title className="header">Details</Card.Title>
-              <Card.Text>
-                <em>Markdown supported.</em>
-              </Card.Text>
-              <Form.Control
-                as="textarea"
-                rows={13}
-                defaultValue={description}
-                onChange={(e) => setDescription(e.target.value)}
-                data-bs-theme="light"
-                className="mb-3"
-              />
-              <Card.Title className="header">Player Information</Card.Title>
-              <Card.Text>
-                <em>Information visible to players when enabled (Markdown supported).</em>
-              </Card.Text>
-              <Form.Control
-                as="textarea"
-                rows={6}
-                placeholder="Enter information that players will see when this location key is made visible to them..."
-                value={playerInfo}
-                onChange={(e) => setPlayerInfo(e.target.value)}
-                data-bs-theme="light"
-                className="mb-2"
-              />
-              <Form.Check
-                type="checkbox"
-                id="player-visibility-checkbox"
-                label="Make visible to players"
-                checked={isPlayerVisible}
-                onChange={(e) => setIsPlayerVisible(e.target.checked)}
-                className="mb-3"
-              />
-              <Row className="text-center mt-2">
-                <Col>
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      handleSave();
-                    }}
-                    className="me-2"
-                  >
-                    Save
-                  </Button>
-                </Col>
-                <Col>
-                  <Button
-                    variant="danger"
-                    onClick={() => {
-                      navigate("/");
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                </Col>
-                <Col>{""}</Col>
-                <Col>{""}</Col>
-              </Row>
-            </CardBody>
-          </Form.Group>
-        </Form>
-      </Card>
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
+        <h2 className="text-lg font-semibold mb-0 text-gray-900 dark:text-white">Edit Location Key</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-0">Name: {locationKey.name}</p>
+      </div>
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
+        <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Details</h3>
+        <p className="text-gray-700 dark:text-gray-300 mb-2">
+          <em>Markdown supported.</em>
+        </p>
+        <textarea
+          rows={13}
+          defaultValue={description}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+          className="w-full px-3 py-2 mb-3 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        />
+        <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Player Information</h3>
+        <p className="text-gray-700 dark:text-gray-300 mb-2">
+          <em>Information visible to players when enabled (Markdown supported).</em>
+        </p>
+        <textarea
+          rows={6}
+          placeholder="Enter information that players will see when this location key is made visible to them..."
+          value={playerInfo}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setPlayerInfo(e.target.value)}
+          className="w-full px-3 py-2 mb-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        />
+        <label className="flex items-center mb-3 cursor-pointer">
+          <input
+            type="checkbox"
+            id="player-visibility-checkbox"
+            checked={isPlayerVisible}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsPlayerVisible(e.target.checked)}
+            className="mr-2"
+          />
+          <span className="text-gray-900 dark:text-white">Make visible to players</span>
+        </label>
+        <div className="grid grid-cols-4 gap-2 text-center mt-2">
+          <button
+            onClick={() => handleSave()}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Save
+          </button>
+          <button
+            onClick={() => navigate("/")}
+            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Cancel
+          </button>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
     </>
   );
 };

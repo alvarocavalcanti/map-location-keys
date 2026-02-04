@@ -3,7 +3,6 @@ import OBR, { buildCurve, buildPath, buildShape, Item } from "@owlbear-rodeo/sdk
 import { saveAs } from "file-saver";
 import yaml, { JSON_SCHEMA } from "js-yaml";
 import React from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { paths } from "./util/constants";
@@ -188,70 +187,70 @@ const FogExportImport: React.FC<{
   analytics.page();
 
   return (
-    <Container>
-      <Card className="mb-4">
-        <Card.Body>
-          <Card.Title>Export Fog</Card.Title>
-          <Card.Text>
-            Click the button below to export your fog items as a YAML file.
-            <br className="mb-4" />
-            <Button className="primary" onClick={handleExport}>
-              Export
-            </Button>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <Card className="mb-4">
-        <Card.Body>
-          <Card.Title>Import Fog</Card.Title>
-          <Card.Text className="mb-2">
-            Paste the contents of a YAML file below and click the button to
-            import fog items.
-          </Card.Text>
-          <Container className="mb-4 alert alert-warning" role="alert">
-            Importing will overwrite any existing fog items.
-          </Container>
-          <Form.Control
-            as="textarea"
-            rows={13}
-            defaultValue={importYAML}
-            onChange={(e) => handleOnChange(e.target as HTMLTextAreaElement)}
-            data-bs-theme="light"
-            className={`mb-4 ${inputValid ? "is-valid" : "is-invalid"}`}
-            id="yamlInput"
-          />
-          <Button
-            className={`primary ${inputValid && !isImporting ? "enabled" : "disabled"}`}
-            onClick={handleImport}
-            disabled={!inputValid || isImporting}
-          >
-            {isImporting ? "Importing..." : "Import"}
-          </Button>
-          {isImporting && importProgress && (
-            <Container className="alert alert-info p-3 mt-4">
-              {importProgress}
-            </Container>
-          )}
-          {importSuccess ? (
-            <Container className="alert alert-info p-3 mt-4">
-              Fog items successfully imported.
-            </Container>
-          ) : (
-            importError.length > 0 && (
-              <Container className="alert alert-danger p-3 mt-4">
-                {importError}
-                <br />
-                See the{" "}
-                <Link to={paths.help} className="alert-link">
-                  Help
-                </Link>{" "}
-                page for more information.
-              </Container>
-            )
-          )}
-        </Card.Body>
-      </Card>
-    </Container>
+    <>
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-4">
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Export Fog</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-3">
+          Click the button below to export your fog items as a YAML file.
+        </p>
+        <button onClick={handleExport} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          Export
+        </button>
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-4">
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Import Fog</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-2">
+          Paste the contents of a YAML file below and click the button to
+          import fog items.
+        </p>
+        <div className="mb-4 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 dark:border-yellow-700 p-2 rounded text-yellow-800 dark:text-yellow-200">
+          Importing will overwrite any existing fog items.
+        </div>
+        <textarea
+          rows={13}
+          defaultValue={importYAML}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleOnChange(e.target as HTMLTextAreaElement)}
+          className={`w-full px-3 py-2 mb-4 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white ${
+            inputValid ? "border-green-500" : "border-red-500"
+          }`}
+          id="yamlInput"
+        />
+        <button
+          onClick={handleImport}
+          disabled={!inputValid || isImporting}
+          className={`px-4 py-2 rounded ${
+            inputValid && !isImporting
+              ? "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-gray-400 text-gray-200 cursor-not-allowed"
+          }`}
+        >
+          {isImporting ? "Importing..." : "Import"}
+        </button>
+        {isImporting && importProgress && (
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 p-3 mt-4 rounded text-blue-800 dark:text-blue-200">
+            {importProgress}
+          </div>
+        )}
+        {importSuccess ? (
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 p-3 mt-4 rounded text-blue-800 dark:text-blue-200">
+            Fog items successfully imported.
+          </div>
+        ) : (
+          importError.length > 0 && (
+            <div className="bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 p-3 mt-4 rounded text-red-800 dark:text-red-200">
+              {importError}
+              <br />
+              See the{" "}
+              <Link to={paths.help} className="text-red-700 dark:text-red-300 underline">
+                Help
+              </Link>{" "}
+              page for more information.
+            </div>
+          )
+        )}
+      </div>
+    </>
   );
 };
 

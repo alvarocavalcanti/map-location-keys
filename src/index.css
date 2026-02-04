@@ -7,6 +7,25 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* Theme CSS Variables */
+:root {
+  --color-bg: #FAF8F3;
+  --color-card: #FFFFFF;
+  --color-text: #1F1F1F;
+  --color-text-secondary: #57534E;
+  --color-primary: #7C3AED;
+  --color-primary-hover: #6D28D9;
+  --color-secondary: #78716C;
+  --color-secondary-hover: #57534E;
+  --color-accent: #F59E0B;
+  --color-success: #10B981;
+  --color-success-hover: #059669;
+  --color-danger: #DC2626;
+  --color-danger-hover: #B91C1C;
+  --color-border: #D4D4D8;
+  --color-border-hover: #A1A1AA;
+}
+
 /* Base styles */
 body {
   margin: 0;
@@ -15,15 +34,84 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #ffffff;
-  color: #212529;
-}
-
-html.dark body {
-  background-color: #212529;
-  color: #f8f9fa;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 #app {
   min-height: 100vh;
 }
+
+/* Theme utility classes */
+.bg-theme-card {
+  background-color: var(--color-card);
+}
+
+.text-theme {
+  color: var(--color-text);
+}
+
+.text-theme-secondary {
+  color: var(--color-text-secondary);
+}
+
+.bg-theme-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-theme-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.border-theme-primary {
+  border-color: var(--color-primary);
+}
+
+.border-theme-primary:hover {
+  border-color: var(--color-primary-hover);
+}
+
+.bg-theme-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-theme-secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+.border-theme-secondary {
+  border-color: var(--color-secondary);
+}
+
+.bg-theme-danger {
+  background-color: var(--color-danger);
+}
+
+.bg-theme-danger:hover {
+  background-color: var(--color-danger-hover);
+}
+
+.border-theme-danger {
+  border-color: var(--color-danger);
+}
+
+.bg-theme-success {
+  background-color: var(--color-success);
+}
+
+.bg-theme-success:hover {
+  background-color: var(--color-success-hover);
+}
+
+.border-theme-success {
+  border-color: var(--color-success);
+}
+
+.border-theme {
+  border-color: var(--color-border);
+}
+
+.border-theme:hover {
+  border-color: var(--color-border-hover);
+}
+

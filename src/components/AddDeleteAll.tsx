@@ -70,7 +70,7 @@ const AddDeleteAll: React.FC = () => {
         </h2>
         <button
           onClick={addAllToLocationKeys}
-          className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="mt-2 px-4 py-2 bg-theme-primary border-2 border-theme-primary text-white rounded font-medium transition-colors"
         >
           Add All
         </button>
@@ -79,7 +79,7 @@ const AddDeleteAll: React.FC = () => {
         <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Delete all Location Keys</h2>
         <button
           onClick={deleteAllLocationKeys}
-          className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          className="mt-2 px-4 py-2 bg-theme-danger border-2 border-theme-danger text-white rounded font-medium transition-colors"
         >
           Delete All
         </button>

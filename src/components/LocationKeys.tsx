@@ -94,7 +94,7 @@ const LocationKeys: React.FC<{
                 </button>
                 {locationToReveal === locationKey.id && (
                   <div className="p-4 border-t border-gray-300 dark:border-gray-600">
-                    <div className="markdown-content mb-3 text-gray-700 dark:text-gray-300">
+                    <div className="markdown-content mb-3 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300">
                       <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
                     </div>
                     <div className="grid grid-cols-4 gap-2 text-center mt-1">
@@ -109,23 +109,23 @@ const LocationKeys: React.FC<{
                               isPlayerVisible: locationKey.isPlayerVisible,
                             })
                           }
-                          className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                          className="w-full px-4 py-2 bg-theme-primary border-2 border-theme-primary text-white rounded font-medium transition-colors"
                         >
                           Edit
                         </button>
                       </Link>
                       <button
                         onClick={() => showOnMap(locationKey.id)}
-                        className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                        className="px-4 py-2 bg-theme-secondary border-2 border-theme-secondary text-white rounded font-medium transition-colors"
                       >
                         Show
                       </button>
                       <button
                         onClick={() => togglePlayerVisibility(locationKey.id)}
-                        className={`px-4 py-2 rounded ${
+                        className={`px-4 py-2 rounded border-2 font-medium transition-colors ${
                           locationKey.isPlayerVisible
-                            ? "bg-green-600 text-white hover:bg-green-700"
-                            : "bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
+                            ? "bg-theme-success border-theme-success text-white"
+                            : "bg-white dark:bg-gray-800 border-theme text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                         }`}
                         title={
                           locationKey.isPlayerVisible

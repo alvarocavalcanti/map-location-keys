@@ -21,6 +21,8 @@ import FogExportImport from "./FogExportImport";
 import { paths } from "./util/constants";
 import PlayerView from "./PlayerView";
 import AddDeleteAll from "./AddDeleteAll";
+import { useTheme } from "../hooks/useTheme";
+import { ColorMode } from "../themes";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
@@ -30,6 +32,8 @@ export default function SPA() {
   const [fogKeys, setFogKeys] = React.useState<FogKey[]>([]);
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
   const [activeTab, setActiveTab] = useState<string>("location-keys");
+  const [colorMode, setColorMode] = useState<ColorMode>('dark');
+  const { themeId, changeTheme } = useTheme(colorMode);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,8 +61,10 @@ export default function SPA() {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
+      setColorMode('dark');
     } else {
       root.classList.remove('dark');
+      setColorMode('light');
     }
   };
 
@@ -180,30 +186,30 @@ export default function SPA() {
         <div className="flex gap-2 mb-4">
           <button
             onClick={() => navigate(paths.importExport)}
-            className={`px-3 py-1.5 rounded text-sm ${
+            className={`px-4 py-2 rounded font-medium text-sm border-2 transition-colors ${
               location.pathname === paths.importExport
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
+                ? "bg-blue-600 border-blue-600 text-white"
+                : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-500"
             }`}
           >
             Location Keys
           </button>
           <button
             onClick={() => navigate(paths.fogExportImport)}
-            className={`px-3 py-1.5 rounded text-sm ${
+            className={`px-4 py-2 rounded font-medium text-sm border-2 transition-colors ${
               location.pathname === paths.fogExportImport
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
+                ? "bg-blue-600 border-blue-600 text-white"
+                : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-500"
             }`}
           >
             Fog
           </button>
           <button
             onClick={() => navigate(paths.bulkActions)}
-            className={`px-3 py-1.5 rounded text-sm ${
+            className={`px-4 py-2 rounded font-medium text-sm border-2 transition-colors ${
               location.pathname === paths.bulkActions
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"
+                ? "bg-blue-600 border-blue-600 text-white"
+                : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-500"
             }`}
           >
             Bulk Actions
@@ -242,7 +248,7 @@ export default function SPA() {
           path={paths.bulkActions}
           element={<AddDeleteAll />}
         />
-        <Route path={paths.help} element={<Help version={version} />} />
+        <Route path={paths.help} element={<Help version={version} currentTheme={themeId} onThemeChange={changeTheme} />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>

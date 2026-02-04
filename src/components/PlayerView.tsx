@@ -134,19 +134,19 @@ const PlayerView: React.FC = () => {
                         <div className="grid grid-cols-4 gap-2 text-center">
                           <button
                             onClick={() => handleSave(locationKey)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
                           >
                             Save
                           </button>
                           <button
                             onClick={handleCancel}
-                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                            className="px-4 py-2 bg-red-600 border-2 border-red-600 text-white rounded hover:bg-red-700 hover:border-red-700 font-medium transition-colors"
                           >
                             Cancel
                           </button>
                           <button
                             onClick={() => showOnMap(locationKey.id)}
-                            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                            className="px-4 py-2 bg-gray-500 border-2 border-gray-500 text-white rounded hover:bg-gray-600 hover:border-gray-600 font-medium transition-colors"
                           >
                             Show
                           </button>
@@ -156,7 +156,7 @@ const PlayerView: React.FC = () => {
                     ) : (
                       <>
                         {locationKey.playerInfo ? (
-                          <div className="markdown-content mb-3">
+                          <div className="markdown-content mb-3 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700">
                             <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
                           </div>
                         ) : (
@@ -165,13 +165,13 @@ const PlayerView: React.FC = () => {
                         <div className="grid grid-cols-4 gap-2 text-center">
                           <button
                             onClick={() => showOnMap(locationKey.id)}
-                            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                            className="px-4 py-2 bg-gray-500 border-2 border-gray-500 text-white rounded hover:bg-gray-600 hover:border-gray-600 font-medium transition-colors"
                           >
                             Show
                           </button>
                           <button
                             onClick={() => handleEdit(locationKey)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
                           >
                             Edit
                           </button>

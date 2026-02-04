@@ -204,7 +204,7 @@ const Homepage: React.FC = () => {
           </li>
         </ul>
         <h2 className="text-2xl font-semibold mb-3 text-gray-900 dark:text-white">Help Topics</h2>
-        <Help version={version} />
+        <Help version={version} currentTheme="dark-fantasy" onThemeChange={() => {}} />
       </div>
     </div>
   );

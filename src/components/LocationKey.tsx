@@ -89,13 +89,13 @@ const LocationKey: React.FC<{
         <div className="grid grid-cols-4 gap-2 text-center mt-2">
           <button
             onClick={() => handleSave()}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 py-2 bg-theme-primary border-2 border-theme-primary text-white rounded font-medium transition-colors"
           >
             Save
           </button>
           <button
             onClick={() => navigate("/")}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            className="px-4 py-2 bg-theme-danger border-2 border-theme-danger text-white rounded font-medium transition-colors"
           >
             Cancel
           </button>

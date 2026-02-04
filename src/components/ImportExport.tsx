@@ -223,7 +223,7 @@ const ImportExport: React.FC<{
         <p className="text-gray-700 dark:text-gray-300 mb-3">
           Click the button below to export your location keys as a YAML file.
         </p>
-        <button onClick={handleExport} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        <button onClick={handleExport} className="px-4 py-2 bg-theme-primary border-2 border-theme-primary text-white rounded font-medium transition-colors">
           Export
         </button>
       </div>
@@ -259,10 +259,10 @@ const ImportExport: React.FC<{
         <button
           onClick={handleImport}
           disabled={!inputValid || isImporting}
-          className={`px-4 py-2 rounded ${
+          className={`px-4 py-2 rounded border-2 font-medium transition-colors ${
             inputValid && !isImporting
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-400 text-gray-200 cursor-not-allowed"
+              ? "bg-theme-primary border-theme-primary text-white"
+              : "bg-gray-400 border-gray-400 text-gray-200 cursor-not-allowed"
           }`}
         >
           {isImporting ? "Importing..." : "Import"}

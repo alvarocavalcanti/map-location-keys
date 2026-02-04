@@ -10,6 +10,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { ID } from "../main";
 import { paths } from "./util/constants";
 import { analytics } from "../utils";
+import DonationButtons from "./DonationButtons";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
@@ -154,15 +155,7 @@ const LocationKeys: React.FC<{
           </p>
         </div>
       )}
-      <div className="p-2 text-center">
-        <a href="https://www.buymeacoffee.com/alvarocavalcanti" target="_blank">
-          <img
-            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-            alt="Buy Me A Coffee"
-            className="h-[60px] w-[217px] inline-block"
-          />
-        </a>
-      </div>
+      <DonationButtons />
     </>
   );
 };

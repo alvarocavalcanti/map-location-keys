@@ -23,6 +23,7 @@ import PlayerView from "./PlayerView";
 import AddDeleteAll from "./AddDeleteAll";
 import { useTheme } from "../hooks/useTheme";
 import { ColorMode } from "../themes";
+import WhatsNew from "./WhatsNew";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
@@ -135,6 +136,8 @@ export default function SPA() {
 
   return role === "GM" ? (
     <div className="p-4">
+      <WhatsNew currentVersion={version} storageKey="map-location-keys-last-seen-version" />
+
       {isDevMode() ? (
         <div className="bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-400 dark:border-yellow-700 p-2 mb-3 text-yellow-800 dark:text-yellow-200 rounded">
           Development Mode

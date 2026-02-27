@@ -79,11 +79,11 @@ This application uses **local React state** without global state management libr
 
 - **Owlbear Rodeo SDK Integration**: Uses `@owlbear-rodeo/sdk` for all map interactions
 - **React SPA**: Single-page application with React Router for navigation
-- **Tab-Based Navigation**: Bootstrap Tab.Container with horizontal tabs (Location Keys, Tools, Help)
+- **Tab-Based Navigation**: Custom Tailwind tab components with horizontal tabs (Location Keys, Tools, Help)
 - **Context Menu System**: Adds right-click options to TEXT and PROP layer items
 - **Metadata Storage**: Location keys stored in item metadata using pattern `${ID}/metadata`
 - **Role-Based Routing**: Separate route trees for GM and Player roles
-- **Theme Synchronization**: Matches OBR dark/light mode via `data-bs-theme` attribute
+- **Theme Synchronization**: Matches OBR dark/light mode via Tailwind `dark:` variants
 - **Broadcasting**: Local broadcast channel for context menu ↔ popover communication
 - **Compact Spacing**: Optimized padding and margins throughout (`p-2`, `py-2`, `mb-3`) for maximum content visibility
 
@@ -100,7 +100,7 @@ main.tsx (Entry Point)
             ├── SceneNotReady (if !scene.isReady)
             └── SPA (if scene.isReady)
                 ├── GM Interface (if role === "GM")
-                │   ├── Tab Navigation (Bootstrap Tab.Container)
+                │   ├── Tab Navigation (custom Tailwind tabs)
                 │   │   ├── "Location Keys" Tab
                 │   │   │   ├── "/" → LocationKeys (main list)
                 │   │   │   └── "/location-key/:id" → LocationKey (edit form)
@@ -158,7 +158,7 @@ main.tsx (Entry Point)
 
 **Tab-Based Navigation (GM Interface)**:
 
-The extension uses Bootstrap Tab components for navigation, replacing the previous dropdown navbar:
+The extension uses custom Tailwind tab components for navigation:
 
 - **Three Main Tabs**:
   - **Location Keys**: Main list view and edit form routes
@@ -342,7 +342,7 @@ const locationKeyTemplate = `
 1. `OBR.theme.getTheme()` on mount
 2. `OBR.theme.onChange(callback)` subscribes to changes
 3. Sets `document.body.dataset.bsTheme = theme.mode`
-4. Bootstrap automatically applies dark/light styles
+4. Tailwind `dark:` variants automatically apply dark/light styles
 
 ### Context Menu System
 
@@ -450,37 +450,16 @@ The extension defines **three separate context menus** for GM-only actions:
 
 The extension tracks user interactions via two analytics systems:
 
-**Vercel Analytics** (`utils.ts`):
-
-- Import: `import { track } from "@vercel/analytics"`
-- Usage: `track("event_name")`
-
 **Google Analytics** (`utils.ts`):
 
-- Custom implementation: `analytics.track("event_name")`
+- Custom `analytics.track()` wrapper around `window.gtag`
 - Loaded via Google Tag Manager in `index.html`
-
-**Tracked Events**:
-
-- `add_location_key` - Context menu add action
-- `remove_location_key` - Context menu remove action
-- `reveal_location_key` - Context menu reveal action
-- `toggle_player_visibility` - Context menu visibility toggle
-- `export_location_keys` - Export button clicked
-- `import_location_keys` - Import button clicked
-- `show_location_key` - Show on map button clicked
-- `save_location_key` - Edit form saved
-- `add_all_location_keys` - Bulk add operation
-- `delete_all_location_keys` - Bulk delete operation
 
 **Implementation Pattern**:
 
 ```typescript
-track("event_name");
 analytics.track("event_name");
 ```
-
-Both analytics calls are made together for redundancy.
 
 ### OBR SDK Integration Reference
 
@@ -564,12 +543,12 @@ Complete list of Owlbear Rodeo SDK methods used:
 
 ### Dependencies
 
-- **UI**: React + React Bootstrap for interface components
+- **UI**: React + Tailwind CSS for interface components
 - **Routing**: React Router DOM for SPA navigation
 - **Markdown**: Remarkable for rendering location key descriptions
 - **File Operations**: file-saver and js-yaml for import/export functionality
 - **Icons**: FontAwesome for UI icons
-- **Analytics**: Vercel Analytics + Google Analytics for usage tracking
+- **Analytics**: Google Analytics for usage tracking
 - **SDK**: @owlbear-rodeo/sdk for all OBR interactions
 
 ## Build System

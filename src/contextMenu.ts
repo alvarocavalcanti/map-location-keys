@@ -1,6 +1,5 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "./main";
-import { track } from "@vercel/analytics";
 import { analytics } from "./utils";
 
 export const locationKeyTemplate = `# Evocative Name
@@ -48,7 +47,6 @@ export function setupContextMenu() {
       );
 
       if (addToLocationKeys) {
-        track("add_to_location_keys");
         analytics.track("add_to_location_keys");
         OBR.scene.items.updateItems(context.items, (items) => {
           for (let item of items) {
@@ -58,7 +56,6 @@ export function setupContextMenu() {
           }
         });
       } else {
-        track("remove_from_location_keys");
         analytics.track("remove_from_location_keys");
         if (window.confirm("Are you sure you want to remove this location key?")) {
           OBR.scene.items.updateItems(context.items, (items) => {
@@ -87,7 +84,6 @@ export function setupContextMenu() {
       },
     ],
     onClick(context) {
-      track("reveal_location_key");
       analytics.track("reveal_location_key");
       OBR.action.open();
       OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {
@@ -112,7 +108,6 @@ export function setupContextMenu() {
       },
     ],
     onClick(context) {
-      track("toggle_player_visibility");
       analytics.track("toggle_player_visibility");
       OBR.scene.items.updateItems(context.items, (items) => {
         for (let item of items) {
@@ -143,7 +138,6 @@ export function setupContextMenu() {
       },
     ],
     onClick(context) {
-      track("player_reveal_location_key");
       analytics.track("player_reveal_location_key");
       OBR.action.open();
       OBR.broadcast.sendMessage(`${ID}/broadcast`, `${context.items[0].id}`, {

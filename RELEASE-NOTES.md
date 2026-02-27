@@ -1,5 +1,15 @@
 # Release Notes
 
+## Version 2026-02-27
+
+### Analytics Cleanup
+
+- Removed Vercel Analytics and Speed Insights dependencies
+- Consolidated all event tracking to use Google Analytics (gtag.js) only
+- Reduced bundle size and external requests
+
+---
+
 ## Version 2026-02-04
 
 ### Major Tech Stack Modernization

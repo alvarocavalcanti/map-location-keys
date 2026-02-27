@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import type { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";
 import { ID } from "../main";
-import { track } from "@vercel/analytics";
 import { analytics } from "../utils";
 
 const LocationKey: React.FC<{
@@ -23,7 +22,6 @@ const LocationKey: React.FC<{
   const navigate = useNavigate();
 
   const handleSave = () => {
-    track("edit_location_key");
     analytics.track("edit_location_key");
     OBR.scene.items
       .updateItems(

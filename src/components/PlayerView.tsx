@@ -8,7 +8,6 @@ import {
   sortLocationKeys,
   analytics
 } from "../utils";
-import { track } from "@vercel/analytics";
 import { ID } from "../main";
 
 const PlayerView: React.FC = () => {
@@ -27,7 +26,6 @@ const PlayerView: React.FC = () => {
   };
 
   const handleSave = (locationKey: LocationKey) => {
-    track("player_edit_location_info");
     analytics.track("player_edit_location_info");
     OBR.scene.items.updateItems(
       (item) => item.id === locationKey.id,
@@ -52,7 +50,6 @@ const PlayerView: React.FC = () => {
   };
 
   const showOnMap = (id: string) => {
-    track("player_show_location_on_map");
     analytics.track("player_show_location_on_map");
     OBR.scene.items.getItemBounds([id]).then((bounds) => {
       OBR.viewport.animateToBounds({

@@ -6,7 +6,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { paths } from "./util/constants";
-import { track } from "@vercel/analytics";
 import { analytics } from "../utils";
 
 const FogExportImport: React.FC<{
@@ -40,7 +39,6 @@ const FogExportImport: React.FC<{
   };
 
   const handleExport = () => {
-    track("export_fog_keys");
     analytics.track("export_fog_keys");
     // console.log("Exporting fog keys:", fogKeys);
     // console.log("Fog keys count:", fogKeys.length);
@@ -61,7 +59,6 @@ const FogExportImport: React.FC<{
 
   const handleImport = async () => {
     if (importYAML.length > 0) {
-      track("import_fog_keys");
       analytics.track("import_fog_keys");
       let newFogKeys: FogKey[];
       try {

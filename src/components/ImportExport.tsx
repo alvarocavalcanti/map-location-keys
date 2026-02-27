@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 import { ID } from "../main";
 import { paths } from "./util/constants";
-import { track } from "@vercel/analytics";
 import { analytics } from "../utils";
 
 const ImportExport: React.FC<{
@@ -42,7 +41,6 @@ const ImportExport: React.FC<{
   };
 
   const handleExport = () => {
-    track("export_location_keys");
     analytics.track("export_location_keys");
     const yamlText = yaml.dump(locationKeys, { schema: JSON_SCHEMA });
     const blob = new Blob([yamlText], { type: "text/yaml;charset=utf-8" });
@@ -94,7 +92,6 @@ const ImportExport: React.FC<{
 
   const handleImport = async () => {
     if (importYAML.length > 0) {
-      track("import_location_keys");
       analytics.track("import_location_keys");
       let newLocationKeys: LocationKey[];
       try {

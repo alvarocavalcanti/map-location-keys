@@ -1,6 +1,5 @@
 import { LocationKey } from "../@types/types";
 import OBR from "@owlbear-rodeo/sdk";
-import { track } from "@vercel/analytics";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import MarkdownRenderer from "./util/MarkdownRenderer";
@@ -23,7 +22,6 @@ const LocationKeys: React.FC<{
   };
 
   const showOnMap = (id: string) => {
-    track("show_location_key_on_map");
     analytics.track("show_location_key_on_map");
     OBR.scene.items.getItemBounds([id]).then((bounds) => {
       OBR.viewport.animateToBounds({
@@ -35,7 +33,6 @@ const LocationKeys: React.FC<{
   };
 
   const togglePlayerVisibility = (id: string) => {
-    track("toggle_player_visibility");
     analytics.track("toggle_player_visibility");
     OBR.scene.items.updateItems([id], (items) => {
       for (let item of items) {

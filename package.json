@@ -17,7 +17,7 @@
     "@types/remarkable": "^2.0.8",
     "autoprefixer": "^10.4.24",
     "typescript": "^5.4.5",
-    "vite": "^6.4.1"
+    "vite": "^6.4.2"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",

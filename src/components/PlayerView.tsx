@@ -166,12 +166,14 @@ const PlayerView: React.FC = () => {
                           >
                             Show
                           </button>
-                          <button
-                            onClick={() => handleEdit(locationKey)}
-                            className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
-                          >
-                            Edit
-                          </button>
+                          {locationKey.isPlayerEditable !== false && (
+                            <button
+                              onClick={() => handleEdit(locationKey)}
+                              className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
+                            >
+                              Edit
+                            </button>
+                          )}
                           <div></div>
                           <div></div>
                         </div>

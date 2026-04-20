@@ -52,6 +52,7 @@ export function setupContextMenu() {
           for (let item of items) {
             item.metadata[`${ID}/metadata`] = {
               locationKey: locationKeyTemplate,
+              isPlayerEditable: true,
             };
           }
         });

@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import MarkdownRenderer from "./util/MarkdownRenderer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faPencil } from "@fortawesome/free-solid-svg-icons";
 
 import { ID } from "../main";
 import { paths } from "./util/constants";
@@ -29,6 +29,19 @@ const LocationKeys: React.FC<{
         min: { x: bounds.min.x - 1000, y: bounds.min.y - 1000 },
         max: { x: bounds.max.x + 1000, y: bounds.max.y + 1000 },
       });
+    });
+  };
+
+  const togglePlayerEditable = (id: string) => {
+    analytics.track("toggle_player_editable");
+    OBR.scene.items.updateItems([id], (items) => {
+      for (let item of items) {
+        const metadata = item.metadata[`${ID}/metadata`] as any;
+        if (metadata) {
+          metadata.isPlayerEditable = metadata.isPlayerEditable === false ? true : false;
+          item.metadata[`${ID}/metadata`] = metadata;
+        }
+      }
     });
   };
 
@@ -105,6 +118,7 @@ const LocationKeys: React.FC<{
                               description: locationKey.description,
                               playerInfo: locationKey.playerInfo,
                               isPlayerVisible: locationKey.isPlayerVisible,
+                              isPlayerEditable: locationKey.isPlayerEditable,
                             })
                           }
                           className="w-full px-4 py-2 bg-theme-primary border-2 border-theme-primary text-white rounded font-medium transition-colors"
@@ -135,7 +149,24 @@ const LocationKeys: React.FC<{
                           icon={locationKey.isPlayerVisible ? faEye : faEyeSlash}
                         />
                       </button>
-                      <div></div>
+                      <button
+                        onClick={() => togglePlayerEditable(locationKey.id)}
+                        disabled={!locationKey.isPlayerVisible}
+                        className={`px-4 py-2 rounded border-2 font-medium transition-colors ${
+                          locationKey.isPlayerVisible && locationKey.isPlayerEditable !== false
+                            ? "bg-theme-success border-theme-success text-white"
+                            : "bg-white dark:bg-gray-800 border-theme text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        } disabled:opacity-40 disabled:cursor-not-allowed`}
+                        title={
+                          !locationKey.isPlayerVisible
+                            ? "Enable player visibility first"
+                            : locationKey.isPlayerEditable !== false
+                            ? "Prevent players from editing"
+                            : "Allow players to edit"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faPencil} />
+                      </button>
                     </div>
                   </div>
                 )}

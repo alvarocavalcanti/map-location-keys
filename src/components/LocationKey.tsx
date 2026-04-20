@@ -19,6 +19,9 @@ const LocationKey: React.FC<{
   const [isPlayerVisible, setIsPlayerVisible] = React.useState(
     locationKey.isPlayerVisible || false
   );
+  const [isPlayerEditable, setIsPlayerEditable] = React.useState(
+    locationKey.isPlayerEditable !== undefined ? locationKey.isPlayerEditable : true
+  );
   const navigate = useNavigate();
 
   const handleSave = () => {
@@ -28,10 +31,11 @@ const LocationKey: React.FC<{
         (item) => item.id === locationKey.id,
         (items) => {
           for (let item of items) {
-            item.metadata[`${ID}/metadata`] = { 
+            item.metadata[`${ID}/metadata`] = {
               locationKey: description,
               playerInfo: playerInfo,
-              isPlayerVisible: isPlayerVisible
+              isPlayerVisible: isPlayerVisible,
+              isPlayerEditable: isPlayerEditable
             };
           }
         }
@@ -74,7 +78,7 @@ const LocationKey: React.FC<{
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setPlayerInfo(e.target.value)}
           className="w-full px-3 py-2 mb-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         />
-        <label className="flex items-center mb-3 cursor-pointer">
+        <label className="flex items-center mb-2 cursor-pointer">
           <input
             type="checkbox"
             id="player-visibility-checkbox"
@@ -83,6 +87,17 @@ const LocationKey: React.FC<{
             className="mr-2"
           />
           <span className="text-gray-900 dark:text-white">Make visible to players</span>
+        </label>
+        <label className={`flex items-center mb-3 ${isPlayerVisible ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}>
+          <input
+            type="checkbox"
+            id="player-editable-checkbox"
+            checked={isPlayerEditable}
+            disabled={!isPlayerVisible}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsPlayerEditable(e.target.checked)}
+            className="mr-2"
+          />
+          <span className="text-gray-900 dark:text-white">Allow players to edit player information</span>
         </label>
         <div className="grid grid-cols-4 gap-2 text-center mt-2">
           <button

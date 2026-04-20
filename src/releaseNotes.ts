@@ -6,6 +6,15 @@ export interface ReleaseHighlight {
 
 export const releaseHighlights: ReleaseHighlight[] = [
   {
+    version: "2026-04-20",
+    date: "April 20, 2026",
+    highlights: [
+      "✏️ GM toggle to allow/prevent players from editing Player Information",
+      "🔒 Toggle is disabled when a location isn't visible to players",
+      "⚙️ Also configurable from the location key edit form",
+    ]
+  },
+  {
     version: "2026-02-04",
     date: "February 4, 2026",
     highlights: [

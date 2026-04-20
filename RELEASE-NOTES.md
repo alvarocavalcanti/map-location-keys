@@ -1,5 +1,17 @@
 # Release Notes
 
+## Version 2026-04-20
+
+### Player Edit Permission Toggle
+
+- GMs can now control whether players can edit Player Information per location key
+- New pencil icon toggle next to the "show to players" button in the location key list
+- Toggle is disabled when the location is not visible to players
+- Defaults to "editable" for new and existing location keys
+- Checkbox also available in the location key edit form
+
+---
+
 ## Version 2026-02-27
 
 ### Analytics Cleanup

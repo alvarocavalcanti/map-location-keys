@@ -4,6 +4,7 @@ export interface LocationKey {
   id: string;
   playerInfo?: string;
   isPlayerVisible?: boolean;
+  isPlayerEditable?: boolean;
   position?: { x: number; y: number };
   style?: {
     fillColor: string;

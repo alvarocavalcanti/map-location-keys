@@ -23,6 +23,7 @@ export function loadExistingLocationKeys(
         id: item.id,
         playerInfo: metadata.playerInfo || "",
         isPlayerVisible: metadata.isPlayerVisible || false,
+        isPlayerEditable: metadata.isPlayerEditable !== undefined ? metadata.isPlayerEditable : true,
         position: item.position,
         style: textItem.text?.style,
         textSize: textItem.text ? { width: textItem.text.width, height: textItem.text.height } : undefined,

@@ -1,5 +1,14 @@
 # Release Notes
 
+## Version 2026-05-25
+
+### Bug Fix: PROP Item Edit
+
+- Fixed a bug where clicking **Edit** on a location key attached to a PROP layer item would silently close the accordion and return to the list instead of opening the edit form
+- Root cause: PROP items (images/tokens) may have no text, producing an empty name that broke the URL routing
+
+---
+
 ## Version 2026-04-20
 
 ### Player Edit Permission Toggle

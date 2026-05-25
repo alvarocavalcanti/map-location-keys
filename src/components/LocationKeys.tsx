@@ -109,7 +109,7 @@ const LocationKeys: React.FC<{
                       <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
                     </div>
                     <div className="grid grid-cols-4 gap-2 text-center mt-1">
-                      <Link to={`/location-key/${locationKey.name}?item-id=${locationKey.id}`}>
+                      <Link to={`/location-key/${locationKey.id}`}>
                         <button
                           onClick={() =>
                             setLocationKeyToEdit({

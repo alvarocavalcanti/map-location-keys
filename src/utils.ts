@@ -42,12 +42,13 @@ export function sortLocationKeys(newLocationKeys: LocationKey[]) {
 }
 
 export const getItemText = (item: any) => {
+  if (!item.text) return "";
   if (item.text.richText && item.text.richText.length > 0) {
     return item.text.richText
       .map((line: any) => line.children.map((child: any) => child.text).join(''))
       .join(' ');
   }
-  return item.text.plainText;
+  return item.text.plainText || "";
 };
 
 export const isDevMode = (): boolean => {

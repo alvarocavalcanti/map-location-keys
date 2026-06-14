@@ -17,7 +17,7 @@
     "@types/remarkable": "^2.0.8",
     "autoprefixer": "^10.4.24",
     "typescript": "^5.4.5",
-    "vite": "^6.4.2"
+    "vite": "^8.0.16"
   },
   "overrides": {
     "uuid": "^11.1.1"
@@ -29,7 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@owlbear-rodeo/sdk": "^2.4.0",
-"@vitejs/plugin-react": "^4.3.4",
+"@vitejs/plugin-react": "^6.0.2",
     "file-saver": "^2.0.5",
     "js-yaml": "^4.1.1",
     "react": "^18.3.1",

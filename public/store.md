@@ -12,7 +12,7 @@ learn-more: https://github.com/alvarocavalcanti/map-location-keys
 
 # Map Location Keys
 
-![Map Location Keys](img/hero.png)
+![Map Location Keys](https://map-location-keys.vercel.app/img/hero.png)
 
 With this extension you can add "location keys" to a map, which usually contain descriptions of a particular room or feature.
 

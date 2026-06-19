@@ -59,6 +59,7 @@ const LocationKeys: React.FC<{
   };
 
   useEffect(() => {
+    analytics.page();
     OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
       setLocationToReveal(event.data as string);
       window.document
@@ -66,8 +67,6 @@ const LocationKeys: React.FC<{
         ?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }, []);
-
-  analytics.page();
 
   return (
     <>

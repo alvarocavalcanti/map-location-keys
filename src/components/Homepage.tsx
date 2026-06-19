@@ -10,6 +10,7 @@ const Homepage: React.FC = () => {
 
   const [version, setVersion] = useState("unknown");
   useEffect(() => {
+    analytics.page();
     fetch("/manifest.json")
       .then((b) => b.json())
       .then((j) => j.version)
@@ -21,8 +22,6 @@ const Homepage: React.FC = () => {
       window.location.href = "/?homepage";
     }
   }, []);
-
-  analytics.page();
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">

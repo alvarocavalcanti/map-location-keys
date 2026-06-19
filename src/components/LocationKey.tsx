@@ -48,7 +48,9 @@ const LocationKey: React.FC<{
       });
   };
 
-  analytics.page();
+  React.useEffect(() => {
+    analytics.page();
+  }, []);
 
   return (
     <>

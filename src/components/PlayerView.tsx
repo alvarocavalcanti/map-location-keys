@@ -71,6 +71,7 @@ const PlayerView: React.FC = () => {
   };
 
   useEffect(() => {
+    analytics.page();
     OBR.scene.items.onChange(loadPlayerVisibleKeys);
     OBR.scene.isReady().then(() => {
       OBR.scene.items.getItems().then(loadPlayerVisibleKeys);
@@ -83,8 +84,6 @@ const PlayerView: React.FC = () => {
         ?.scrollIntoView({ behavior: "smooth", block: "center" });
     });
   }, []);
-
-  analytics.page();
 
   return (
     <div className="p-4">

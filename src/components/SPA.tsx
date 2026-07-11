@@ -22,6 +22,7 @@ import { paths } from "./util/constants";
 import PlayerView from "./PlayerView";
 import AddDeleteAll from "./AddDeleteAll";
 import { useTheme } from "../hooks/useTheme";
+import { usePlayerInfoInGMView } from "../hooks/usePlayerInfoInGMView";
 import { ColorMode } from "../themes";
 import WhatsNew from "./WhatsNew";
 import Settings from "./Settings";
@@ -35,7 +36,8 @@ export default function SPA() {
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
   const [activeTab, setActiveTab] = useState<string>("location-keys");
   const [colorMode, setColorMode] = useState<ColorMode>('dark');
-  const { themeId, changeTheme } = useTheme(colorMode);
+  const [themeId, setThemeId] = useTheme(colorMode);
+  const [showPlayerInfoInGMView, setShowPlayerInfoInGMView] = usePlayerInfoInGMView();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -242,6 +244,7 @@ export default function SPA() {
             <LocationKeys
               setLocationKeyToEdit={setLocationKeyToEdit}
               locationKeys={locationKeys}
+              showPlayerInfoInGMView={showPlayerInfoInGMView}
             />
           }
         />
@@ -267,7 +270,17 @@ export default function SPA() {
           element={<AddDeleteAll />}
         />
         <Route path={paths.help} element={<Help version={version} />} />
-        <Route path={paths.settings} element={<Settings currentTheme={themeId} onThemeChange={changeTheme} />} />
+        <Route
+          path={paths.settings}
+          element={
+            <Settings
+              currentTheme={themeId}
+              onThemeChange={setThemeId}
+              showPlayerInfoInGMView={showPlayerInfoInGMView}
+              onShowPlayerInfoInGMViewChange={setShowPlayerInfoInGMView}
+            />
+          }
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>

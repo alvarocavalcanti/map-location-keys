@@ -6,6 +6,14 @@ export interface ReleaseHighlight {
 
 export const releaseHighlights: ReleaseHighlight[] = [
   {
+    version: "2026-07-11",
+    date: "July 11, 2026",
+    highlights: [
+      "⚙️ New GM setting to show Player Information directly in the GM location key list",
+      "👀 Player Information now appears beneath the primary details section when the setting is enabled"
+    ]
+  },
+  {
     version: "2026-06-16",
     date: "June 16, 2026",
     highlights: [

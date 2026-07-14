@@ -3,13 +3,15 @@ import { themes, ThemeId, ColorMode } from '../themes';
 
 const THEME_STORAGE_KEY = 'map-location-keys-theme';
 
-export const useTheme = (colorMode: ColorMode) => {
+export const useTheme = (colorMode: ColorMode): [ThemeId, React.Dispatch<ThemeId>] => {
   const [themeId, setThemeId] = useState<ThemeId>(() => {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
     return (stored as ThemeId) || 'dark-fantasy';
   });
 
   useEffect(() => {
+    localStorage.setItem(THEME_STORAGE_KEY, themeId);
+
     const theme = themes[themeId];
     const colors = colorMode === 'dark' ? theme.dark : theme.light;
 
@@ -32,10 +34,5 @@ export const useTheme = (colorMode: ColorMode) => {
     root.style.setProperty('--color-border-hover', colors.borderHover);
   }, [themeId, colorMode]);
 
-  const changeTheme = (newTheme: ThemeId) => {
-    setThemeId(newTheme);
-    localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-  };
-
-  return { themeId, changeTheme };
+  return [ themeId, setThemeId ];
 };

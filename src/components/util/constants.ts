@@ -4,6 +4,7 @@ export const paths: { [key: string]: string } = {
   importExport: "/import-export",
   fogExportImport: "/fog-export-import",
   help: "/help",
+  settings: "/settings",
   playerView: "/player-view",
   bulkActions: "/bulk-actions",
 };

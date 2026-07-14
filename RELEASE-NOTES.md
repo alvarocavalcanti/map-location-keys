@@ -1,5 +1,14 @@
 # Release Notes
 
+## Version 2026-07-11
+
+### GM View Player Information Setting
+
+- Added a new Settings option to show Player Information directly in the GM location key list
+- When enabled, Player Information is displayed beneath the primary location details for each expanded location key
+
+---
+
 ## Version 2026-06-16
 
 ### Bug Fixes

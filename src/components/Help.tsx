@@ -6,11 +6,9 @@ import { faBluesky } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faGlobeAfrica } from "@fortawesome/free-solid-svg-icons";
-import ThemeSelector from "./ThemeSelector";
-import { ThemeId } from "../themes";
 import DonationButtons from "./DonationButtons";
 
-const Help: React.FC<{ version: string; currentTheme: ThemeId; onThemeChange: (theme: ThemeId) => void }> = ({ version, currentTheme, onThemeChange }) => {
+const Help: React.FC<{ version: string }> = ({ version }) => {
   const [activeSection, setActiveSection] = React.useState<string>("");
 
   const itemsAdd: { header: string; image: string; description?: string }[] = [
@@ -177,8 +175,6 @@ const Help: React.FC<{ version: string; currentTheme: ThemeId; onThemeChange: (t
 
   return (
     <>
-      <ThemeSelector currentTheme={currentTheme} onThemeChange={onThemeChange} />
-
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
         <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Video Tutorial</h2>
         <YouTube videoId="jJM_600M1eo" opts={opts} />

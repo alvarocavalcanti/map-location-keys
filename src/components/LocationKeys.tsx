@@ -14,7 +14,8 @@ import DonationButtons from "./DonationButtons";
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
   locationKeys: LocationKey[];
-}> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys }) => {
+  showPlayerInfoInGMView: boolean;
+}> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys, showPlayerInfoInGMView }) => {
   const [locationToReveal, setLocationToReveal] = React.useState<string>("");
 
   const handleToggleClick = (id: string) => {
@@ -107,6 +108,20 @@ const LocationKeys: React.FC<{
                     <div className="markdown-content mb-3 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300">
                       <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
                     </div>
+                    {showPlayerInfoInGMView && (
+                      <div className="mb-3">
+                        <h3 className="text-sm font-semibold mb-2 text-gray-900 dark:text-white">Player Information</h3>
+                        {locationKey.playerInfo ? (
+                          <div className="markdown-content p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-900 text-gray-700 dark:text-gray-300">
+                            <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
+                          </div>
+                        ) : (
+                          <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+                            No player information provided.
+                          </p>
+                        )}
+                      </div>
+                    )}
                     <div className="grid grid-cols-4 gap-2 text-center mt-1">
                       <Link to={`/location-key/${locationKey.id}`}>
                         <button

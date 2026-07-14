@@ -22,8 +22,10 @@ import { paths } from "./util/constants";
 import PlayerView from "./PlayerView";
 import AddDeleteAll from "./AddDeleteAll";
 import { useTheme } from "../hooks/useTheme";
+import { usePlayerInfoInGMView } from "../hooks/usePlayerInfoInGMView";
 import { ColorMode } from "../themes";
 import WhatsNew from "./WhatsNew";
+import Settings from "./Settings";
 
 export default function SPA() {
   const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
@@ -34,7 +36,8 @@ export default function SPA() {
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
   const [activeTab, setActiveTab] = useState<string>("location-keys");
   const [colorMode, setColorMode] = useState<ColorMode>('dark');
-  const { themeId, changeTheme } = useTheme(colorMode);
+  const [themeId, setThemeId] = useTheme(colorMode);
+  const [showPlayerInfoInGMView, setShowPlayerInfoInGMView] = usePlayerInfoInGMView();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -116,6 +119,8 @@ export default function SPA() {
       setActiveTab("tools");
     } else if (location.pathname === paths.help) {
       setActiveTab("help");
+    } else if (location.pathname === paths.settings) {
+      setActiveTab("settings");
     } else if (location.pathname === "/") {
       setActiveTab("location-keys");
     }
@@ -130,6 +135,8 @@ export default function SPA() {
         navigate(paths.importExport);
       } else if (key === "help") {
         navigate(paths.help);
+      } else if (key === "settings") {
+        navigate(paths.settings);
       }
     }
   };
@@ -167,6 +174,16 @@ export default function SPA() {
             }`}
           >
             Tools
+          </button>
+          <button
+            onClick={() => handleTabSelect("settings")}
+            className={`px-4 py-2 font-medium text-sm ${
+              activeTab === "settings"
+                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-300"
+                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            }`}
+          >
+            Settings
           </button>
           <button
             onClick={() => handleTabSelect("help")}
@@ -227,6 +244,7 @@ export default function SPA() {
             <LocationKeys
               setLocationKeyToEdit={setLocationKeyToEdit}
               locationKeys={locationKeys}
+              showPlayerInfoInGMView={showPlayerInfoInGMView}
             />
           }
         />
@@ -251,7 +269,18 @@ export default function SPA() {
           path={paths.bulkActions}
           element={<AddDeleteAll />}
         />
-        <Route path={paths.help} element={<Help version={version} currentTheme={themeId} onThemeChange={changeTheme} />} />
+        <Route path={paths.help} element={<Help version={version} />} />
+        <Route
+          path={paths.settings}
+          element={
+            <Settings
+              currentTheme={themeId}
+              onThemeChange={setThemeId}
+              showPlayerInfoInGMView={showPlayerInfoInGMView}
+              onShowPlayerInfoInGMViewChange={setShowPlayerInfoInGMView}
+            />
+          }
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>

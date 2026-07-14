@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  --color-*: initial;
   --breakpoint-*: initial;
 }
 

@@ -7,15 +7,17 @@ interface MarkdownRendererProps {
 
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ children }) => {
   return (
-    <ReactMarkdown
-      components={{
-        a: ({ node, ...props }) => (
-          <a {...props} target="_blank" rel="noopener noreferrer" />
-        ),
-      }}
-    >
-      {children}
-    </ReactMarkdown>
+    <div className="prose dark:prose-invert max-w-none prose-sm">
+      <ReactMarkdown
+        components={{
+          a: ({ node, ...props }) => (
+            <a {...props} target="_blank" rel="noopener noreferrer" />
+          ),
+        }}
+      >
+        {children}
+      </ReactMarkdown>
+    </div>
   );
 };
 

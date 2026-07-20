@@ -35,11 +35,9 @@ export function loadExistingLocationKeys(
 }
 
 export function sortLocationKeys(newLocationKeys: LocationKey[]) {
-  newLocationKeys.sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-    return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-  });
+  newLocationKeys.sort((a, b) => 
+    a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' })
+  );
 }
 
 export const getItemText = (item: any) => {
@@ -110,9 +108,7 @@ export function loadExistingFogKeys(
 }
 
 export function sortFogKeys(newFogKeys: FogKey[]) {
-  newFogKeys.sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-    return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-  });
+  newFogKeys.sort((a, b) => 
+    a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' })
+  );
 }

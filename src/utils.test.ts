@@ -36,17 +36,17 @@ describe('utils', () => {
   });
 
   describe('sortLocationKeys', () => {
-    it('sorts alphabetically establishing current lexicographical baseline (Issue #23)', () => {
+    it('sorts numbers naturally instead of lexicographically (Issue #23)', () => {
       const keys: any[] = [
         { name: '10', id: '1', description: '' },
         { name: '2', id: '2', description: '' },
         { name: '1', id: '3', description: '' }
       ];
       sortLocationKeys(keys);
-      // With lexicographical sort: 1, 10, 2
+      // Natural sort: 1, 2, 10
       expect(keys[0].name).toBe('1');
-      expect(keys[1].name).toBe('10');
-      expect(keys[2].name).toBe('2');
+      expect(keys[1].name).toBe('2');
+      expect(keys[2].name).toBe('10');
     });
   });
 

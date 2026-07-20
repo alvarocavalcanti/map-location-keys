@@ -6,6 +6,14 @@ export interface ReleaseHighlight {
 
 export const releaseHighlights: ReleaseHighlight[] = [
   {
+    version: "2026-07-20",
+    date: "July 20, 2026",
+    highlights: [
+      "🔢 Natural sorting for numbered locations (e.g., 1, 2, 10 instead of 1, 10, 2) without needing leading zeros",
+      "📝 Fixed Markdown bullet points and numbered lists styling issues",
+    ]
+  },
+  {
     version: "2026-07-11",
     date: "July 11, 2026",
     highlights: [

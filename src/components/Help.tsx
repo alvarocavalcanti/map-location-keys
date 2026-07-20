@@ -299,20 +299,20 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
 
       <div className="mt-2 text-center">
         <a
-          href="https://shadowcrawler.vercel.app"
+          href="https://map-location-keys.vercel.app"
           target="_blank"
           className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
         >
-          <FontAwesomeIcon icon={faGlobeAfrica} /> shadowcrawler.vercel.app
+          <FontAwesomeIcon icon={faGlobeAfrica} /> map-location-keys.vercel.app
         </a>
       </div>
       <div className="mt-2 text-center">
         <a
-          href="https://github.com/alvarocavalcanti/shadowcrawler"
+          href="https://github.com/alvarocavalcanti/map-location-keys"
           target="_blank"
           className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
         >
-          <FontAwesomeIcon icon={faGithub} /> alvarocavalcanti/shadowcrawler
+          <FontAwesomeIcon icon={faGithub} /> alvarocavalcanti/map-location-keys
         </a>
       </div>
       <div className="mt-2 text-center">

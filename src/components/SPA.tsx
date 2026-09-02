@@ -23,6 +23,7 @@ import PlayerView from "./PlayerView";
 import AddDeleteAll from "./AddDeleteAll";
 import { useTheme } from "../hooks/useTheme";
 import { usePlayerInfoInGMView } from "../hooks/usePlayerInfoInGMView";
+import { usePopoverWidth } from "../hooks/usePopoverWidth";
 import { ColorMode } from "../themes";
 import WhatsNew from "./WhatsNew";
 import Settings from "./Settings";
@@ -38,6 +39,7 @@ export default function SPA() {
   const [colorMode, setColorMode] = useState<ColorMode>('dark');
   const [themeId, setThemeId] = useTheme(colorMode);
   const [showPlayerInfoInGMView, setShowPlayerInfoInGMView] = usePlayerInfoInGMView();
+  const [popoverWidth, setPopoverWidth] = usePopoverWidth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -278,6 +280,8 @@ export default function SPA() {
               onThemeChange={setThemeId}
               showPlayerInfoInGMView={showPlayerInfoInGMView}
               onShowPlayerInfoInGMViewChange={setShowPlayerInfoInGMView}
+              popoverWidth={popoverWidth}
+              onPopoverWidthChange={setPopoverWidth}
             />
           }
         />

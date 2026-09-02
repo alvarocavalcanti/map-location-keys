@@ -6,6 +6,14 @@ export interface ReleaseHighlight {
 
 export const releaseHighlights: ReleaseHighlight[] = [
   {
+    version: "2026-09-02",
+    date: "September 2, 2026",
+    highlights: [
+      "📐 Adjustable popover width - Choose from 4 presets in the Settings tab, applies instantly and is remembered",
+      "📉 Reduced default popover width from 800px to 500px so more of your battlemap stays visible",
+    ]
+  },
+  {
     version: "2026-07-20",
     date: "July 20, 2026",
     highlights: [

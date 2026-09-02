@@ -21,15 +21,15 @@ const Settings: React.FC<{
 }) => {
   return (
     <>
-      <ThemeSelector currentTheme={currentTheme} onThemeChange={onThemeChange} />
-      <GMViewSettings
-        showPlayerInfoInGMView={showPlayerInfoInGMView}
-        onShowPlayerInfoInGMViewChange={onShowPlayerInfoInGMViewChange}
-      />
       <PopoverWidthSettings
         width={popoverWidth}
         onWidthChange={onPopoverWidthChange}
       />
+      <GMViewSettings
+        showPlayerInfoInGMView={showPlayerInfoInGMView}
+        onShowPlayerInfoInGMViewChange={onShowPlayerInfoInGMViewChange}
+      />
+      <ThemeSelector currentTheme={currentTheme} onThemeChange={onThemeChange} />
     </>
   );
 };

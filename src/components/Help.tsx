@@ -156,6 +156,7 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
             <li>Only location keys that you've marked as player-visible</li>
             <li>The custom "Player Information" content you've written for each location</li>
             <li>A "Show" button to navigate to each visible location</li>
+            <li>A search box to filter shared locations by name or text</li>
           </ul>
           If no location keys are made visible to players, they'll see a message saying "Your GM hasn't shared any location information with players yet."
         </div>
@@ -181,7 +182,10 @@ const Help: React.FC<{ version: string }> = ({ version }) => {
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-2">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Adding Location Keys</h2>
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Adding Location Keys</h2>
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          You can search your location keys by name, GM notes, or player info using the search box above the list. Press Enter to jump to the first match.
+        </p>
       </div>
       <div className="mb-3 space-y-2">
         {itemsAdd.map((item, index) => (

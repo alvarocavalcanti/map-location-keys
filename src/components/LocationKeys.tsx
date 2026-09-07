@@ -8,8 +8,9 @@ import { faEye, faEyeSlash, faPencil } from "@fortawesome/free-solid-svg-icons";
 
 import { ID } from "../main";
 import { paths } from "./util/constants";
-import { analytics } from "../utils";
+import { analytics, searchLocationKeys } from "../utils";
 import DonationButtons from "./DonationButtons";
+import SearchBox from "./util/SearchBox";
 
 const LocationKeys: React.FC<{
   setLocationKeyToEdit: (locationKey: LocationKey) => void;
@@ -17,6 +18,27 @@ const LocationKeys: React.FC<{
   showPlayerInfoInGMView: boolean;
 }> = ({ setLocationKeyToEdit: setLocationKeyToEdit, locationKeys, showPlayerInfoInGMView }) => {
   const [locationToReveal, setLocationToReveal] = React.useState<string>("");
+  const [searchQuery, setSearchQuery] = React.useState<string>("");
+
+  const filteredKeys = React.useMemo(
+    () => searchLocationKeys(locationKeys, searchQuery),
+    [locationKeys, searchQuery]
+  );
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    if (query.trim()) analytics.track("search_location_keys");
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && filteredKeys.length > 0) {
+      const first = filteredKeys[0];
+      setLocationToReveal(first.id);
+      window.document
+        .getElementById(`accordion-${first.id}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
 
   const handleToggleClick = (id: string) => {
     setLocationToReveal((prevKey) => (prevKey === id ? "" : id));
@@ -62,6 +84,7 @@ const LocationKeys: React.FC<{
   useEffect(() => {
     analytics.page();
     OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
+      setSearchQuery("");
       setLocationToReveal(event.data as string);
       window.document
         .getElementById(`accordion-${event.data as string}`)
@@ -73,120 +96,141 @@ const LocationKeys: React.FC<{
     <>
       {locationKeys.length > 0 ? (
         <>
-          <div className="space-y-2">
-            {locationKeys.map((locationKey, index) => (
-              <div
-                key={String(index)}
-                id={`accordion-${locationKey.id}`}
-                className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden"
-              >
-                <button
-                  onClick={() => handleToggleClick(locationKey.id)}
-                  className="w-full px-4 py-3 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
-                >
-                  <span className="flex items-center gap-2">
-                    {locationKey.name}
-                    {locationKey.isPlayerVisible && (
-                      <FontAwesomeIcon
-                        icon={faEye}
-                        className="text-green-600 dark:text-green-400"
-                        title="Visible to players"
-                      />
-                    )}
-                  </span>
-                  <svg
-                    className={`w-5 h-5 transition-transform ${locationToReveal === locationKey.id ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+          <SearchBox
+            query={searchQuery}
+            onQueryChange={handleSearchChange}
+            onKeyDown={handleSearchKeyDown}
+          />
+          {filteredKeys.length > 0 ? (
+            <>
+              {searchQuery.trim() && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                  {filteredKeys.length} of {locationKeys.length} keys
+                </p>
+              )}
+              <div className="space-y-2">
+                {filteredKeys.map((locationKey, index) => (
+                  <div
+                    key={String(index)}
+                    id={`accordion-${locationKey.id}`}
+                    className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {locationToReveal === locationKey.id && (
-                  <div className="p-4 border-t border-gray-300 dark:border-gray-600">
-                    <div className="markdown-content mb-3 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300">
-                      <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
-                    </div>
-                    {showPlayerInfoInGMView && (
-                      <div className="mb-3">
-                        <h3 className="text-sm font-semibold mb-2 text-gray-900 dark:text-white">Player Information</h3>
-                        {locationKey.playerInfo ? (
-                          <div className="markdown-content p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-900 text-gray-700 dark:text-gray-300">
-                            <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
-                          </div>
-                        ) : (
-                          <p className="text-sm text-gray-500 dark:text-gray-400 italic">
-                            No player information provided.
-                          </p>
+                    <button
+                      onClick={() => handleToggleClick(locationKey.id)}
+                      className="w-full px-4 py-3 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
+                    >
+                      <span className="flex items-center gap-2">
+                        {locationKey.name}
+                        {locationKey.isPlayerVisible && (
+                          <FontAwesomeIcon
+                            icon={faEye}
+                            className="text-green-600 dark:text-green-400"
+                            title="Visible to players"
+                          />
                         )}
+                      </span>
+                      <svg
+                        className={`w-5 h-5 transition-transform ${locationToReveal === locationKey.id ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {locationToReveal === locationKey.id && (
+                      <div className="p-4 border-t border-gray-300 dark:border-gray-600">
+                        <div className="markdown-content mb-3 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300">
+                          <MarkdownRenderer>{locationKey.description || ""}</MarkdownRenderer>
+                        </div>
+                        {showPlayerInfoInGMView && (
+                          <div className="mb-3">
+                            <h3 className="text-sm font-semibold mb-2 text-gray-900 dark:text-white">Player Information</h3>
+                            {locationKey.playerInfo ? (
+                              <div className="markdown-content p-3 bg-blue-50 dark:bg-blue-950/30 rounded border border-blue-200 dark:border-blue-900 text-gray-700 dark:text-gray-300">
+                                <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
+                              </div>
+                            ) : (
+                              <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+                                No player information provided.
+                              </p>
+                            )}
+                          </div>
+                        )}
+                        <div className="grid grid-cols-4 gap-2 text-center mt-1">
+                          <Link to={`/location-key/${locationKey.id}`}>
+                            <button
+                              onClick={() =>
+                                setLocationKeyToEdit({
+                                  id: locationKey.id,
+                                  name: locationKey.name,
+                                  description: locationKey.description,
+                                  playerInfo: locationKey.playerInfo,
+                                  isPlayerVisible: locationKey.isPlayerVisible,
+                                  isPlayerEditable: locationKey.isPlayerEditable,
+                                })
+                              }
+                              className="w-full px-4 py-2 bg-theme-primary border-2 border-theme-primary text-white rounded font-medium transition-colors"
+                            >
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            onClick={() => showOnMap(locationKey.id)}
+                            className="px-4 py-2 bg-theme-secondary border-2 border-theme-secondary text-white rounded font-medium transition-colors"
+                          >
+                            Show
+                          </button>
+                          <button
+                            onClick={() => togglePlayerVisibility(locationKey.id)}
+                            className={`px-4 py-2 rounded border-2 font-medium transition-colors ${
+                              locationKey.isPlayerVisible
+                                ? "bg-theme-success border-theme-success text-white"
+                                : "bg-white dark:bg-gray-800 border-theme text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                            }`}
+                            title={
+                              locationKey.isPlayerVisible
+                                ? "Hide from players"
+                                : "Show to players"
+                            }
+                          >
+                            <FontAwesomeIcon
+                              icon={locationKey.isPlayerVisible ? faEye : faEyeSlash}
+                            />
+                          </button>
+                          <button
+                            onClick={() => togglePlayerEditable(locationKey.id)}
+                            disabled={!locationKey.isPlayerVisible}
+                            className={`px-4 py-2 rounded border-2 font-medium transition-colors ${
+                              locationKey.isPlayerVisible && locationKey.isPlayerEditable !== false
+                                ? "bg-theme-success border-theme-success text-white"
+                                : "bg-white dark:bg-gray-800 border-theme text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                            } disabled:opacity-40 disabled:cursor-not-allowed`}
+                            title={
+                              !locationKey.isPlayerVisible
+                                ? "Enable player visibility first"
+                                : locationKey.isPlayerEditable !== false
+                                ? "Prevent players from editing"
+                                : "Allow players to edit"
+                            }
+                          >
+                            <FontAwesomeIcon icon={faPencil} />
+                          </button>
+                        </div>
                       </div>
                     )}
-                    <div className="grid grid-cols-4 gap-2 text-center mt-1">
-                      <Link to={`/location-key/${locationKey.id}`}>
-                        <button
-                          onClick={() =>
-                            setLocationKeyToEdit({
-                              id: locationKey.id,
-                              name: locationKey.name,
-                              description: locationKey.description,
-                              playerInfo: locationKey.playerInfo,
-                              isPlayerVisible: locationKey.isPlayerVisible,
-                              isPlayerEditable: locationKey.isPlayerEditable,
-                            })
-                          }
-                          className="w-full px-4 py-2 bg-theme-primary border-2 border-theme-primary text-white rounded font-medium transition-colors"
-                        >
-                          Edit
-                        </button>
-                      </Link>
-                      <button
-                        onClick={() => showOnMap(locationKey.id)}
-                        className="px-4 py-2 bg-theme-secondary border-2 border-theme-secondary text-white rounded font-medium transition-colors"
-                      >
-                        Show
-                      </button>
-                      <button
-                        onClick={() => togglePlayerVisibility(locationKey.id)}
-                        className={`px-4 py-2 rounded border-2 font-medium transition-colors ${
-                          locationKey.isPlayerVisible
-                            ? "bg-theme-success border-theme-success text-white"
-                            : "bg-white dark:bg-gray-800 border-theme text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
-                        }`}
-                        title={
-                          locationKey.isPlayerVisible
-                            ? "Hide from players"
-                            : "Show to players"
-                        }
-                      >
-                        <FontAwesomeIcon
-                          icon={locationKey.isPlayerVisible ? faEye : faEyeSlash}
-                        />
-                      </button>
-                      <button
-                        onClick={() => togglePlayerEditable(locationKey.id)}
-                        disabled={!locationKey.isPlayerVisible}
-                        className={`px-4 py-2 rounded border-2 font-medium transition-colors ${
-                          locationKey.isPlayerVisible && locationKey.isPlayerEditable !== false
-                            ? "bg-theme-success border-theme-success text-white"
-                            : "bg-white dark:bg-gray-800 border-theme text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
-                        } disabled:opacity-40 disabled:cursor-not-allowed`}
-                        title={
-                          !locationKey.isPlayerVisible
-                            ? "Enable player visibility first"
-                            : locationKey.isPlayerEditable !== false
-                            ? "Prevent players from editing"
-                            : "Allow players to edit"
-                        }
-                      >
-                        <FontAwesomeIcon icon={faPencil} />
-                      </button>
-                    </div>
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">
+              <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">No Matching Keys</h2>
+              <p className="text-gray-700 dark:text-gray-300 mb-0">
+                No location keys match "{searchQuery}".
+              </p>
+            </div>
+          )}
         </>
       ) : (
         <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-3">

@@ -40,6 +40,17 @@ export function sortLocationKeys(newLocationKeys: LocationKey[]) {
   );
 }
 
+export function searchLocationKeys(keys: LocationKey[], query: string): LocationKey[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return keys;
+  return keys.filter((key) =>
+    [key.name, key.description, key.playerInfo ?? ""]
+      .join("\n")
+      .toLowerCase()
+      .includes(q)
+  );
+}
+
 export const getItemText = (item: any) => {
   if (!item.text) return "";
   if (item.text.richText && item.text.richText.length > 0) {

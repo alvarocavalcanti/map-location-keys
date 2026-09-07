@@ -9,12 +9,39 @@ import {
   analytics
 } from "../utils";
 import { ID } from "../main";
+import SearchBox from "./util/SearchBox";
 
 const PlayerView: React.FC = () => {
   const [playerVisibleKeys, setPlayerVisibleKeys] = useState<LocationKey[]>([]);
   const [locationToReveal, setLocationToReveal] = useState<string>("");
   const [editingLocationId, setEditingLocationId] = useState<string | null>(null);
   const [editedPlayerInfo, setEditedPlayerInfo] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredKeys = React.useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return playerVisibleKeys;
+    return playerVisibleKeys.filter(
+      (key) =>
+        key.name.toLowerCase().includes(q) ||
+        (key.playerInfo ?? "").toLowerCase().includes(q)
+    );
+  }, [playerVisibleKeys, searchQuery]);
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    if (query.trim()) analytics.track("player_search_location_keys");
+  };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && filteredKeys.length > 0) {
+      const first = filteredKeys[0];
+      setLocationToReveal(first.id);
+      window.document
+        .getElementById(`player-accordion-${first.id}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
 
   const handleToggleClick = (id: string) => {
     setLocationToReveal((prevKey) => (prevKey === id ? "" : id));
@@ -78,6 +105,7 @@ const PlayerView: React.FC = () => {
     });
 
     OBR.broadcast.onMessage(`${ID}/broadcast`, (event) => {
+      setSearchQuery("");
       setLocationToReveal(event.data as string);
       window.document
         .getElementById(`player-accordion-${event.data as string}`)
@@ -95,93 +123,117 @@ const PlayerView: React.FC = () => {
               Your GM has shared these location details with you.
             </p>
           </div>
-          <div className="mt-3 space-y-2">
-            {playerVisibleKeys.map((locationKey, index) => (
-              <div
-                key={String(index)}
-                id={`player-accordion-${locationKey.id}`}
-                className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden"
-              >
-                <button
-                  onClick={() => handleToggleClick(locationKey.id)}
-                  className="w-full px-4 py-3 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
-                >
-                  <span>{locationKey.name}</span>
-                  <svg
-                    className={`w-5 h-5 transition-transform ${locationToReveal === locationKey.id ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {locationToReveal === locationKey.id && (
-                  <div className="p-4 border-t border-gray-300 dark:border-gray-600">
-                    {editingLocationId === locationKey.id ? (
-                      <>
-                        <textarea
-                          rows={6}
-                          value={editedPlayerInfo}
-                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedPlayerInfo(e.target.value)}
-                          className="w-full px-3 py-2 mb-3 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                          placeholder="Enter your notes about this location..."
-                        />
-                        <div className="grid grid-cols-4 gap-2 text-center">
-                          <button
-                            onClick={() => handleSave(locationKey)}
-                            className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
-                          >
-                            Save
-                          </button>
-                          <button
-                            onClick={handleCancel}
-                            className="px-4 py-2 bg-red-600 border-2 border-red-600 text-white rounded hover:bg-red-700 hover:border-red-700 font-medium transition-colors"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            onClick={() => showOnMap(locationKey.id)}
-                            className="px-4 py-2 bg-gray-500 border-2 border-gray-500 text-white rounded hover:bg-gray-600 hover:border-gray-600 font-medium transition-colors"
-                          >
-                            Show
-                          </button>
-                          <div></div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        {locationKey.playerInfo ? (
-                          <div className="markdown-content mb-3 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700">
-                            <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
-                          </div>
-                        ) : (
-                          <p className="text-gray-500 dark:text-gray-400 italic mb-3">No additional information provided.</p>
-                        )}
-                        <div className="grid grid-cols-4 gap-2 text-center">
-                          <button
-                            onClick={() => showOnMap(locationKey.id)}
-                            className="px-4 py-2 bg-gray-500 border-2 border-gray-500 text-white rounded hover:bg-gray-600 hover:border-gray-600 font-medium transition-colors"
-                          >
-                            Show
-                          </button>
-                          {locationKey.isPlayerEditable !== false && (
-                            <button
-                              onClick={() => handleEdit(locationKey)}
-                              className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
-                            >
-                              Edit
-                            </button>
-                          )}
-                          <div></div>
-                          <div></div>
-                        </div>
-                      </>
-                    )}
-                  </div>
+          <div className="mt-3">
+            <SearchBox
+              query={searchQuery}
+              onQueryChange={handleSearchChange}
+              onKeyDown={handleSearchKeyDown}
+              placeholder="Search locations..."
+            />
+            {filteredKeys.length > 0 ? (
+              <>
+                {searchQuery.trim() && (
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                    {filteredKeys.length} of {playerVisibleKeys.length} locations
+                  </p>
                 )}
+                <div className="space-y-2">
+                  {filteredKeys.map((locationKey, index) => (
+                    <div
+                      key={String(index)}
+                      id={`player-accordion-${locationKey.id}`}
+                      className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden"
+                    >
+                      <button
+                        onClick={() => handleToggleClick(locationKey.id)}
+                        className="w-full px-4 py-3 text-left font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center"
+                      >
+                        <span>{locationKey.name}</span>
+                        <svg
+                          className={`w-5 h-5 transition-transform ${locationToReveal === locationKey.id ? 'rotate-180' : ''}`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      {locationToReveal === locationKey.id && (
+                        <div className="p-4 border-t border-gray-300 dark:border-gray-600">
+                          {editingLocationId === locationKey.id ? (
+                            <>
+                              <textarea
+                                rows={6}
+                                value={editedPlayerInfo}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedPlayerInfo(e.target.value)}
+                                className="w-full px-3 py-2 mb-3 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                                placeholder="Enter your notes about this location..."
+                              />
+                              <div className="grid grid-cols-4 gap-2 text-center">
+                                <button
+                                  onClick={() => handleSave(locationKey)}
+                                  className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={handleCancel}
+                                  className="px-4 py-2 bg-red-600 border-2 border-red-600 text-white rounded hover:bg-red-700 hover:border-red-700 font-medium transition-colors"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  onClick={() => showOnMap(locationKey.id)}
+                                  className="px-4 py-2 bg-gray-500 border-2 border-gray-500 text-white rounded hover:bg-gray-600 hover:border-gray-600 font-medium transition-colors"
+                                >
+                                  Show
+                                </button>
+                                <div></div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              {locationKey.playerInfo ? (
+                                <div className="markdown-content mb-3 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700">
+                                  <MarkdownRenderer>{locationKey.playerInfo}</MarkdownRenderer>
+                                </div>
+                              ) : (
+                                <p className="text-gray-500 dark:text-gray-400 italic mb-3">No additional information provided.</p>
+                              )}
+                              <div className="grid grid-cols-4 gap-2 text-center">
+                                <button
+                                  onClick={() => showOnMap(locationKey.id)}
+                                  className="px-4 py-2 bg-gray-500 border-2 border-gray-500 text-white rounded hover:bg-gray-600 hover:border-gray-600 font-medium transition-colors"
+                                >
+                                  Show
+                                </button>
+                                {locationKey.isPlayerEditable !== false && (
+                                  <button
+                                    onClick={() => handleEdit(locationKey)}
+                                    className="px-4 py-2 bg-blue-600 border-2 border-blue-600 text-white rounded hover:bg-blue-700 hover:border-blue-700 font-medium transition-colors"
+                                  >
+                                    Edit
+                                  </button>
+                                )}
+                                <div></div>
+                                <div></div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mb-4">
+                <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">No Matching Locations</h2>
+                <p className="text-gray-700 dark:text-gray-300">
+                  No shared locations match "{searchQuery}".
+                </p>
               </div>
-            ))}
+            )}
           </div>
         </>
       ) : (

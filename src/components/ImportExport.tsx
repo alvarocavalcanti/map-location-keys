@@ -1,7 +1,7 @@
 import { LocationKey } from "../@types/types";
 import OBR, { buildText, Item } from "@owlbear-rodeo/sdk";
 import { saveAs } from "file-saver";
-import yaml, { JSON_SCHEMA } from "js-yaml";
+import { load, dump, JSON_SCHEMA } from "js-yaml";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -28,21 +28,20 @@ const ImportExport: React.FC<{
       setInputValid(false);
       return;
     }
-    yaml.load(target.value, {
-      schema: JSON_SCHEMA,
-      onWarning(e) {
-        console.error("Invalid YAML:", e);
-        setInputValid(false);
-      },
-    });
-    // console.log("Valid YAML");
+    try {
+      load(target.value, { schema: JSON_SCHEMA });
+      // console.log("Valid YAML");
+      setInputValid(true);
+    } catch (e) {
+      console.error("Invalid YAML:", e);
+      setInputValid(false);
+    }
     setImportYAML(target.value);
-    setInputValid(true);
   };
 
   const handleExport = () => {
     analytics.track("export_location_keys");
-    const yamlText = yaml.dump(locationKeys, { schema: JSON_SCHEMA });
+    const yamlText = dump(locationKeys, { schema: JSON_SCHEMA });
     const blob = new Blob([yamlText], { type: "text/yaml;charset=utf-8" });
     saveAs(blob, "locationKeys.yaml");
   };
@@ -95,7 +94,7 @@ const ImportExport: React.FC<{
       analytics.track("import_location_keys");
       let newLocationKeys: LocationKey[];
       try {
-        newLocationKeys = yaml.load(importYAML) as LocationKey[];
+        newLocationKeys = load(importYAML, { schema: JSON_SCHEMA }) as LocationKey[];
       } catch (e) {
         console.error("Invalid YAML:", e);
         return;

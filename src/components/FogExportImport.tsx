@@ -1,7 +1,7 @@
 import { FogKey } from "../@types/types";
 import OBR, { buildCurve, buildPath, buildShape, Item } from "@owlbear-rodeo/sdk";
 import { saveAs } from "file-saver";
-import yaml, { JSON_SCHEMA } from "js-yaml";
+import { load, dump, JSON_SCHEMA } from "js-yaml";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -26,23 +26,22 @@ const FogExportImport: React.FC<{
       setInputValid(false);
       return;
     }
-    yaml.load(target.value, {
-      schema: JSON_SCHEMA,
-      onWarning(e) {
-        console.error("Invalid YAML:", e);
-        setInputValid(false);
-      },
-    });
-    // console.log("Valid YAML");
+    try {
+      load(target.value, { schema: JSON_SCHEMA });
+      // console.log("Valid YAML");
+      setInputValid(true);
+    } catch (e) {
+      console.error("Invalid YAML:", e);
+      setInputValid(false);
+    }
     setImportYAML(target.value);
-    setInputValid(true);
   };
 
   const handleExport = () => {
     analytics.track("export_fog_keys");
     // console.log("Exporting fog keys:", fogKeys);
     // console.log("Fog keys count:", fogKeys.length);
-    const yamlText = yaml.dump(fogKeys, { schema: JSON_SCHEMA });
+    const yamlText = dump(fogKeys, { schema: JSON_SCHEMA });
     const blob = new Blob([yamlText], { type: "text/yaml;charset=utf-8" });
     saveAs(blob, "fogKeys.yaml");
   };
@@ -62,7 +61,7 @@ const FogExportImport: React.FC<{
       analytics.track("import_fog_keys");
       let newFogKeys: FogKey[];
       try {
-        newFogKeys = yaml.load(importYAML) as FogKey[];
+        newFogKeys = load(importYAML, { schema: JSON_SCHEMA }) as FogKey[];
       } catch (e) {
         console.error("Invalid YAML:", e);
         return;

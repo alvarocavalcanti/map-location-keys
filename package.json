@@ -32,7 +32,7 @@
   "overrides": {
     "uuid": "^11.1.1",
     "nanoid": "^3.3.17",
-    "undici": "^7.29.0"
+    "undici": "^7.30.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -43,7 +43,7 @@
     "@owlbear-rodeo/sdk": "^2.4.0",
     "@vitejs/plugin-react": "^6.0.2",
     "file-saver": "^2.0.5",
-    "js-yaml": "^4.3.2",
+    "js-yaml": "^5.4.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",
